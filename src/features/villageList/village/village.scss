@@ -1,0 +1,41 @@
+@import '../../../index.scss';
+
+.village {
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center center; 
+    margin-bottom: 15px;
+    border-radius: 5px;
+    height: 140px;
+    background-color: rgba($color: #000000, $alpha: 0.7);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+    position: relative;
+    cursor: pointer;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(67, 63, 63, 0.2);
+      border-radius: 5px;
+    }
+
+    &:hover {
+      border: 2px solid rgb(42, 41, 41);
+    }
+
+    div {
+      color: #fff;
+      padding: 12px 10px  0 15px ;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.16px;
+
+      p {
+        margin-top: 8px;
+      }
+    }
+}

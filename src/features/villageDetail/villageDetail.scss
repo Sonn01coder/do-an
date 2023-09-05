@@ -1,0 +1,221 @@
+@import "../../index.scss";
+
+.villageDetail {
+    padding-right: 3px;
+    max-height: 500px;
+    
+    &_title {
+        @include flex(center, space-between, row);
+        padding: 5px 8px 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+
+        h1 {
+            color: #8C580B;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.26px;
+        }
+        
+        section {
+            margin-right: 5px;
+            font-size: 22px;
+            @include flex(center, center, row);
+            
+
+            span:first-child {
+                color: blue;
+                font-size: 26px;
+                margin-right: 8px;
+                transform: translateY(5%);
+            }
+            
+            span {
+                cursor: pointer;
+            }
+        }
+    }
+    
+    &_content {
+        overflow-y: auto;
+        max-height: 445px;
+
+        &-info {
+            font-size: 14px;
+            background-color: #e3e3e3;
+            border-radius: 8px;
+            padding: 15px 8px;
+            margin-bottom: 30px;
+
+
+            section {
+                @include flex(flex-start, unset, row);
+                text-align: justify;
+
+                p {
+                    text-indent: 5px
+                }
+            }
+
+            section:first-child {
+                margin-bottom: 8px;
+            }
+
+            .villageDetail_content-history{
+                position: relative;
+
+                h4 {
+                    position: absolute;
+                }
+
+                p {
+                    text-indent: 105px;
+                    max-height: 144px;
+                    overflow-y: hidden;
+                }
+            }
+
+            .villageDetail_content-more {
+                margin-top: 5px;
+                color: blue;
+                margin-bottom: 10px;
+                cursor: pointer;
+            }
+
+            &-img {
+                margin-top: 8px;
+
+                img {
+                    margin-bottom: 15px;
+                    height: 190px;
+                    width: 100%;
+
+                }
+            }
+        }
+
+        &-product {
+            font-size: 14px;
+            background-color: #e3e3e3;
+            border-radius: 8px;
+            padding: 15px 8px 30px;
+            margin-bottom: 30px;
+            position: relative;
+
+            &-wrapper {
+                position: relative;
+                
+                div {
+                    @include flex(center, unset, row);
+                    margin-bottom: 20px;
+                }
+
+                section {
+                    max-height:380px;
+                    overflow-y: hidden;
+
+                    img {
+                        height: 190px;
+                        width: 100%;
+                        margin-bottom: 15px;
+                    }
+                }
+
+                span {
+                    width: 100%;
+                    position: absolute;
+                    bottom: 0;
+                    height: 100px;
+                    background: linear-gradient(to top, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 100%);
+                }
+            }
+
+            &-more {
+                position: absolute;
+                font-size: 28px;
+                text-align: center;
+                cursor: pointer;
+                left: 45%;
+                bottom: 8px;
+            }
+        }
+
+        &-place {
+            font-size: 14px;
+            background-color: #e3e3e3;
+            border-radius: 8px;
+            padding: 15px 8px 30px;
+            margin-bottom: 30px;
+            position: relative;
+
+            h4 {
+                margin-bottom: 15px;
+            }
+
+            &-wrapper {
+                max-height: 500px;
+                overflow: auto;
+
+                div {
+                    @include flex(center, center, column);
+                    margin-bottom: 20px;
+
+                    img {
+                        height: 190px;
+                        width: 100%;
+                        margin-bottom: 8px;
+                    }
+
+                }
+            }
+        }
+
+        &-proposed {
+            font-size: 14px;
+            background-color: #e3e3e3;
+            border-radius: 8px;
+            padding: 15px 8px 30px;
+            margin-bottom: 15px;
+            position: relative;
+
+            h4 {
+                margin-bottom: 15px;
+            }
+
+            &-wrapper {
+                max-height: 400px;
+                overflow-y: auto;
+                section {
+                    margin-bottom: 20px;
+
+                    h5 {
+                        font-size: 14px;
+                        color: blue;
+                        margin-bottom: 5px;
+                    }
+
+                    img {
+                        height: 190px;
+                        width: 100%;
+                    }
+
+                    div {
+                        @include flex(center, flex-end, row);
+                        color: red;
+                        margin-top: 8px;
+                        cursor: pointer;
+
+                        section {
+                            transform: translateY(45%);
+                            font-size: 20px;
+                            margin-left: 6px;
+                        }
+
+                        &:hover {
+                            opacity: 0.6;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

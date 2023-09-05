@@ -1,0 +1,7 @@
+@import '../index.scss';
+
+.layout {
+    @include flex(unset, flex-start, row);
+    width: 100%;
+    height: 100%;
+}
