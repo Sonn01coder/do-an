@@ -1,0 +1,56 @@
+@import "../index.scss";
+
+.popupAdmin {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    @include flex(center, center, row);
+
+    &_container {
+        background-color: white;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+        height: 30%;
+        width: 35%;
+        border-radius: 8px;
+        padding: 45px 40px;
+
+        &-content {
+            @include flex(center, unset, row);
+
+            section {
+                font-size: 60px;
+                color: blue;
+            }
+        }
+
+        &-button {
+            margin-top: 30px;
+            @include flex(center, flex-end, row);
+
+            button {
+                padding: 12px 22px;
+                cursor: pointer;
+                margin-left: 20px;
+                outline: none;
+                border: none;
+                font-size: 16px;
+                border-radius: 3px;
+
+                &:active {
+                    opacity: 0.8;
+                }
+            }
+
+            button:first-child {
+                background-color: rgb(72, 72, 230);
+                color: #fff;
+            }
+
+            button:last-child {
+                background-color: #dad3d3;
+                border: 1px solid #cbc0c0;
+            }
+        }
+    }
+}

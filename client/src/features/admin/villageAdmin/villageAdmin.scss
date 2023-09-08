@@ -1,0 +1,79 @@
+@import "../../../index.scss";
+
+.villageAdmin {
+    margin-top: 20px;
+    position: relative;
+
+    div {
+        width: 100%;
+        @include flex(center, unset, row);
+        border: 1px solid #626060;
+
+        section {
+            padding: 15px 10px  ;
+            text-align: center;
+            border-right: 1px solid #626060;
+        }
+
+        section:first-child {
+            width: 50px;
+        }
+
+        section:nth-child(2) {
+            width: 500px;
+        }
+
+        section:nth-child(3) {
+            width: 200px;
+           
+        }
+
+        section:nth-child(4) {
+            width: 500px;
+            white-space: nowrap;
+            overflow: hidden;         
+            text-overflow: ellipsis
+        }
+        
+
+        span {
+            @include flex(center,unset, row);
+            font-size: 18px;
+            margin-left: 25px;
+
+            p {
+                cursor: pointer;
+
+                &:active {
+                    opacity: 0.8;
+                }
+            }
+
+            p:first-child {
+                color: orange;
+                font-size: 24px;
+                margin-right: 25px;
+            }
+
+            p:nth-child(2) {
+                color: red;
+                font-size: 24px;
+                margin-right: 25px;
+            }
+
+            p:nth-child(3) {
+                color: blue;
+            }
+        }
+
+    }
+    
+    body {
+        max-height: calc(100vh - 300px);
+        overflow-y: auto;
+    }
+   
+    &_title {
+        background-color: #cbc6c6;
+    }
+}

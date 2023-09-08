@@ -1,0 +1,53 @@
+@import "../../index.scss";
+
+.product {
+    width: 100vw;
+    height: 100vh;
+    background-color: #fff;
+    @include flex(unset, unset, column);
+
+    &_header {
+        height: 60px;
+        background-color: #EBBC84;
+        padding: 0 32px;
+        @include flex(center, space-between, row);
+
+        h2 {
+            color: #811313;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: 0.36px;
+        }
+
+        button {
+            border-radius: 5px;
+            background: #C84040;
+            color: #fff;
+            border: 1px solid rgb(174, 8, 8);
+            padding: 12px 25px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+    }
+
+    &_content {
+        padding: 10px 32px;
+        flex: 1;
+    }
+
+    &_footer {
+        padding: 12px 32px;
+        background-color: #d9d9d9;
+        font-weight: bold;
+        font-size: 14px;
+        @include flex(center, space-between, row);
+
+        div {
+            @include flex(flex-start, center, column);
+            p {
+                margin-bottom: 5px;
+            }
+        }
+    }
+}
