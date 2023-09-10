@@ -1,12 +1,22 @@
-import axios from 'axios';
+import axios from "axios";
 
-const axiosBase = axios.create({
+export const createAxiosInstance = (url) => {
+  const axiosBase = axios.create({
     headers: { 'Content-Type': 'application/json' },
-    withCredentials: true
-});
+  });
 
-axiosBase.interceptors.response.use((response) => {
-    return response.data.result;
+  // axiosBase.interceptors.request.use((request) => {
+  //   const accessToken: string = getAccessToken ?? '';
+  //   const accessHeader = `Bearer ${accessToken}`;
+  //   if (request.headers != null) {
+  //     request.headers.Authorization = accessHeader;
+  //   }
+
+  //   return request;
+  // });
+
+  axiosBase.interceptors.response.use((response) => {
+    return response;
   }, (err) => {
     console.log(err);
   });

@@ -4,68 +4,63 @@ import {FaPlaceOfWorship} from 'react-icons/fa';
 import {AiOutlineInbox} from 'react-icons/ai';
 import {MdOutlineTour} from  'react-icons/md'
 import './admin.scss';
-import {BsSearch} from "react-icons/bs";
-import {AiFillCaretDown} from "react-icons/ai"
-import { ROUTER, showListLength } from '../../shared/constants/Constants';
-import VillageAdmin from './villageAdmin/VillageAdmin';
-import CreateAndEditVillage from './createAndEditVillage/CreateAndEditVillage';
-import { VillageContext } from '../../shared/dataContext/VillageContext';
 import { Link, useLocation } from 'react-router-dom';
+import VillageManagement from './village/VillageManagement';
+import ProductManagement from './product/ProductManagement';
+import PlaceManagement from './place/PlaceManagement';
+import TouristManagement from './tourist/TouristManagement';
+import NotFound from './notFound/NotFound';
 
 const data = [
   {
     id: 1,
     name: 'Village',
-    icon:  <GiVillage />
+    icon:  <GiVillage />,
+    link: '/admin/village'
   },
   {
     id: 2,
     name: 'Product',
-    icon:  <AiOutlineInbox />
+    icon:  <AiOutlineInbox />,
+    link: '/admin/product'
   },
   {
     id: 3,
     name: 'Place',
-    icon:  <FaPlaceOfWorship />
+    icon:  <FaPlaceOfWorship />,
+    link: '/admin/place'
   },
   {
     id: 4,
     name: 'Tourist',
-    icon:  <MdOutlineTour />
+    icon:  <MdOutlineTour />,
+    link: '/admin/tourist'
   }, 
-
 ]
 
 export default function Admin() {
-
-  const [listLength, setListLength] = useState(showListLength[0].length)
-  const [openPopup, setOpenPopUp] = useState(false)
+  //active
+  const [activeId , setActiveId] = useState(data[0].id)
 
   //get current param
   const location = useLocation()
 
-  //handle pick length show data
-  const handlePickLength = (length) => {
-      setListLength(length)
-      setOpenPopUp(false)
-  }
+  //path => active
 
-  const popUpRef = useRef()
-
-  //click outside
   useEffect(() => {
-      const handler = (e) => {
-        if (popUpRef?.current?.contains(e.target) === false) {
-          setOpenPopUp(false);
-        }
-      };
-  
-      document.addEventListener('mousedown', handler);
-  
-      return () => {
-        document.removeEventListener('mousedown', handler);
-      };
-    }, []);
+    location.pathname.includes("/village") ? (
+      setActiveId(data[0].id)
+    ) : location.pathname.includes('/product') ? (
+      setActiveId(data[1].id)
+    ) : location.pathname.includes('/place') ? (
+      setActiveId(data[2].id)
+    ) : location.pathname.includes('/tourist') ? (
+      setActiveId(data[3].id)
+    ) : (
+      <NotFound />
+    )
+
+  }, [location.pathname])
 
   return (
     <div className='admin'>
@@ -75,10 +70,12 @@ export default function Admin() {
         <div className='admin_sidebar-navigation'>
           {
             data.map(item => (
-              <div className={item.id===1 ? 'active' : ''} key={item.id}>
+              <Link to={item.link} key={item.id} onClick={() => setActiveId(item.id)}>
+                <div className={item.id === activeId ? 'active' : ''}>
                   <section>{item.icon}</section>
                   <p>{item.name}</p>
-              </div>
+                </div>
+              </Link>
             ))
           }
         </div>
@@ -94,48 +91,22 @@ export default function Admin() {
           </div>
         </div>
         
-        {
-          !(location.pathname.includes(ROUTER.ADMIN_VILLAGE_DETAIL) || location.pathname.includes(ROUTER.ADMIN_VILLAGE_CREATE) ) ? 
-          (
-            <div className='admin_content-body'>
-               <div className='admin_content-body-header'>
-                   <div className='admin_content-body-header-show'>
-                     <div className='admin_content-body-header-show-option' onClick={() => setOpenPopUp(true)}>
-                         <p>Show {listLength}</p>
-                         <section><AiFillCaretDown/></section>
-                     </div>
-                     {
-                       openPopup && (
-                           <section className='admin_content-body-header-show-popup' ref={popUpRef}>
-                               {
-                                   showListLength.map( item =>
-                                       <p key={item.id} onClick={() => handlePickLength(item.length)}>{item.length}</p>
-                                   )
-                               }
-                           </section>
-                       )
-                     }
-                   </div>
-     
-                   <div className='admin_content-body-header-search'>
-                     <Link to={ROUTER.ADMIN_VILLAGE_CREATE}><button>Create</button></Link>
-                     <input type="text"  placeholder='Nhập từ khóa tìm kiếm'/>
-                     <section><BsSearch /></section>
-                   </div>
-               </div>
-     
-               <div>
-                     <VillageAdmin />
-               </div>
-             </div>   
-          ) : (
-            <div className='admin_content-body'>
-                <CreateAndEditVillage />
-            </div> 
-          )
-        }
-
+        <div className='admin_content-body'>
+          {
+            location.pathname.includes("/village") ? (
+              <VillageManagement />
+            ) : location.pathname.includes('/product') ? (
+              <ProductManagement />
+            ) : location.pathname.includes('/place') ? (
+              <PlaceManagement />
+            ) : location.pathname.includes('/tourist') ? (
+              <TouristManagement />
+            ) : (
+              <NotFound />
+            )
+          }
+        </div>
       </div>
-      </div>
+    </div>
   )
 }

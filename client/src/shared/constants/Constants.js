@@ -70,7 +70,7 @@ export const showListLength = [
 
 export const BASE_URL = 'http://localhost:8888/api/v1'
 
-export const VILLAGE_BASE = BASE_URL + "/village"
+export const VILLAGE_URL = BASE_URL + "/village"
 
 
 export const ROUTER = {
@@ -81,4 +81,13 @@ export const ROUTER = {
 export const TITLE_VILLAGE_ADMIN = {
     EDIT_VILLAGE: "Edit Village",
     CREARTE_VILLAGE: "Create Village",
+}
+
+export const VILLAGE_DEFAULT = {
+    name: "",
+    slug: "",
+    address: "",
+    geocode: "",
+    history : "",
+    image: [],
 }
