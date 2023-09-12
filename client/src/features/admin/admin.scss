@@ -24,7 +24,7 @@
 
            div {
             @include flex(center, unset, row);
-            padding: 15px 40px;
+            padding: 15px 15px;
             font-size: 18px;
             margin-bottom: 10px;
             cursor: pointer;
@@ -37,7 +37,8 @@
             }
 
             p {
-                margin-left: 15px;
+                flex: 1;
+                margin-left: 10px;
             }
            }
 

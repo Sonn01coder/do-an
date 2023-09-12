@@ -1,8 +1,8 @@
 import express from 'express';
 import villageController from '../controllers/villageController';
 import productController from '../controllers/productController';
-import placeController from '../controllers/placeController';
-import touristController from '../controllers/touristController';
+import pointofinterestController from '../controllers/pointofinterestController';
+import pointofserviceController from '../controllers/pointofserviceController';
 
 let router =  express.Router();
 
@@ -21,17 +21,17 @@ let initAPIRoutes = (app) => {
     router.delete('/product/delete/:id', productController.deleteProduct)
 
 
-    //place village
-    router.get('/place/getAll', placeController.getAllPlace)
-    router.post('/place/create', placeController.createPlace)
-    router.put('/place/update', placeController.updatePlace)
-    router.delete('/place/delete/:id', placeController.deletePlace)
+    //point of interest
+    router.get('/poi/getAll', pointofinterestController.getAllPOI)
+    router.post('/poi/create', pointofinterestController.createPOI)
+    router.put('/poi/update', pointofinterestController.updatePOI)
+    router.delete('/poi/delete/:id', pointofinterestController.deletePOI)
 
-    //tourist
-    router.get('/tourist/getAll', touristController.getAllTourist)
-    router.post('/tourist/create', touristController.createTourist)
-    router.put('/tourist/update', touristController.updateTourist)
-    router.delete('/tourist/delete/:id', touristController.deleteTourist)
+    //point of services
+    router.get('/pos/getAll', pointofserviceController.getAllPOS)
+    router.post('/pos/create', pointofserviceController.createPOS)
+    router.put('/pos/update', pointofserviceController.updatePOS)
+    router.delete('/pos/delete/:id', pointofserviceController.deletePOS)
 
     return app.use('/api/v1/', router) 
 }

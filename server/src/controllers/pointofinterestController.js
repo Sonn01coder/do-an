@@ -1,8 +1,8 @@
 import { pool } from "../config/connectDB";
 
-const getAllTourist = async (req, res) => {
+const getAllPOI = async (req, res) => {
   try {
-    const [rows, fields] = await pool.execute('SELECT * FROM tourist');
+    const [rows, fields] = await pool.execute('SELECT * FROM pointofinterest');
     
     return res.status(200).json({
       message: "Success",
@@ -17,17 +17,17 @@ const getAllTourist = async (req, res) => {
   }
 };
 
-const createTourist = async (req, res) => {
-  const { name, slug, address, villageId, image, geocode } = req.body;
+const createPOI = async (req, res) => {
+  const { name, slug, address, villageId, image, description, geocode } = req.body;
 
-  if (!name || !slug || !villageId || !image  || !geocode || !address) {
+  if (!name || !slug || !villageId || !image || !description || !geocode || !address) {
     return res.status(400).json({
       message: "Bad Request: Missing required fields"
     });
   }
 
   try {
-    await pool.execute('INSERT INTO tourist (name, slug, address, villageId, image, geocode) VALUES (?, ?, ?, ?, ?, ?)', [name, slug, address, villageId, image, geocode]);
+    await pool.execute('INSERT INTO pointofinterest (name, slug, address, villageId, image, description, geocode) VALUES (?, ?, ?, ?, ?, ?, ?)', [name, slug, address, villageId, image, description, geocode]);
     
     return res.status(201).json({
       message: "Product created successfully",
@@ -42,17 +42,17 @@ const createTourist = async (req, res) => {
   }
 };
 
-const updateTourist = async (req, res) => {
-  const { name, slug, address, villageId, image, geocode, id } = req.body;
+const updatePOI = async (req, res) => {
+  const { name, slug, address, villageId, image, description, geocode, id } = req.body;
 
-  if (!name || !slug || !villageId || !image || !id || !geocode || !address) {
+  if (!name || !slug || !villageId || !image  || !description || !id || !geocode || !address) {
     return res.status(400).json({
       message: "Bad Request: Missing required fields"
     });
   }
 
   try {
-    const [rows] = await pool.execute('SELECT * FROM tourist WHERE id = ?', [id]);
+    const [rows] = await pool.execute('SELECT * FROM pointofinterest WHERE id = ?', [id]);
 
     if (rows.length === 0) {
       return res.status(404).json({
@@ -60,8 +60,8 @@ const updateTourist = async (req, res) => {
       });
     }
 
-    await pool.execute('UPDATE tourist SET name = ?, slug = ?, villageId = ?, image = ?, geocode=?, address=? WHERE id = ?',
-      [name, slug, address, villageId, image, geocode, id]);
+    await pool.execute('UPDATE pointofinterest SET name = ?, slug = ?, villageId = ?, image = ?, description = ?, geocode=?, address=? WHERE id = ?',
+      [name, slug, address, villageId, image, description, geocode, id]);
 
     return res.status(200).json({
       message: "Product updated successfully"
@@ -75,7 +75,7 @@ const updateTourist = async (req, res) => {
   }
 };
 
-const deleteTourist = async (req, res) => {
+const deletePOI = async (req, res) => {
   const id = req.params.id;
 
   if (!id) {
@@ -85,7 +85,7 @@ const deleteTourist = async (req, res) => {
   }
 
   try {
-    const [rows] = await pool.execute('SELECT * FROM tourist WHERE id = ?', [id]);
+    const [rows] = await pool.execute('SELECT * FROM pointofinterest WHERE id = ?', [id]);
 
     if (rows.length === 0) {
       return res.status(404).json({
@@ -93,7 +93,7 @@ const deleteTourist = async (req, res) => {
       });
     }
 
-    await pool.execute('DELETE FROM tourist WHERE id = ?', [id]);
+    await pool.execute('DELETE FROM pointofinterest WHERE id = ?', [id]);
 
     return res.status(204).json({
         message: "Delete product"
@@ -108,8 +108,8 @@ const deleteTourist = async (req, res) => {
 };
 
 export default {
-  getAllTourist,
-  deleteTourist,
-  updateTourist,
-  createTourist,
+  getAllPOI,
+  deletePOI,
+  updatePOI,
+  createPOI,
 };

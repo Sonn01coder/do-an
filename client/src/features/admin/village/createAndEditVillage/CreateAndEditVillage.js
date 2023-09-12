@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import "./createAndEditVillage.scss";
 import {FaCloudUploadAlt} from "react-icons/fa";
 import {AiOutlineDelete} from "react-icons/ai";
@@ -13,13 +13,12 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 export default function CreateAndEditVillage() {
     const {villages, createVillage, updateVillage} = useContext(VillageContext);
 
-    const navigate = useNavigate()
-
     //get slug
     const {slug} = useParams()
 
     //get village current 
     const villageCurrent = villages.find(village => village.slug === slug)
+
 
     const [formData, setFormData] = useState( villageCurrent ||  VILLAGE_DEFAULT)
 
@@ -71,8 +70,9 @@ export default function CreateAndEditVillage() {
             void updateVillage({...formData, image: JSON.stringify(selectedImages) })
         } else {
             void createVillage({...formData, image: JSON.stringify(selectedImages) })
-            navigate("/admin/village")
+            setFormData({...VILLAGE_DEFAULT})
         }
+
     } 
 
 

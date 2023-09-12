@@ -71,16 +71,41 @@ export const showListLength = [
 export const BASE_URL = 'http://localhost:8888/api/v1'
 
 export const VILLAGE_URL = BASE_URL + "/village"
+export const PRODUCT_URL = BASE_URL + "/product"
+export const POI_URL = BASE_URL + "/place"
+export const POS_URL = BASE_URL + "/tourist"
 
 
 export const ROUTER = {
     ADMIN_VILLAGE_DETAIL: "/admin/village/detail/",
     ADMIN_VILLAGE_CREATE: "/admin/village/create",
+
+    ADMIN_PRODUCT_DETAIL: "/admin/product/detail/",
+    ADMIN_PRODUCT_CREATE: "/admin/product/create",
 }
 
 export const TITLE_VILLAGE_ADMIN = {
     EDIT_VILLAGE: "Edit Village",
     CREARTE_VILLAGE: "Create Village",
+}
+
+export const TITLE_ADMIN = {
+    VILLAGE: {
+        EDIT: "Edit Village",
+        CREATE: "Create Village",
+    },
+    PRODUCT: {
+        EDIT: "Edit Product",
+        CREATE: "Create Product",
+    },
+    POINT_OF_INTEREST: {
+        EDIT: "Edit Point of Interest",
+        CREATE: "Create Point of Interest",
+    },
+    POINT_OF_SERVICE: {
+        EDIT: "Edit Point of Service",
+        CREATE: "Create Point of Service",
+    }
 }
 
 export const VILLAGE_DEFAULT = {
@@ -90,4 +115,12 @@ export const VILLAGE_DEFAULT = {
     geocode: "",
     history : "",
     image: [],
+}
+
+export const PRODUCT_DEFAULT = {
+    name: '',
+    slug: '',
+    villageId: 0,
+    image: [],
+    description: ''
 }

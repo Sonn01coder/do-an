@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import {GiVillage} from 'react-icons/gi';
 import {FaPlaceOfWorship} from 'react-icons/fa';
 import {AiOutlineInbox} from 'react-icons/ai';
@@ -7,9 +7,9 @@ import './admin.scss';
 import { Link, useLocation } from 'react-router-dom';
 import VillageManagement from './village/VillageManagement';
 import ProductManagement from './product/ProductManagement';
-import PlaceManagement from './place/PlaceManagement';
-import TouristManagement from './tourist/TouristManagement';
 import NotFound from './notFound/NotFound';
+import PointOfInterest from './pointOfInterest/PointOfInterest';
+import PointOfService from './pointOfService/PointOfService';
 
 const data = [
   {
@@ -26,13 +26,13 @@ const data = [
   },
   {
     id: 3,
-    name: 'Place',
+    name: 'Point of Interest',
     icon:  <FaPlaceOfWorship />,
     link: '/admin/place'
   },
   {
     id: 4,
-    name: 'Tourist',
+    name: 'Point of Service',
     icon:  <MdOutlineTour />,
     link: '/admin/tourist'
   }, 
@@ -98,9 +98,9 @@ export default function Admin() {
             ) : location.pathname.includes('/product') ? (
               <ProductManagement />
             ) : location.pathname.includes('/place') ? (
-              <PlaceManagement />
+              <PointOfInterest />
             ) : location.pathname.includes('/tourist') ? (
-              <TouristManagement />
+              <PointOfService />
             ) : (
               <NotFound />
             )

@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function PlaceManagement() {
+export default function PointOfInterest() {
   return (
     <div>
-      <h1>Place</h1>
+      <h1>POI</h1>
     </div>
   )
 }

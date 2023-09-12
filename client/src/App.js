@@ -6,9 +6,10 @@ import PopupAdmin from "./shared/components/PopupAdmin";
 import "./App.scss"; 
 import { useContext } from "react";
 import { VillageContext } from "./shared/dataContext/VillageContext";
+import Loading from "./shared/common/Loading";
 
 function App() {
-  const {popupAdmin} = useContext(VillageContext)
+  const {popupAdmin, isLoading} = useContext(VillageContext)
 
   return (
     <BrowserRouter>
@@ -21,12 +22,16 @@ function App() {
           <Route exact path="/admin/village/create" element={<Admin />} />
 
           <Route exact path="/admin/product" element={<Admin />} />
+          <Route exact path="/admin/product/detail/:slug" element={<Admin />} />
+          <Route exact path="/admin/product/create" element={<Admin />} />
+          
           <Route exact path="/admin/place" element={<Admin />} />
           <Route exact path="/admin/tourist" element={<Admin />} />
           <Route path="/lang-nghe-bat-trang" element={<Layout />} />
           <Route  path="/lang-nghe-bat-trang/san-pham" element={<Product />} />
         </Routes>
         {popupAdmin.isPopup && <PopupAdmin /> }
+        {isLoading && <Loading />}
       </div>
     </BrowserRouter>
 

@@ -1,8 +1,8 @@
 import { pool } from "../config/connectDB";
 
-const getAllPlace = async (req, res) => {
+const getAllPOS = async (req, res) => {
   try {
-    const [rows, fields] = await pool.execute('SELECT * FROM placevillage');
+    const [rows, fields] = await pool.execute('SELECT * FROM pointofservice');
     
     return res.status(200).json({
       message: "Success",
@@ -17,17 +17,17 @@ const getAllPlace = async (req, res) => {
   }
 };
 
-const createPlace = async (req, res) => {
-  const { name, slug, address, villageId, image, description, geocode } = req.body;
+const createPOS = async (req, res) => {
+  const { name, slug, address, villageId, image, geocode } = req.body;
 
-  if (!name || !slug || !villageId || !image || !description || !geocode || !address) {
+  if (!name || !slug || !villageId || !image  || !geocode || !address) {
     return res.status(400).json({
       message: "Bad Request: Missing required fields"
     });
   }
 
   try {
-    await pool.execute('INSERT INTO placevillage (name, slug, address, villageId, image, description, geocode) VALUES (?, ?, ?, ?, ?, ?, ?)', [name, slug, address, villageId, image, description, geocode]);
+    await pool.execute('INSERT INTO pointofservice (name, slug, address, villageId, image, geocode) VALUES (?, ?, ?, ?, ?, ?)', [name, slug, address, villageId, image, geocode]);
     
     return res.status(201).json({
       message: "Product created successfully",
@@ -42,17 +42,17 @@ const createPlace = async (req, res) => {
   }
 };
 
-const updatePlace = async (req, res) => {
-  const { name, slug, address, villageId, image, description, geocode, id } = req.body;
+const updatePOS = async (req, res) => {
+  const { name, slug, address, villageId, image, geocode, id } = req.body;
 
-  if (!name || !slug || !villageId || !image  || !description || !id || !geocode || !address) {
+  if (!name || !slug || !villageId || !image || !id || !geocode || !address) {
     return res.status(400).json({
       message: "Bad Request: Missing required fields"
     });
   }
 
   try {
-    const [rows] = await pool.execute('SELECT * FROM placevillage WHERE id = ?', [id]);
+    const [rows] = await pool.execute('SELECT * FROM pointofservice WHERE id = ?', [id]);
 
     if (rows.length === 0) {
       return res.status(404).json({
@@ -60,8 +60,8 @@ const updatePlace = async (req, res) => {
       });
     }
 
-    await pool.execute('UPDATE placevillage SET name = ?, slug = ?, villageId = ?, image = ?, description = ?, geocode=?, address=? WHERE id = ?',
-      [name, slug, address, villageId, image, description, geocode, id]);
+    await pool.execute('UPDATE pointofservice SET name = ?, slug = ?, villageId = ?, image = ?, geocode=?, address=? WHERE id = ?',
+      [name, slug, address, villageId, image, geocode, id]);
 
     return res.status(200).json({
       message: "Product updated successfully"
@@ -75,7 +75,7 @@ const updatePlace = async (req, res) => {
   }
 };
 
-const deletePlace = async (req, res) => {
+const deletePOS = async (req, res) => {
   const id = req.params.id;
 
   if (!id) {
@@ -85,7 +85,7 @@ const deletePlace = async (req, res) => {
   }
 
   try {
-    const [rows] = await pool.execute('SELECT * FROM placevillage WHERE id = ?', [id]);
+    const [rows] = await pool.execute('SELECT * FROM pointofservice WHERE id = ?', [id]);
 
     if (rows.length === 0) {
       return res.status(404).json({
@@ -93,7 +93,7 @@ const deletePlace = async (req, res) => {
       });
     }
 
-    await pool.execute('DELETE FROM placevillage WHERE id = ?', [id]);
+    await pool.execute('DELETE FROM pointofservice WHERE id = ?', [id]);
 
     return res.status(204).json({
         message: "Delete product"
@@ -108,8 +108,8 @@ const deletePlace = async (req, res) => {
 };
 
 export default {
-  getAllPlace,
-  deletePlace,
-  updatePlace,
-  createPlace,
+  getAllPOS,
+  deletePOS,
+  updatePOS,
+  createPOS,
 };

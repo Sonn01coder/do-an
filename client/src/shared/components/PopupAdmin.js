@@ -2,15 +2,18 @@ import React, { useContext } from 'react'
 import "../scss/components/popupAdmin.scss";
 import {AiOutlineDelete} from 'react-icons/ai'
 import { VillageContext } from '../dataContext/VillageContext';
+import { ProductContext } from '../dataContext/ProductContetx';
 
 
 export default function PopupAdmin() {
   const { deleteVillage, popupAdmin , setPopupAdmin} = useContext(VillageContext)
-  console.log(popupAdmin);
+  const { deleteProduct} = useContext(ProductContext)
 
   const handleRemove = () => {
     if(popupAdmin.category === "village") {
       void deleteVillage(popupAdmin.id)
+    } else if(popupAdmin.category === "product") {
+      void deleteProduct(popupAdmin.id)
     }
     setPopupAdmin({isPopup: false, content: "", id: 0, category: ""})
   }
