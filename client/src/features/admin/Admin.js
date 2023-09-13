@@ -28,13 +28,13 @@ const data = [
     id: 3,
     name: 'Point of Interest',
     icon:  <FaPlaceOfWorship />,
-    link: '/admin/place'
+    link: '/admin/poi'
   },
   {
     id: 4,
     name: 'Point of Service',
     icon:  <MdOutlineTour />,
-    link: '/admin/tourist'
+    link: '/admin/pos'
   }, 
 ]
 
@@ -52,9 +52,9 @@ export default function Admin() {
       setActiveId(data[0].id)
     ) : location.pathname.includes('/product') ? (
       setActiveId(data[1].id)
-    ) : location.pathname.includes('/place') ? (
+    ) : location.pathname.includes('/poi') ? (
       setActiveId(data[2].id)
-    ) : location.pathname.includes('/tourist') ? (
+    ) : location.pathname.includes('/pos') ? (
       setActiveId(data[3].id)
     ) : (
       <NotFound />
@@ -97,9 +97,9 @@ export default function Admin() {
               <VillageManagement />
             ) : location.pathname.includes('/product') ? (
               <ProductManagement />
-            ) : location.pathname.includes('/place') ? (
+            ) : location.pathname.includes('/poi') ? (
               <PointOfInterest />
-            ) : location.pathname.includes('/tourist') ? (
+            ) : location.pathname.includes('/pos') ? (
               <PointOfService />
             ) : (
               <NotFound />

@@ -1,6 +1,6 @@
 @import "../../../../index.scss";
 
-.productList_admin {
+.poi_admin {
     margin-top: 20px;
     position: relative;
 
@@ -20,23 +20,27 @@
         }
 
         section:nth-child(2) {
-            width: 350px;
+            width: 300px;
         }
 
         section:nth-child(3) {
-            width: 180px;
+            width: 150px;
            
         }
 
         section:nth-child(4) {
-            width: 300px;
+            width: 280px;
             white-space: nowrap;
             overflow: hidden;         
             text-overflow: ellipsis
         }
 
         section:nth-child(5) {
-            width: 350px;
+            width: 250px;
+        }
+
+        section:nth-child(6) {
+            width: 220px;
         }
         
 
@@ -91,8 +95,8 @@
         }
 
     }
-
+   
     &-title {
         background-color: #cbc6c6;
     }
-}  
+}

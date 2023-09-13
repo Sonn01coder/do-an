@@ -112,7 +112,7 @@ export const villages = [
     {
         id: 13,
         name: "Làng miến, bánh đa Minh Khai",
-        location: [ 21.048070, 105.861464],
+        location: [21.048070, 105.861464],
         img: img_mien,
         address: "Xã Minh Khai, Huyện Từ Liêm, Hà Nội"
     },

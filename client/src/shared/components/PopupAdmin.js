@@ -3,17 +3,25 @@ import "../scss/components/popupAdmin.scss";
 import {AiOutlineDelete} from 'react-icons/ai'
 import { VillageContext } from '../dataContext/VillageContext';
 import { ProductContext } from '../dataContext/ProductContetx';
+import {POSContext} from '../dataContext/PointOfServiceContext';
+import { POIContext } from '../dataContext/PointOfInterestContext';
 
 
 export default function PopupAdmin() {
   const { deleteVillage, popupAdmin , setPopupAdmin} = useContext(VillageContext)
   const { deleteProduct} = useContext(ProductContext)
+  const { deletePos} = useContext(POSContext)
+  const { deletePoi} = useContext(POIContext)
 
   const handleRemove = () => {
     if(popupAdmin.category === "village") {
       void deleteVillage(popupAdmin.id)
     } else if(popupAdmin.category === "product") {
       void deleteProduct(popupAdmin.id)
+    } else if(popupAdmin.category === "pos") {
+      void deletePos(popupAdmin.id)
+    } else if(popupAdmin.category === "poi") {
+      void deletePoi(popupAdmin.id)
     }
     setPopupAdmin({isPopup: false, content: "", id: 0, category: ""})
   }

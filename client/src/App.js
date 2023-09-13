@@ -25,8 +25,14 @@ function App() {
           <Route exact path="/admin/product/detail/:slug" element={<Admin />} />
           <Route exact path="/admin/product/create" element={<Admin />} />
           
-          <Route exact path="/admin/place" element={<Admin />} />
-          <Route exact path="/admin/tourist" element={<Admin />} />
+          <Route exact path="/admin/pos" element={<Admin />} />
+          <Route exact path="/admin/pos/detail/:slug" element={<Admin />} />
+          <Route exact path="/admin/pos/create" element={<Admin />} />
+
+          <Route exact path="/admin/poi" element={<Admin />} />
+          <Route exact path="/admin/poi/detail/:slug" element={<Admin />} />
+          <Route exact path="/admin/poi/create" element={<Admin />} />
+
           <Route path="/lang-nghe-bat-trang" element={<Layout />} />
           <Route  path="/lang-nghe-bat-trang/san-pham" element={<Product />} />
         </Routes>

@@ -72,8 +72,8 @@ export const BASE_URL = 'http://localhost:8888/api/v1'
 
 export const VILLAGE_URL = BASE_URL + "/village"
 export const PRODUCT_URL = BASE_URL + "/product"
-export const POI_URL = BASE_URL + "/place"
-export const POS_URL = BASE_URL + "/tourist"
+export const POI_URL = BASE_URL + "/poi"
+export const POS_URL = BASE_URL + "/pos"
 
 
 export const ROUTER = {
@@ -82,6 +82,12 @@ export const ROUTER = {
 
     ADMIN_PRODUCT_DETAIL: "/admin/product/detail/",
     ADMIN_PRODUCT_CREATE: "/admin/product/create",
+
+    ADMIN_POS_DETAIL: "/admin/pos/detail/",
+    ADMIN_POS_CREATE: "/admin/pos/create",
+
+    ADMIN_POI_DETAIL: "/admin/poi/detail/",
+    ADMIN_POI_CREATE: "/admin/poi/create",
 }
 
 export const TITLE_VILLAGE_ADMIN = {
@@ -123,4 +129,23 @@ export const PRODUCT_DEFAULT = {
     villageId: 0,
     image: [],
     description: ''
+}
+
+export const POI_DEFAULT = {
+    name: '',
+    slug: '',
+    villageId: 0,
+    address: '',
+    image: [],
+    geocode: [],
+    description: ''
+}
+
+export const POS_DEFAULT = {
+    name: '',
+    slug: '',
+    villageId: 0,
+    address: '',
+    image: [],
+    geocode: [],
 }

@@ -60,7 +60,7 @@ const updatePOS = async (req, res) => {
       });
     }
 
-    await pool.execute('UPDATE pointofservice SET name = ?, slug = ?, villageId = ?, image = ?, geocode=?, address=? WHERE id = ?',
+    await pool.execute('UPDATE pointofservice SET name = ?, slug = ?,address = ?, villageId = ?, image = ?, geocode=? WHERE id = ?',
       [name, slug, address, villageId, image, geocode, id]);
 
     return res.status(200).json({

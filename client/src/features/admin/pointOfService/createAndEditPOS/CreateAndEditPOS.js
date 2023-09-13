@@ -1,20 +1,18 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useParams } from "react-router-dom";
-import "./createAndEditProduct.scss";
 import {FaCloudUploadAlt} from "react-icons/fa";
 import {AiOutlineDelete} from "react-icons/ai";
 import { VillageContext } from '../../../../shared/dataContext/VillageContext';
-import { PRODUCT_DEFAULT, TITLE_ADMIN, VILLAGE_DEFAULT } from '../../../../shared/constants/Constants';
-import ReactQuill from 'react-quill';
+import { POS_DEFAULT, TITLE_ADMIN, VILLAGE_DEFAULT } from '../../../../shared/constants/Constants';
 import {AiFillCaretDown} from "react-icons/ai"
-import 'react-quill/dist/quill.snow.css';
+import './createAndEditPOS.scss';
 import { storage } from '../../../../shared/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { ProductContext } from '../../../../shared/dataContext/ProductContetx';
+import { POSContext } from '../../../../shared/dataContext/PointOfServiceContext';
 
-export default function CreateAndEditProduct() {
+export default function CreateAndEditPOS() {
     const {villages} = useContext(VillageContext);
-    const {products, createProduct, updateProduct} = useContext(ProductContext);
+    const {pos, createPos, updatePos } = useContext(POSContext);
 
     //get slug
     const {slug} = useParams()
@@ -23,9 +21,9 @@ export default function CreateAndEditProduct() {
     const [popupVillages, setPopupVillages] = useState(false)
 
     //get village current 
-    const productCurrent = products.find(product => product.slug.trim() === slug)
+    const posCurrent = pos.find(product => product.slug === slug)
 
-    const [formData, setFormData] = useState(productCurrent || PRODUCT_DEFAULT)
+    const [formData, setFormData] = useState(posCurrent || POS_DEFAULT)
 
     //village current 
     const [villageCurrent, setVillageCurrent] = useState(villages.find(village => village.id === formData.villageId) || VILLAGE_DEFAULT)
@@ -39,7 +37,6 @@ export default function CreateAndEditProduct() {
         const selectedFileArray = Array.from(e.target.files)
 
         void handleUploadToFirebase(selectedFileArray)
-
     }
 
     //ref popup
@@ -90,42 +87,38 @@ export default function CreateAndEditProduct() {
         setSelectedImages(selectedImages.filter(item => item !== img))
     }
 
-    //get value description
-    const handleReactQuill = (value) => {
-        setFormData({...formData, description: value})
-    }
-
     //handle add/edit village
     const handleAllProduct = () => {
         if(formData.id) {
-            void updateProduct({...formData, image: JSON.stringify(selectedImages) , villageId: villageCurrent.id, id: formData.id})
+            void updatePos({...formData, image: JSON.stringify(selectedImages) , villageId: villageCurrent.id, id: formData.id})
         } else {
-            void createProduct({...formData, image: JSON.stringify(selectedImages), villageId: villageCurrent.id })
-            setFormData(PRODUCT_DEFAULT)
+            void createPos({...formData, image: JSON.stringify(selectedImages), villageId: villageCurrent.id })
+            setFormData(POS_DEFAULT)
             setVillageCurrent(VILLAGE_DEFAULT)
+            setSelectedImages([])
         }
     } 
 
   return (
-    <div className='createAndEditProduct'>
-        <div className='createAndEditProduct_title'>
-            <h2>{slug ? TITLE_ADMIN.PRODUCT.EDIT : TITLE_ADMIN.PRODUCT.CREATE}</h2>
+    <div className='createAndEditPOS'>
+        <div className='createAndEditPOS_title'>
+            <h2>{slug ? TITLE_ADMIN.POINT_OF_SERVICE.EDIT : TITLE_ADMIN.POINT_OF_SERVICE.CREATE}</h2>
             <section onClick={handleAllProduct}><FaCloudUploadAlt /></section>
         </div>
 
-        <div className='createAndEditProduct_content'> 
+        <div className='createAndEditPOS_content'> 
 
-            <div  className='createAndEditProduct_content-input padding_right-input'>
+            <div  className='createAndEditPOS_content-input padding_right-input'>
                 <p>Name</p>
                 <input 
                     type="text" 
-                    placeholder='Nhập tên sản phẩm'
+                    placeholder='Nhập tên địa điểm dịch vụ'
                     value={formData.name}
                     onChange={e => setFormData({...formData, name: e.target.value})}
                 />
             </div>
 
-            <div className='createAndEditProduct_content-input'>
+            <div className='createAndEditPOS_content-input'>
                 <p className='font-left'>Slug</p>
                 <input 
                     type="text" 
@@ -135,17 +128,37 @@ export default function CreateAndEditProduct() {
                 />
             </div>
 
-            <div className='createAndEditProduct_content-input  full-width'>
+            <div className='createAndEditPOS_content-input'>
+                <p>Address</p>
+                <input 
+                    type="text" 
+                    placeholder='Nhập địa chỉ dịch vụ' 
+                    value={formData.address}
+                    onChange={e => setFormData({...formData, address: e.target.value})}
+                />
+            </div>
+            
+            <div className='createAndEditPOS_content-input'>
+                <p className='font-left'>Geocode</p>
+                <input 
+                    type="text" 
+                    placeholder='Nhập tọa độ địa lí' 
+                    value={formData.geocode}
+                    onChange={e => setFormData({...formData, geocode: e.target.value})}
+                />
+            </div>
+
+            <div className='createAndEditPOS_content-input  full-width'>
                 <p>Village</p>
                 <input 
                     type="text" 
-                    placeholder='Sản phẩm thuộc làng' 
+                    placeholder='Địa điểm dịch lịch gần làng' 
                     value={villageCurrent.name}
                     onClick={() => setPopupVillages(true)}
                 />
                 {
                     popupVillages && (
-                        <div ref={popupRef} className='createAndEditProduct_content-input-popup'>
+                        <div ref={popupRef} className='createAndEditPOS_content-input-popup'>
                             <div>
                                 {
                                     villages.map(village => (
@@ -160,19 +173,9 @@ export default function CreateAndEditProduct() {
 
             </div>
             
-            <div className='createAndEditProduct_content-history'>
-                <p>Description</p>
-                <ReactQuill
-                    className='createAndEditProduct_content-history-quill'
-                    theme='snow'
-                    value={formData.description}
-                    onChange={handleReactQuill}
-                />
-            </div>
-
-            <div className='createAndEditProduct_content-image'>
+            <div className='createAndEditPOS_content-image'>
                 <p>Image</p>
-                <div className='createAndEditProduct_content-image-upload'>
+                <div className='createAndEditPOS_content-image-upload'>
                     <section>
                         <input 
                             type="file" 
@@ -182,7 +185,7 @@ export default function CreateAndEditProduct() {
                         />
                         <p>Upload {selectedImages.length} image</p>
                     </section>
-                    <div className='createAndEditProduct_content-image-upload-wrapper'>  
+                    <div className='createAndEditPOS_content-image-upload-wrapper'>  
                     {   selectedImages && selectedImages.map((img, index) => (
                             <div  key={index}> 
                                 <img src={img} alt='img' />
