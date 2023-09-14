@@ -1,18 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './product.scss';
 import ProductList from './productList/ProductList';
-import ProdcutScreen from './productScreen/ProdcutScreen';
+import { Link, useParams } from 'react-router-dom';
+import { VillageContext } from '../../shared/dataContext/VillageContext';
+import { ProductContext } from '../../shared/dataContext/ProductContetx';
 
 export default function Product() {
+  const {slug} = useParams()
+  const {villages} = useContext(VillageContext)
+  const {products} = useContext(ProductContext)
+
+  const village = villages.find(village => village.slug === slug)
+  
+  const productVillage = products.filter(product => product.villageId === village.id)
+
   return (
     <div className='product'>
       <div className='product_header'>
-            <h2>LÀNG VIỆT</h2>
+            <Link to={'/home'} >
+              <h2>LÀNG VIỆT</h2>
+            </Link>
             <button>ĐĂNG KÍ THAM QUAN</button>
       </div>
 
       <div className='product_content'>
-        <ProductList />
+        <ProductList products={productVillage}/>
       </div>
     
       <div className='product_footer'>

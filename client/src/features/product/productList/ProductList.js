@@ -1,17 +1,18 @@
 import React from 'react';
 import "./productList.scss";
-import { Link } from 'react-router-dom';
-import img from "../../../shared/assest/image/bat-trang/lang.jpeg";
+import { Link, useParams } from 'react-router-dom';
 
-export default function ProductList() {
+export default function ProductList({products}) {
+    const {slug} = useParams()
+
   return (
     <div className='productList'>
         <div className='productList_path'>
-            <Link>
+            <Link to={"/home"}>
                 <p>Home > </p>
             </Link>
-            <Link>
-                <p>Lang Bat Trang > </p>
+            <Link to={`/village/${slug}`}>
+                <p>Lang Bat Trang  > </p>
             </Link>
             <Link>
                 <p>San pham</p>
@@ -19,30 +20,16 @@ export default function ProductList() {
         </div>
         
         <div className='productList_wrapper'>
-            <div className='productList_item'>
-                <img  src={img} alt ="img" /> 
-                <p>Ấm chén rạng đông làng Bát Tràng</p>
-            </div>
-
-            <div className='productList_item'>
-                <img  src={img} alt ="img" /> 
-                <p>Ấm chén rạng đông làng Bát Tràng</p>
-            </div>
-
-            <div className='productList_item'>
-                <img  src={img} alt ="img" /> 
-                <p>Ấm chén rạng đông làng Bát Tràng</p>
-            </div>
-
-            <div className='productList_item'>
-                <img  src={img} alt ="img" /> 
-                <p>Ấm chén rạng đông làng Bát Tràng</p>
-            </div>
-            <div className='productList_item'>
-                <img  src={img} alt ="img" /> 
-                <p>Ấm chén rạng đông làng Bát Tràng</p>
-            </div>
-
+        {
+            products.map(product => (
+                    <Link to={product.slug} key={product.id} >
+                    <div  className='productList_item' >
+                        <img  src={JSON.parse(product.image)[0]} alt ="img" /> 
+                        <p>{product.name}</p>
+                    </div>
+                </Link>
+            ))
+        }
         </div>
     </div>
   )

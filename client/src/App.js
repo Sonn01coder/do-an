@@ -7,6 +7,7 @@ import "./App.scss";
 import { useContext } from "react";
 import { VillageContext } from "./shared/dataContext/VillageContext";
 import Loading from "./shared/common/Loading";
+import ProductScreen from "./features/product/productScreen/ProdcutScreen";
 
 function App() {
   const {popupAdmin, isLoading} = useContext(VillageContext)
@@ -33,8 +34,12 @@ function App() {
           <Route exact path="/admin/poi/detail/:slug" element={<Admin />} />
           <Route exact path="/admin/poi/create" element={<Admin />} />
 
-          <Route path="/lang-nghe-bat-trang" element={<Layout />} />
-          <Route  path="/lang-nghe-bat-trang/san-pham" element={<Product />} />
+          <Route exact path="/village/:slug">
+            <Route index element={<Layout />} />
+            <Route  path="product" element={<Product />} />
+            <Route  path="product/:path" element={<ProductScreen />} />
+          </Route>
+ 
         </Routes>
         {popupAdmin.isPopup && <PopupAdmin /> }
         {isLoading && <Loading />}
