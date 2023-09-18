@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import "./productList.scss";
 import { Link, useParams } from 'react-router-dom';
 import {BsSearch} from 'react-icons/bs';
 
-export default function ProductList({products}) {
+export default function PoiList({poiVillage, village}) {
     const {slug} = useParams()
 
     const [valueSearch , setValueSearch] = useState('')
 
-  const productSearch = products.filter(product => product.name.toLowerCase().includes(valueSearch.toLowerCase()))
+    console.log(village);
+
+  const poiSearch = poiVillage.filter(item => item.name.toLowerCase().includes(valueSearch.toLowerCase()))
 
 
   return (
@@ -19,10 +20,10 @@ export default function ProductList({products}) {
                     <p>Home > </p>
                 </Link>
                 <Link to={`/village/${slug}`}>
-                    <p>Lang Bat Trang  > </p>
+                    <p>{village.name}  > </p>
                 </Link>
                 <Link>
-                    <p>San pham</p>
+                    <p>Địa điểm tham quan</p>
                 </Link>
             </section>
 
@@ -39,8 +40,8 @@ export default function ProductList({products}) {
         
         <div className='productList_wrapper'>
         {
-            productSearch.length > 0 ? (
-            productSearch.map(product => (
+            poiSearch.length > 0 ? (
+            poiSearch.map(product => (
                     <Link to={product.slug} key={product.id} >
                     <div  className='productList_item' >
                         <img  src={JSON.parse(product.image)[0]} alt ="img" /> 

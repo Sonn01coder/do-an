@@ -7,31 +7,73 @@
     border-radius: 8px;
 
     &_path {
-        @include flex(center, unset, row);
+        @include flex(center, space-between, row);
         margin-bottom: 20px;
         margin-left: 5px;
+        width: 100%;
 
-        p {
-            margin-right: 10px
+        section {
+            @include flex(center, unset, row);
+
+            p {
+                margin-right: 10px;
+                color: blue;
+            }
         }
+
+        span {
+            width: 25%;
+            position: relative;
+            margin-right: 30px;
+            @include flex(center, flex-end, row);
+
+            input {
+                padding: 12px 20px;
+                width: 90%;
+                border-radius:8px;
+                border: 2px solid #b4b0b0;
+
+                &:focus {
+                    border: 2px solid blue;
+                }
+            }
+
+            p {
+                position: absolute;
+                top: 25%;
+                right: 10px;
+                font-size: 22px
+            }
+        }
+
     }
 
     &_wrapper {
-        @include flex(center, space-between, unset);
+        @include flex(center, unset, unset);
         padding: 5px 30px 0;
         flex-wrap: wrap;
         max-height: 550px;
         overflow-y: auto;
-        
-        .productList_item {
+
+        a {
             width: calc(23% - 10px); 
             margin-bottom: 20px;
             cursor: pointer;
+            margin-right: 20px;
+
+            
+            .productList_item {
             @include flex(center, unset, column);
+            background-color: aliceblue;
+            height: 250px;
+            padding: 20px 10px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
 
             img {
-                height: 200px;
-                margin-bottom: 10px;
+                height: 160px;
+                margin-bottom: 20px;
                 object-fit: cover;
             }
               
@@ -43,6 +85,7 @@
             &:hover {
                 scale: 1.05;
             }
+        }
         }
     }
 }

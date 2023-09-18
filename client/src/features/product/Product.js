@@ -4,9 +4,10 @@ import ProductList from './productList/ProductList';
 import { Link, useParams } from 'react-router-dom';
 import { VillageContext } from '../../shared/dataContext/VillageContext';
 import { ProductContext } from '../../shared/dataContext/ProductContetx';
+import ProductScreen from './productScreen/ProductScreen';
 
 export default function Product() {
-  const {slug} = useParams()
+  const {slug, path} = useParams()
   const {villages} = useContext(VillageContext)
   const {products} = useContext(ProductContext)
 
@@ -24,7 +25,9 @@ export default function Product() {
       </div>
 
       <div className='product_content'>
-        <ProductList products={productVillage}/>
+      {
+        !path ?  <ProductList products={productVillage}/> : <ProductScreen />
+      }
       </div>
     
       <div className='product_footer'>

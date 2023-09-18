@@ -7,7 +7,7 @@ import "./App.scss";
 import { useContext } from "react";
 import { VillageContext } from "./shared/dataContext/VillageContext";
 import Loading from "./shared/common/Loading";
-import ProductScreen from "./features/product/productScreen/ProdcutScreen";
+import POI from "./features/pointOfInterest/POI";
 
 function App() {
   const {popupAdmin, isLoading} = useContext(VillageContext)
@@ -37,9 +37,11 @@ function App() {
           <Route exact path="/village/:slug">
             <Route index element={<Layout />} />
             <Route  path="product" element={<Product />} />
-            <Route  path="product/:path" element={<ProductScreen />} />
+            <Route  path="product/:path" element={<Product />} />
+
+            <Route path="poi" element={<POI />} />
+            <Route path="poi/:path" element={<POI />} />
           </Route>
- 
         </Routes>
         {popupAdmin.isPopup && <PopupAdmin /> }
         {isLoading && <Loading />}

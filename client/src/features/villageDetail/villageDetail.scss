@@ -64,13 +64,12 @@
                 position: relative;
 
                 h4 {
-                    position: absolute;
+                    width: 200px;
                 }
 
                 p {
-                    text-indent: 105px;
-                    max-height: 144px;
-                    overflow-y: hidden;
+                    // text-indent: 105px;
+                    overflow: hidden;
                 }
             }
 

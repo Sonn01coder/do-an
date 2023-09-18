@@ -5,15 +5,23 @@ import { Icon } from 'leaflet';
 import 'leaflet/dist/leaflet.css'
 import "./map.scss";
 import { VillageContext } from '../../shared/dataContext/VillageContext';
-import { useParams } from 'react-router-dom';
+import { POIContext } from '../../shared/dataContext/PointOfInterestContext';
+import { Link, useParams } from 'react-router-dom';
 import ChangeMap from './ChangeMap';
 
 
 
 export default function Map() {
   const {villages} = useContext(VillageContext)
+  const {poi} = useContext(POIContext)
 
   const {slug} = useParams()
+
+  //get village current
+  const villageCurrent = villages.find(village => village.slug.trim() === slug)
+
+  //get poi current
+  const poiCurrent = slug ? poi.filter(item => item.villageId === villageCurrent.id) : []
 
   const customIcon = new Icon({
     iconUrl:require("../../shared/assest/image/icon.png"),
@@ -34,15 +42,18 @@ export default function Map() {
     />
     {slug ? <ChangeMap /> : null} 
     {
-      villages.map(village => (
+      (poiCurrent.length > 0 ? poiCurrent : villages).map(village => (
         <Marker 
           key={village.id}
           position={convertToArray(village)}
           icon={customIcon}
+          
         >
-          <Popup >
-            <h4>{village.name}</h4>
-            <img src={JSON.parse(village.image)[0]} alt={village.name} />
+          <Popup autoOpen={true} autoClose={true}>
+            <Link to={!slug ? `/village/${village.slug}` : `/village/${villageCurrent.slug}/poi/${village.slug}`}>
+              <h4>{village.name}</h4>
+              <img src={JSON.parse(village.image)[0]} alt={village.name} />
+            </Link>
           </Popup>
         </Marker>
         ))

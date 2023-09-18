@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import {AiFillHome} from 'react-icons/ai';
 import {TiWeatherCloudy} from "react-icons/ti";
 import {BsChevronDoubleDown} from "react-icons/bs";
@@ -9,6 +9,7 @@ import { VillageContext } from '../../shared/dataContext/VillageContext';
 import { ProductContext } from '../../shared/dataContext/ProductContetx';
 import { POIContext } from '../../shared/dataContext/PointOfInterestContext';
 import { POSContext } from '../../shared/dataContext/PointOfServiceContext';
+
 
 export default function VillageDetail() {
   const {villages} = useContext(VillageContext)
@@ -29,6 +30,9 @@ export default function VillageDetail() {
   
   //get pos village
   const posVillage = pos.filter(item => item.villageId === village.id) 
+
+  //more text history
+  const [isMore, setIsMore]  = useState(false)
   
 
   //handle convert image from string to array
@@ -44,7 +48,9 @@ export default function VillageDetail() {
                 <TiWeatherCloudy />
               </span>
               <span>
-                <AiFillHome />
+                <Link to="/home" >
+                  <AiFillHome />
+                </Link>
               </span>
             </section>
         </div>
@@ -58,10 +64,14 @@ export default function VillageDetail() {
 
             <section className='villageDetail_content-history'>
               <h4>Lịch sử ra đời: </h4>
-              <p dangerouslySetInnerHTML={{ __html: village.history }}/>
+              <p style={{maxHeight: isMore ? null : "100px"}} dangerouslySetInnerHTML={{ __html: village.history }}/>
             </section>
 
-            <div className='villageDetail_content-more'>Xem thêm</div>
+            <div className='villageDetail_content-more' onClick={() => setIsMore(!isMore)}>
+              {
+                isMore ? "Thu gọn" : "Xem thêm"
+              }
+            </div>
 
             <div className='villageDetail_content-info-img'> 
               <img src={convertImage(village.image, 0)} alt={village.name}/>
@@ -72,7 +82,6 @@ export default function VillageDetail() {
             <div className='villageDetail_content-product-wrapper'>
               <div>
                 <h4>Sản phẩm: </h4>
-                <p>Gốm Mỹ Nghệ</p>
               </div>
 
               <section>

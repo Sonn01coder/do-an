@@ -1,6 +1,6 @@
 @import '../../../index.scss';
 
-.productScreen {
+.poiScreen {
     padding: 15px 8px 5px; 
     background-color: rgb(229, 222, 222);
     height: 100%;
@@ -76,7 +76,7 @@
                 flex-wrap: nowrap;
                 overflow-x: auto;
 
-                .product_wrapper-footer-item {
+                .item_wrapper-footer-item {
                     @include flex(center, flex-end, column);
                     width: 20%;
                     height: 250px;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './sidebar.scss';
 import {FiSearch} from "react-icons/fi";
 import {BsSignTurnRightFill} from "react-icons/bs";
@@ -8,6 +8,9 @@ import VillageList from '../../features/villageList/VillageList';
 
 export default function Sidebar() {
   const pathName = useLocation()
+
+  const [valueSearch, setValueSearch] = useState("")
+  console.log(valueSearch);
 
   return (
     <div className='sidebar'>
@@ -23,7 +26,12 @@ export default function Sidebar() {
 
       <div className='sidebar_search'>
         <div className='sidebar_search-input'>
-          <input type='text' placeholder='Tìm kiếm làng nghề'/>
+          <input 
+            type='text' 
+            placeholder='Tìm kiếm làng nghề'
+            value={valueSearch}
+            onChange={e => setValueSearch(e.target.value)}
+          />
           <section><FiSearch /></section>
         </div>
 
@@ -34,7 +42,7 @@ export default function Sidebar() {
         <div className='sidebar_content-wrapper'>
           {
             pathName.pathname === '/home' ? 
-            <VillageList /> : <VillageDetail />
+            <VillageList valueSearch={valueSearch} /> : <VillageDetail />
           }
         </div>
       </div>
