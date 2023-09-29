@@ -3,6 +3,7 @@ import villageController from '../controllers/villageController';
 import productController from '../controllers/productController';
 import pointofinterestController from '../controllers/pointofinterestController';
 import pointofserviceController from '../controllers/pointofserviceController';
+import neighboringpointController from '../controllers/neighboringpointController';
 
 let router =  express.Router();
 
@@ -32,6 +33,12 @@ let initAPIRoutes = (app) => {
     router.post('/pos/create', pointofserviceController.createPOS)
     router.put('/pos/update', pointofserviceController.updatePOS)
     router.delete('/pos/delete/:id', pointofserviceController.deletePOS)
+
+    //neighboring point
+    router.get('/nei/getAll', neighboringpointController.getAllNei)
+    router.post('/nei/create', neighboringpointController.createNei)
+    router.put('/nei/update', neighboringpointController.updateNei)
+    router.delete('/nei/delete/:id', neighboringpointController.deleteNei)
 
     return app.use('/api/v1/', router) 
 }

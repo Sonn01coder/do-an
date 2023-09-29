@@ -2,7 +2,7 @@ import React, {  useEffect, useState } from 'react'
 import {GiVillage} from 'react-icons/gi';
 import {FaPlaceOfWorship} from 'react-icons/fa';
 import {AiOutlineInbox} from 'react-icons/ai';
-import {MdOutlineTour} from  'react-icons/md'
+import {MdOutlineTour, MdLocationPin} from  'react-icons/md'
 import './admin.scss';
 import { Link, useLocation } from 'react-router-dom';
 import VillageManagement from './village/VillageManagement';
@@ -10,6 +10,7 @@ import ProductManagement from './product/ProductManagement';
 import NotFound from './notFound/NotFound';
 import PointOfInterest from './pointOfInterest/PointOfInterest';
 import PointOfService from './pointOfService/PointOfService';
+import NeighboringPoint from './neighboringPoint/NeighboringPoint';
 
 const data = [
   {
@@ -36,6 +37,12 @@ const data = [
     icon:  <MdOutlineTour />,
     link: '/admin/pos'
   }, 
+  {
+    id: 5,
+    name: 'Neighboring Point',
+    icon: <MdLocationPin />,
+    link: '/admin/nei'
+  }
 ]
 
 export default function Admin() {
@@ -56,6 +63,8 @@ export default function Admin() {
       setActiveId(data[2].id)
     ) : location.pathname.includes('/pos') ? (
       setActiveId(data[3].id)
+    ) : location.pathname.includes('/nei') ? (
+      setActiveId(data[4].id)
     ) : (
       <NotFound />
     )
@@ -101,6 +110,8 @@ export default function Admin() {
               <PointOfInterest />
             ) : location.pathname.includes('/pos') ? (
               <PointOfService />
+            ) : location.pathname.includes('/nei') ? (
+              <NeighboringPoint />
             ) : (
               <NotFound />
             )

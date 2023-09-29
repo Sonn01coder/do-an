@@ -74,6 +74,7 @@ export const VILLAGE_URL = BASE_URL + "/village"
 export const PRODUCT_URL = BASE_URL + "/product"
 export const POI_URL = BASE_URL + "/poi"
 export const POS_URL = BASE_URL + "/pos"
+export const NEI_URL = BASE_URL + "/nei"
 
 
 export const ROUTER = {

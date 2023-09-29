@@ -16,11 +16,11 @@ export default function ProductsAll() {
   }
 
   const villageName = (idVillage) => {
-    const village = villages.find(village => village.id === idVillage)
-
-    return village.name
+    if(idVillage) {
+      const village = villages.find(village => village.id === idVillage)
+      return village.name
+    }
   }
-
  
   return (
     <div className='productList_admin'>

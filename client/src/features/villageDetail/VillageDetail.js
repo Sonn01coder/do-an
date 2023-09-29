@@ -1,7 +1,5 @@
 import React, { useContext, useState } from 'react'
 import {AiFillHome} from 'react-icons/ai';
-import {TiWeatherCloudy} from "react-icons/ti";
-import {BsChevronDoubleDown} from "react-icons/bs";
 import {RiRunFill} from "react-icons/ri"
 import './villageDetail.scss';
 import { Link, useParams } from 'react-router-dom';
@@ -10,10 +8,9 @@ import { ProductContext } from '../../shared/dataContext/ProductContetx';
 import { POIContext } from '../../shared/dataContext/PointOfInterestContext';
 import { POSContext } from '../../shared/dataContext/PointOfServiceContext';
 
-
 export default function VillageDetail() {
   const {villages} = useContext(VillageContext)
-  const {products} = useContext(ProductContext)
+  const {products, setPopupProduct, popupProduct} = useContext(ProductContext)
   const { poi } = useContext(POIContext)
   const { pos } = useContext(POSContext)
 
@@ -21,10 +18,10 @@ export default function VillageDetail() {
 
   //get village current
   const village = villages.find(village => village.slug.trim() === path.slug)
-  
+
   //get product village
   const productVillage = products.filter(product => product.villageId === village.id) 
-  
+
   //get poi village
   const poiVillage = poi.filter(item => item.villageId === village.id) 
   
@@ -33,20 +30,22 @@ export default function VillageDetail() {
 
   //more text history
   const [isMore, setIsMore]  = useState(false)
-  
 
   //handle convert image from string to array
   const convertImage = (array, index) => {
     return JSON.parse(array)[index]
   }
+
+
+  const handleHoverImage = (product) => {
+    setPopupProduct({...popupProduct, isPopup: true, product: product})
+  }
+
   return (
     <div className='villageDetail'>
         <div className='villageDetail_title'>
             <h1>{village.name}</h1>
             <section>
-              <span>
-                <TiWeatherCloudy />
-              </span>
               <span>
                 <Link to="/home" >
                   <AiFillHome />
@@ -81,21 +80,22 @@ export default function VillageDetail() {
           <div className='villageDetail_content-product'>
             <div className='villageDetail_content-product-wrapper'>
               <div>
-                <h4>Sản phẩm: </h4>
+                <h4>Một số sản phẩm tiêu biểu: </h4>
               </div>
-
               <section>
-              <img src={convertImage(productVillage[0].image, 0)} alt={village.name}/>
-              <img src={convertImage(productVillage[1].image, 0)} alt={village.name}/>
+              {
+                productVillage.map(product => (
+                  <Link 
+                    to={`/village/${path.slug}/product/${product.slug}`}  
+                    onMouseOver={() => handleHoverImage(product)} 
+                    className='villageDetail_link-img'
+                  >
+                    <img src={convertImage(product.image, 0)} alt={product.name} />
+                  </Link>
+                ))
+              }
               </section>
-
-              <span></span>
-
             </div>
-            
-            <Link to={"product"}>
-              <section className='villageDetail_content-product-more'><BsChevronDoubleDown /></section>
-            </Link>
           </div>
 
 
@@ -104,10 +104,10 @@ export default function VillageDetail() {
             <div className='villageDetail_content-place-wrapper'>
               {
                 poiVillage.map(poi => (
-                <div>
+                <Link to={`poi/${poi.slug}`} className='villageDetail_content-link-poi'>
                   <img src={convertImage(poi.image, 0)} alt={poi.name}/>
                   <p>{poi.name}</p>
-                </div>
+                </Link>
                 ))
               }
              

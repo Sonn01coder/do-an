@@ -11,6 +11,8 @@ export const ProductProvider = (props) => {
     const {children}= props;
     const [products, setProducts] = useState([])
 
+    const [popupProduct, setPopupProduct] = useState({isPopup: false, product: {}})
+
     const getAllProducts = async () => {
         const res = await getALlProductAPI()
         setProducts(res.data.data)
@@ -63,7 +65,7 @@ export const ProductProvider = (props) => {
 
     return (
         <ProductContext.Provider 
-            value={{products, createProduct, updateProduct, deleteProduct}}
+            value={{products, createProduct, updateProduct, deleteProduct, popupProduct, setPopupProduct}}
         >
            {children}
         </ProductContext.Provider>

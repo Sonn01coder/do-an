@@ -1,16 +1,34 @@
-import React, { useState } from 'react'
+import React, {  useContext, useEffect, useRef, useState } from 'react'
 import './sidebar.scss';
 import {FiSearch} from "react-icons/fi";
 import {BsSignTurnRightFill} from "react-icons/bs";
 import VillageDetail from '../../features/villageDetail/VillageDetail';
 import { useLocation } from 'react-router-dom';
 import VillageList from '../../features/villageList/VillageList';
+import PopupHover from '../../shared/components/PopupHover';
+import { ProductContext } from '../../shared/dataContext/ProductContetx';
+
 
 export default function Sidebar() {
   const pathName = useLocation()
+  const {popupProduct, setPopupProduct} = useContext(ProductContext)
 
   const [valueSearch, setValueSearch] = useState("")
-  console.log(valueSearch);
+
+  const popupRef = useRef(null)
+
+  useEffect(() => {
+    const handler = (e) => {
+    if (popupRef?.current?.contains(e.target) === false) {
+        setPopupProduct({...popupProduct, isPopup: false, product: {}});
+    }
+    };
+    document.addEventListener('mousedown', handler);
+
+    return () => {
+    document.removeEventListener('mousedown', handler);
+    };
+  }, []);
 
   return (
     <div className='sidebar'>
@@ -39,12 +57,19 @@ export default function Sidebar() {
       </div>
 
       <div className='sidebar_content'>
-        <div className='sidebar_content-wrapper'>
+        <div className='sidebar_content-wrapper' >
           {
             pathName.pathname === '/home' ? 
             <VillageList valueSearch={valueSearch} /> : <VillageDetail />
           }
         </div>
+        {
+          popupProduct.isPopup ? (
+            <div className='sidebar_content-popup-product' ref={popupRef}>
+              <PopupHover />
+            </div>
+          ) : null
+        }
       </div>
 
       <div className='sidebar_footer'>

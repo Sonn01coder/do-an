@@ -1,28 +1,33 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import "./productList.scss";
 import { Link, useParams } from 'react-router-dom';
 import {BsSearch} from 'react-icons/bs';
+import { VillageContext } from '../../../shared/dataContext/VillageContext';
 
 export default function ProductList({products}) {
     const {slug} = useParams()
+    const {villages} = useContext(VillageContext)
 
     const [valueSearch , setValueSearch] = useState('')
 
   const productSearch = products.filter(product => product.name.toLowerCase().includes(valueSearch.toLowerCase()))
 
+  const villageCurrent = villages.find(village => village.slug.trim() === slug)
 
   return (
     <div className='productList'>
         <div className='productList_path'>
             <section>
-                <Link to={"/home"}>
-                    <p>Home > </p>
+                <Link to={"/home"} className='productList_path-link'>
+                    <p>Home</p>
+                    <span> > </span>
                 </Link>
-                <Link to={`/village/${slug}`}>
-                    <p>Lang Bat Trang  > </p>
-                </Link>
-                <Link>
-                    <p>San pham</p>
+                <Link to={`/village/${slug}`} className='productList_path-link'>
+                    <p className='name_link'>{villageCurrent.name} </p>
+                    <span> > </span>
+                 </Link>
+                <Link className='productList_path-link'>
+                    <span className='product_link'>Sản phẩm </span>
                 </Link>
             </section>
 

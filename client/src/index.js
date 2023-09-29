@@ -7,20 +7,21 @@ import { Toaster } from 'react-hot-toast';
 import { ProductProvider } from './shared/dataContext/ProductContetx';
 import { POSProvider } from './shared/dataContext/PointOfServiceContext';
 import { POIProvider } from './shared/dataContext/PointOfInterestContext';
+import { NeiProvider } from './shared/dataContext/NeighboringPointContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <VillageProvider>
-      <ProductProvider>
-        <POSProvider>
-          <POIProvider>
-            <App />
-            <Toaster/>
-          </POIProvider>
-        </POSProvider>
-      </ProductProvider>
+      <NeiProvider>
+        <ProductProvider>
+          <POSProvider>
+            <POIProvider>
+              <App />
+              <Toaster/>
+            </POIProvider>
+          </POSProvider>
+        </ProductProvider>
+      </NeiProvider>
     </VillageProvider>
-  </React.StrictMode>
 );

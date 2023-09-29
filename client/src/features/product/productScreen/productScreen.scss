@@ -31,6 +31,18 @@
         flex-wrap: wrap;
         max-height: 550px;
         overflow-y: auto;
+        &::-webkit-scrollbar-thumb {
+            background: #605e5e;
+        }
+    
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+    
+        &::-webkit-scrollbar-track {
+            background: #e7e7e7;
+    
+        }
 
         &-content {
             margin-bottom: 50px;
@@ -62,6 +74,8 @@
             background-color: rgb(254, 252, 252);
             padding: 15px 20px;
             width: 100%;
+            position: relative;
+            
 
             h3 {
                 margin-top: 10px;
@@ -70,36 +84,62 @@
             }
 
             section {
-                margin-bottom: 40px;
-                margin-top: 20px;
-                @include flex( flex-end, flex-start, row);
-                flex-wrap: nowrap;
-                overflow-x: auto;
+                position: relative;
+                display: grid;
+                grid-template-columns: repeat(8, 220px);
+                overflow:hidden;
+                scroll-behavior: smooth;
+                gap: 16px;
+                margin: 20px 0 20px;
 
                 .product_wrapper-footer-item {
                     @include flex(center, flex-end, column);
-                    width: 20%;
                     height: 250px;
                     margin-right: 20px;
                     background-color: rgb(235, 231, 231);
+                    padding: 0 10px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+                    border-radius: 5px;
 
                     p {
                         height: 20px;
                         overflow: hidden;
                         text-decoration: dotted;
                         margin-top: 20px;
-                        width: 90%;
+                        width: 80%;
                         text-overflow: ellipsis;
                         white-space: nowrap;
                         margin-bottom: 8px;
                     }
 
                     img {
-                        height: 180px;
+                        height: 160px;
                         object-fit: contain;
                     }
 
                 }
+
+            }
+            .product_wrapper-footer-left, 
+            .product_wrapper-footer-right {
+                position: absolute;
+                top: 50%;
+                font-size: 28px;
+                padding: 10px 5px; 
+                background-color: rgb(247, 242, 242);
+                @include flex(center, center, row);
+                cursor: pointer;
+                border: 1px solid #b8b3b3;
+                border-radius: 4px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+            }
+
+            .product_wrapper-footer-right {
+                right: 20px;
+            }
+
+            .product_wrapper-footer-left {
+                left: 5px;
             }
             
         }

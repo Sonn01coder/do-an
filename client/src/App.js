@@ -3,7 +3,7 @@ import Layout from "./layout/Layout";
 import Product from "./features/product/Product";
 import Admin from "./features/admin/Admin";
 import PopupAdmin from "./shared/components/PopupAdmin";
-import "./App.scss"; 
+import "./App.css"; 
 import { useContext } from "react";
 import { VillageContext } from "./shared/dataContext/VillageContext";
 import Loading from "./shared/common/Loading";
@@ -33,6 +33,8 @@ function App() {
           <Route exact path="/admin/poi" element={<Admin />} />
           <Route exact path="/admin/poi/detail/:slug" element={<Admin />} />
           <Route exact path="/admin/poi/create" element={<Admin />} />
+
+          <Route exact path="/admin/nei" element={<Admin />} />
 
           <Route exact path="/village/:slug">
             <Route index element={<Layout />} />

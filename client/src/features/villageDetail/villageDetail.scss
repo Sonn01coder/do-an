@@ -21,14 +21,6 @@
             font-size: 22px;
             @include flex(center, center, row);
             
-
-            span:first-child {
-                color: blue;
-                font-size: 26px;
-                margin-right: 8px;
-                transform: translateY(5%);
-            }
-            
             span {
                 cursor: pointer;
             }
@@ -39,13 +31,26 @@
         overflow-y: auto;
         max-height: 445px;
 
+        &::-webkit-scrollbar-thumb {
+            background: #747373;
+        }
+    
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+    
+        &::-webkit-scrollbar-track {
+            background: #e7e7e7;
+    
+        }
+
         &-info {
             font-size: 14px;
-            background-color: #e3e3e3;
+            background-color: #fff !important;
             border-radius: 8px;
             padding: 15px 8px;
             margin-bottom: 30px;
-
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 
             section {
                 @include flex(flex-start, unset, row);
@@ -62,13 +67,15 @@
 
             .villageDetail_content-history{
                 position: relative;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                display: inline;
 
                 h4 {
-                    width: 200px;
+                    float: left;
                 }
 
                 p {
-                    // text-indent: 105px;
                     overflow: hidden;
                 }
             }
@@ -87,18 +94,20 @@
                     margin-bottom: 15px;
                     height: 190px;
                     width: 100%;
-
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
                 }
             }
         }
 
         &-product {
             font-size: 14px;
-            background-color: #e3e3e3;
+            background-color: #fff;
             border-radius: 8px;
             padding: 15px 8px 30px;
             margin-bottom: 30px;
             position: relative;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+
 
             &-wrapper {
                 position: relative;
@@ -110,13 +119,41 @@
 
                 section {
                     max-height:380px;
-                    overflow-y: hidden;
-
-                    img {
-                        height: 190px;
-                        width: 100%;
-                        margin-bottom: 15px;
+                    overflow-y: auto;
+                    &::-webkit-scrollbar-thumb {
+                        background: #605e5e;
                     }
+                
+                    &::-webkit-scrollbar {
+                        width: 4px;
+                    }
+                
+                    &::-webkit-scrollbar-track {
+                        background: #e7e7e7;
+                
+                    }
+
+                    .villageDetail_link-img {
+                        position: relative;
+                        img {
+                            border: 1px solid #f4f1f1;
+                            height: 190px;
+                            width: 100%;
+                            margin-bottom: 15px;
+                            box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+                        }
+
+                        .popup_hover-img {
+                            position: absolute;
+                            bottom: 50px;
+                            height: 400px;
+                            right: -80px;
+                            width: 300px;
+                            background-color: #605e5e;
+                            z-index: 3000;
+                        }
+                    }
+
                 }
 
                 span {
@@ -140,7 +177,7 @@
 
         &-place {
             font-size: 14px;
-            background-color: #e3e3e3;
+            background-color: #fff;
             border-radius: 8px;
             padding: 15px 8px 30px;
             margin-bottom: 30px;
@@ -154,14 +191,29 @@
                 max-height: 500px;
                 overflow: auto;
 
-                div {
+                &::-webkit-scrollbar-thumb {
+                    background: #605e5e;
+                }
+            
+                &::-webkit-scrollbar {
+                    width: 4px;
+                }
+            
+                &::-webkit-scrollbar-track {
+                    background: #e7e7e7;
+            
+                }
+
+                .villageDetail_content-link-poi {
                     @include flex(center, center, column);
                     margin-bottom: 20px;
+                    margin-right: 5px;
 
                     img {
-                        height: 190px;
+                        height: 170px;
                         width: 100%;
                         margin-bottom: 8px;
+                        box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
                     }
 
                 }
@@ -170,7 +222,7 @@
 
         &-proposed {
             font-size: 14px;
-            background-color: #e3e3e3;
+            background-color: #fff;
             border-radius: 8px;
             padding: 15px 8px 30px;
             margin-bottom: 15px;
@@ -183,6 +235,19 @@
             &-wrapper {
                 max-height: 400px;
                 overflow-y: auto;
+                padding-right: 5px;
+                &::-webkit-scrollbar-thumb {
+                    background: #605e5e;
+                }
+            
+                &::-webkit-scrollbar {
+                    width: 4px;
+                }
+            
+                &::-webkit-scrollbar-track {
+                    background: #e7e7e7;
+                }
+
                 section {
                     margin-bottom: 20px;
 
@@ -193,7 +258,7 @@
                     }
 
                     img {
-                        height: 190px;
+                        height: 170px;
                         width: 100%;
                     }
 

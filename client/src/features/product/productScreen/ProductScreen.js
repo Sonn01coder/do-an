@@ -1,12 +1,17 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ProductContext } from '../../../shared/dataContext/ProductContetx';
-import "./productScreen.scss";
 import { VillageContext } from '../../../shared/dataContext/VillageContext';
+import {AiOutlineLeft, AiOutlineRight} from "react-icons/ai"
+import "./productScreen.scss";
+import { SmoothHorizontalScrolling } from '../../../shared/hook/useSrcollX';
 
 export default function ProductScreen() {
   const {products} = useContext(ProductContext)
   const {villages} = useContext(VillageContext)
+
+  const sliderRef = useRef(null)
+  const itemRef = useRef(null)
   
   const {slug, path} = useParams()
 
@@ -15,6 +20,25 @@ export default function ProductScreen() {
   const villageCurrent = villages.find(village => village.id === product.villageId)
 
   const listProduct = products.filter(item => item.villageId === villageCurrent.id && item.id !== product.id)
+
+  const handleScrollRight = () => {
+    const maxScrollLeft =  sliderRef.current.scrollWidth - sliderRef.current.clientWidth
+    if(sliderRef.current.scrollLeft < maxScrollLeft) {
+        SmoothHorizontalScrolling(sliderRef.current,
+            280,
+            itemRef.current.clientWidth,
+            sliderRef.current.scrollLeft)
+    }
+}
+
+const handleScrollLeft = () => {
+    if(sliderRef.current.scrollLeft > 0) {
+        SmoothHorizontalScrolling(sliderRef.current,
+            280,
+            -itemRef.current.clientWidth,
+            sliderRef.current.scrollLeft)
+    }
+}
   
   return (
     <div className='productScreen'>
@@ -24,11 +48,11 @@ export default function ProductScreen() {
             <span> > </span>
           </Link>
           <Link to={`/village/${slug}`} className='productScreen_path-link'>
-            <p>Lang Bat Trang   </p>
+            <p>{villageCurrent.name} </p>
             <span> > </span>
           </Link>
           <Link to={`/village/${slug}/product`} className='productScreen_path-link'>
-            <p>San pham</p>
+            <p>Sản phẩm </p>
             <span> > </span>
           </Link>
               <p>{product.name}</p>
@@ -46,17 +70,24 @@ export default function ProductScreen() {
 
         <div className='productScreen_wrapper-footer'>
           <h3>CÁC SẢN PHẨM KHÁC CỦA {villageCurrent.name.toUpperCase()} :</h3>
-          <section>
           {
-            listProduct.map(product => (
-              <Link className='product_wrapper-footer-item' to={`/village/${slug}/product/${product.slug}`}>
-                <img  src={JSON.parse(product.image)[0]} alt={product.name} />
-                <p>{product.name}</p>
-              </Link>
-            ))
-          }
-            
-          </section>
+            listProduct.length > 0 ? (
+              <section ref={sliderRef}>
+              {
+                listProduct.map(product => (
+                  <Link className='product_wrapper-footer-item' to={`/village/${slug}/product/${product.slug}`} ref={itemRef}>
+                    <img  src={JSON.parse(product.image)[0]} alt={product.name} />
+                    <p>{product.name}</p>
+                  </Link>
+                ))
+              }
+              </section>
+              ) : (
+                <section>Không còn sản phẩm khác của làng</section>
+                )
+              }
+          <button className='product_wrapper-footer-left' onClick={handleScrollLeft}><AiOutlineLeft /></button>
+          <button className='product_wrapper-footer-right' onClick={handleScrollRight}><AiOutlineRight /></button>
         </div>
       </div>
     </div>
