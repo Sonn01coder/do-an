@@ -21,15 +21,15 @@ export default function PoiScreen() {
       <div className='poiScreen_path'>
           <Link to={"/home"} className='poiScreen_path-link'>
             <p>Home</p>
-            <span> > </span>
+            <span>{' > '}</span>
           </Link>
           <Link to={`/village/${slug}`} className='poiScreen_path-link'>
             <p>{villageCurrent.name}   </p>
-            <span> > </span>
+            <span>{' >'} </span>
           </Link>
           <Link to={`/village/${slug}/poi`} className='poiScreen_path-link'>
             <p>Địa điểm tham quan</p>
-            <span> > </span>
+            <span> {'> '}</span>
           </Link>
               <p>{poiCurrent.name}</p>
       </div>
@@ -45,15 +45,21 @@ export default function PoiScreen() {
         </div>
 
         <div className='poiScreen_wrapper-footer'>
-          <h3>CÁC SẢN PHẨM KHÁC CỦA {villageCurrent.name.toUpperCase()} :</h3>
+          <h3>CÁC ĐỊA ĐIỂM KHÁC CỦA {villageCurrent.name.toUpperCase()} :</h3>
           <section>
           {
-            listPoi.map(item => (
-              <Link className='item_wrapper-footer-item' to={`/village/${slug}/poi/${item.slug}`}>
-                <img  src={JSON.parse(item.image)[0]} alt={item.name} />
-                <p>{item.name}</p>
-              </Link>
-            ))
+            listPoi.lenght > 0 ? (
+              (
+                listPoi.map(item => (
+                  <Link key={item.id} className='item_wrapper-footer-item' to={`/village/${slug}/poi/${item.slug}`}>
+                    <img  src={JSON.parse(item.image)[0]} alt={item.name} />
+                    <p>{item.name}</p>
+                  </Link>
+                ))
+              ) 
+            ) : (
+              <p>Không còn địa điểm nào phù hợp</p>
+            )
           }
             
           </section>

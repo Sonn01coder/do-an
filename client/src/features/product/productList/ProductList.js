@@ -20,11 +20,11 @@ export default function ProductList({products}) {
             <section>
                 <Link to={"/home"} className='productList_path-link'>
                     <p>Home</p>
-                    <span> > </span>
+                    <span> {' > '} </span>
                 </Link>
                 <Link to={`/village/${slug}`} className='productList_path-link'>
                     <p className='name_link'>{villageCurrent.name} </p>
-                    <span> > </span>
+                    <span> {'>'} </span>
                  </Link>
                 <Link className='productList_path-link'>
                     <span className='product_link'>Sản phẩm </span>

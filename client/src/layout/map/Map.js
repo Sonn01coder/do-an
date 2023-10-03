@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import { LOCATION_HANOI } from '../../shared/constants/Constants'
 import { Icon } from 'leaflet';

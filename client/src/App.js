@@ -8,6 +8,8 @@ import { useContext } from "react";
 import { VillageContext } from "./shared/dataContext/VillageContext";
 import Loading from "./shared/common/Loading";
 import POI from "./features/pointOfInterest/POI";
+import Tour from "./features/tour/Tour";
+import Login from "./features/login/Login";
 
 function App() {
   const {popupAdmin, isLoading} = useContext(VillageContext)
@@ -44,6 +46,13 @@ function App() {
             <Route path="poi" element={<POI />} />
             <Route path="poi/:path" element={<POI />} />
           </Route>
+
+          <Route exact path="/tour">
+            <Route index element={<Tour />} />
+          </Route>
+
+          <Route  path="/login" element={<Login />} />
+          <Route  path="/register" element={<Login />} />
         </Routes>
         {popupAdmin.isPopup && <PopupAdmin /> }
         {isLoading && <Loading />}

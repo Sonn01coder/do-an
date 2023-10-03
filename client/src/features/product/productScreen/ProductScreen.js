@@ -45,15 +45,15 @@ const handleScrollLeft = () => {
       <div className='productScreen_path'>
           <Link to={"/home"} className='productScreen_path-link'>
             <p>Home</p>
-            <span> > </span>
+            <span>{' >'} </span>
           </Link>
           <Link to={`/village/${slug}`} className='productScreen_path-link'>
             <p>{villageCurrent.name} </p>
-            <span> > </span>
+            <span> {'>'} </span>
           </Link>
           <Link to={`/village/${slug}/product`} className='productScreen_path-link'>
             <p>Sản phẩm </p>
-            <span> > </span>
+            <span>{' >'} </span>
           </Link>
               <p>{product.name}</p>
       </div>
@@ -86,8 +86,16 @@ const handleScrollLeft = () => {
                 <section>Không còn sản phẩm khác của làng</section>
                 )
               }
-          <button className='product_wrapper-footer-left' onClick={handleScrollLeft}><AiOutlineLeft /></button>
-          <button className='product_wrapper-footer-right' onClick={handleScrollRight}><AiOutlineRight /></button>
+          {
+            listProduct.length > 5 &&  (
+                <button className='product_wrapper-footer-left' onClick={handleScrollLeft}><AiOutlineLeft /></button>
+              )
+          }
+          {
+            listProduct.length > 5 &&  (
+                <button className='product_wrapper-footer-right' onClick={handleScrollRight}><AiOutlineRight /></button>
+              )
+          }
         </div>
       </div>
     </div>

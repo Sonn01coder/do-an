@@ -7,8 +7,6 @@ export default function PoiList({poiVillage, village}) {
 
     const [valueSearch , setValueSearch] = useState('')
 
-    console.log(village);
-
   const poiSearch = poiVillage.filter(item => item.name.toLowerCase().includes(valueSearch.toLowerCase()))
 
 
@@ -16,11 +14,13 @@ export default function PoiList({poiVillage, village}) {
     <div className='productList'>
         <div className='productList_path'>
             <section>
-                <Link to={"/home"}>
-                    <p>Home > </p>
+                <Link to={"/home"} className='productList_path-link'>
+                    <p>Home </p>
+                    <span>{' > '}</span>
                 </Link>
-                <Link to={`/village/${slug}`}>
-                    <p>{village.name}  > </p>
+                <Link to={`/village/${slug}`} className='productList_path-link'>
+                    <p>{village.name}</p>
+                    <span> {' > '}</span>
                 </Link>
                 <Link>
                     <p>Địa điểm tham quan</p>
@@ -42,14 +42,14 @@ export default function PoiList({poiVillage, village}) {
         {
             poiSearch.length > 0 ? (
             poiSearch.map(product => (
-                    <Link to={product.slug} key={product.id} >
+                <Link to={product.slug} key={product.id} >
                     <div  className='productList_item' >
                         <img  src={JSON.parse(product.image)[0]} alt ="img" /> 
                         <p>{product.name}</p>
                     </div>
                 </Link>
             ))) : (
-                <p>Không có sản phẩm nào phù hợp</p>
+                <p>Không có đia điểm nào phù hợp</p>
             )
         }
         </div>

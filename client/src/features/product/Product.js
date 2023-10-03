@@ -21,7 +21,7 @@ export default function Product() {
             <Link to={'/home'} >
               <h2>LÀNG VIỆT</h2>
             </Link>
-            <button>ĐĂNG KÍ THAM QUAN</button>
+            <Link className='product_link-to-tour' to={"/tour"}>ĐĂNG KÍ THAM QUAN</Link>
       </div>
 
       <div className='product_content'>
