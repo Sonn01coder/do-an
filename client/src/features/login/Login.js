@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import "./login.scss";
 import img from "../../shared/assest/image/img_login.jpg";
 import {ImArrowRight2} from 'react-icons/im';
-import { validation } from './validation';
+import { validationLogin } from '../../shared/validation';
 
 export default function Login() {
 
@@ -18,6 +18,13 @@ export default function Login() {
     const handleLoginAndRegister = () => {
         setFormData({email: '', password: '', confirmPassword: ''})
     }
+
+
+    const validations = validationLogin(formData.email, formData.password, formData.confirmPassword)
+
+
+    const isDisabled = isLogin ? (validations.email === undefined && validations.password  === undefined) 
+                    : (validations.email === undefined && validations.password  === undefined && validations.confirmPassword === undefined)
 
   return (
     <div className='login'>
@@ -40,7 +47,7 @@ export default function Login() {
                                 placeholder='Nhập địa chỉ email của bạn' 
                                 value={formData.email}
                                 onChange={e => setFormData({...formData, email: e.target.value})}
-                                onBlur={() => setError({...error, email: validation(formData.email, formData.password, formData.confirmPassword).email})}
+                                onBlur={() => setError({...error, email: validationLogin(formData.email, formData.password, formData.confirmPassword).email})}
                             />
                             {error.email  && <span className='login_error'>{error.email}</span>}
                         </div>
@@ -52,7 +59,7 @@ export default function Login() {
                                 placeholder='Nhập mật khẩu của bạn'
                                 value={formData.password}
                                 onChange={e => setFormData({...formData, password: e.target.value})} 
-                                onBlur={() => setError({...error, password: validation(formData.email, formData.password, formData.confirmPassword).password})}
+                                onBlur={() => setError({...error, password: validationLogin(formData.email, formData.password, formData.confirmPassword).password})}
                             />
                             {error.password  && <span className='login_error'>{error.password}</span>}
                         </div>
@@ -65,7 +72,7 @@ export default function Login() {
                                         placeholder='Xác nhận lại mật khẩu của bạn'
                                         value={formData.confirmPassword}
                                         onChange={e => setFormData({...formData, confirmPassword: e.target.value})}
-                                        onBlur={() => setError({...error, confirmPassword: validation(formData.email, formData.password, formData.confirmPassword).confirmPassword})}
+                                        onBlur={() => setError({...error, confirmPassword: validationLogin(formData.email, formData.password, formData.confirmPassword).confirmPassword})}
                                     />
                                     {error.confirmPassword  && <span className='login_error'>{error.confirmPassword}</span>}
                                 </div>
@@ -74,7 +81,7 @@ export default function Login() {
 
                     </div>
                     
-                    <button onClick={handleLoginAndRegister}>
+                    <button onClick={handleLoginAndRegister} className={!isDisabled ? "btn-disabled" : ""}>
                         <ImArrowRight2 />
                     </button>
                 </div>

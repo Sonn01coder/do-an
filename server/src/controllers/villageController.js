@@ -1,4 +1,4 @@
-import { pool } from "../config/connectDB";
+ import { pool } from "../config/connectDB";
 
 const getAllVillages = async (req, res) => {
   try {

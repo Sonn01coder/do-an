@@ -37,19 +37,19 @@
 
         &-container {
             box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-            background-color: #e6e6e6;
+            background-color: #dbdada;
             width: 40%;
             min-height: 400px;
             border-radius: 6px;
             z-index: 10;
             padding: 20px 25px;
             @include flex(flex-start, unset, column);
-
+            
             h2 {
                 font-size: 26px;
                 margin-bottom: 20px;
             }
-
+            
             &-wrapper {
                 padding: 5px 25px;
                 width: 100%;
@@ -57,7 +57,7 @@
                 margin-bottom: 20px;
                 
                 .login_input-wrapper {
-                    background-color: #f1f1f1;
+                    background-color: #e8e8e8;
                     padding: 20px 10px 50px;
                     
 
@@ -96,14 +96,25 @@
                     font-size: 24px;
                     font-weight: 600;
                     border: none;
-                    background-color: #f1f1f1;
+                    background-color: #e8e8e8;
                     cursor: pointer;
                     @include flex(center, center, row);
 
                     &:active {
                         background-color: #c5c3c3;
                     }
+
+                    &:hover {
+                        transform: scale(1.1);
+                        border: 1px solid #c5c3c3;
+                    }
+
                 }
+
+                .btn-disabled {
+                    pointer-events: none;
+                    opacity: 0.3;
+                }   
             }
 
             .login_content-footer {

@@ -1,0 +1,36 @@
+@import "../../../index.scss";
+
+.historyTour {
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 20px;
+
+    &::-webkit-scrollbar-thumb {
+        background: #605e5e;
+    }
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #b8b8b8;
+
+    }
+
+    &_tour {
+        border: 1px solid #ccc;
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 10px 15px;
+        margin-bottom: 20px;
+
+        @include flex(flex-start, unset, column);
+       
+        p{
+            margin-top: 5px;
+        }
+
+    }
+}
+

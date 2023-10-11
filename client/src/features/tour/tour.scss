@@ -1,0 +1,180 @@
+@import "../../index.scss";
+
+.tour {
+    width: 100vw;
+    height: 100vh;
+    @include flex(unset, unset, column);
+
+    &_header {
+        height: 70px;
+        background-color: #EBBC84;
+        padding: 0 32px;
+        @include flex(center, space-between, row);
+
+        h2 {
+            color: #811313;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: 0.36px;
+        }
+
+        button {
+            margin-right: 20px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-weight: 600;
+        }
+    }
+
+    &_content {
+        height: calc(100vh - 70px);
+        width: 100%;
+        @include flex(center, center, row);
+        padding: 35px 80px;
+        flex: 1;
+
+        &-wrapper {
+            width: 100%;
+            height: 100%;
+            padding: 20px 60px;
+            border-radius: 8px;
+            background-color: #F8F1F1;
+            box-shadow: 1px 2px 4px rgba($color: #000000, $alpha: 0.5);
+            @include flex(flex-start, flex-start, column);
+
+            &-navigate {
+                width: 100%;
+                @include flex(center, space-between, row);
+
+                section {
+                    @include flex(center, space-between, row);
+
+                    a {
+                        color: blue;
+                        margin-right: 8px ;
+                    }
+                }
+
+                .tour_content-input {
+                    width: 25%;
+                    position: relative;
+
+                    input {
+                        width: 100%;
+                        padding: 12px 45px 12px 20px;   
+                        border-radius: 5px;
+                        border: 1px solid #ccc;
+                    }
+
+                    span {
+                        position: absolute;
+                        @include flex(center, center, row);
+                        right: 10px;
+                        top: 30%;
+                        font-size: 20px;
+                    }
+                }
+            }
+
+            .tour_list {
+                margin: 30px 0 20px;
+                overflow: auto;
+                height: 430px;
+                width: 100%;
+                @include flex(flex-start, unset, column);
+                background-color: #D9D9D9;
+                border-radius: 8px;
+                padding: 20px 10px 10px;
+
+                &::-webkit-scrollbar-thumb {
+                    background: #605e5e;
+                }
+            
+                &::-webkit-scrollbar {
+                    width: 8px;
+                }
+            
+                &::-webkit-scrollbar-track {
+                    background: #b8b8b8;
+                }
+
+                .tour_item {
+                    width: 100%;
+                    @include flex(flex-start, space-between, row);
+                    background-color: #ffffff;
+                    padding: 20px 25px;
+                    border-radius: 5px;
+                    margin-bottom: 20px;
+
+                    &-content {
+                        @include flex(flex-start, flex-start, row);
+                        
+                        h4 {
+                            margin-right: 8px;
+                        }
+
+                        p {
+                            flex: 1;
+                        }
+                    }
+
+                    &-link {
+                        color: blue;
+                        width: 25%;
+                        @include flex(center, flex-end, row);
+
+                        span {
+                            @include flex(center, center, row);
+                            margin-left: 5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &_footer {
+        background-color: #D9D9D9;
+        @include flex(center, space-between, row);
+        padding: 15px 32px;
+        font-size: 14px;
+
+        &-contact {
+            p{
+                margin-left: 5px;
+                font-size: 13px;
+                margin-top: 3px;
+            }
+        }
+
+        &-email {
+            
+            section {
+                margin-top: 10px;
+                position: relative;
+                
+                input {
+                    width: 100%;
+                    padding: 10px 30px  10px 15px;
+                    border-radius: 5px;
+                    border: 1px solid #ccc;
+                }
+
+                span  {
+                    position: absolute;
+                    right: 15px;
+                    font-size: 18px;
+                    top: 25%;
+                    @include flex(center, center, row);
+                    cursor: pointer;
+
+                    &:active {
+                        opacity: 0.7;
+                    }
+                }
+            }
+        }
+    }
+}

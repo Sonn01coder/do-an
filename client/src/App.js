@@ -10,6 +10,8 @@ import Loading from "./shared/common/Loading";
 import POI from "./features/pointOfInterest/POI";
 import Tour from "./features/tour/Tour";
 import Login from "./features/login/Login";
+import MyAccount from "./features/myAccount/MyAccount";
+import BookTours from "./features/bookTours/BookTours";
 
 function App() {
   const {popupAdmin, isLoading} = useContext(VillageContext)
@@ -53,6 +55,11 @@ function App() {
 
           <Route  path="/login" element={<Login />} />
           <Route  path="/register" element={<Login />} />
+
+          <Route path="/myaccount/:slug" element={<MyAccount />} />
+
+          <Route path="/book-tour" element={<BookTours />} />
+
         </Routes>
         {popupAdmin.isPopup && <PopupAdmin /> }
         {isLoading && <Loading />}

@@ -1,0 +1,44 @@
+@import '../../../index.scss';
+
+.infoUserRegister {
+    @include flex(flex-start,unset, column);
+    width: 100%;
+
+    h3 {
+        font-size: 20px;
+        margin-bottom: 40px ;
+    }
+
+    &_input {
+        width: 100%;
+        @include flex(flex-start,space-between, row);
+        flex-wrap: wrap;
+
+        &-item {
+            width: 40%;
+            margin-bottom: 40px;
+            
+            h5 {
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+
+            input {
+                padding: 10px 20px;
+                width: 100%;
+                border: 2px solid #ccc;
+                border-radius: 5px;
+
+                &:focus {
+                    border: 2px solid  blue;
+                }
+            }
+
+            p {
+                color: red;
+                font-size: 12px;
+                margin-top: 5px;
+            }
+        }
+    }
+}
