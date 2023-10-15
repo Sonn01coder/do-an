@@ -1,0 +1,78 @@
+@import '../../../index.scss';
+
+.tourMap {
+    background-color :#fff;
+    min-height: 500px;
+    padding: 15px 20px;
+    margin-right: 8px;
+    @include flex(flex-start, flex-start, column);
+
+    &_navigate {
+        width: 100%;
+        @include flex(center, space-between, row);
+        font-size: 24px;
+
+        h3 {
+            font-size: 20px;
+            color: rgb(165, 20, 20);
+        }
+
+        &:active {
+            opacity: 0.6;
+        }
+    }
+
+    &_tour {
+        flex: 1;
+        margin-top: 15px;
+
+
+        &-content {
+            margin-bottom: 30px;
+            &-journey {
+                margin-bottom: 20px;
+                h4 {
+                    margin-bottom: 5px;
+                }
+                
+                p {
+                    margin-left: 5px;
+                    margin-bottom: 3px;
+                }
+            }
+            
+            &-price {
+                @include flex(center, flex-start, row);
+                h4 {
+                    margin-right: 5px;
+                }
+            }
+        }
+
+        &-more {
+            color: blue;
+            cursor: pointer;
+        }
+    }
+
+    &_register {
+        width: 100%;
+        button {
+            background-color: red;
+            padding: 15px 20px;
+            width: 100%;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            border: 1px solid rgb(201, 8, 8);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+            cursor: pointer;
+
+            &:active{
+                opacity: 0.7;
+            }
+        }
+    }
+
+}

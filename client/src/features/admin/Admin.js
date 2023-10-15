@@ -2,7 +2,7 @@ import React, {  useEffect, useState } from 'react'
 import {GiVillage} from 'react-icons/gi';
 import {FaPlaceOfWorship} from 'react-icons/fa';
 import {AiOutlineInbox} from 'react-icons/ai';
-import {MdOutlineTour, MdLocationPin} from  'react-icons/md'
+import {MdOutlineTour, MdLocationPin, MdShareLocation} from  'react-icons/md'
 import './admin.scss';
 import { Link, useLocation } from 'react-router-dom';
 import VillageManagement from './village/VillageManagement';
@@ -11,6 +11,9 @@ import NotFound from './notFound/NotFound';
 import PointOfInterest from './pointOfInterest/PointOfInterest';
 import PointOfService from './pointOfService/PointOfService';
 import NeighboringPoint from './neighboringPoint/NeighboringPoint';
+import PlaceOfTour from './placeOfTour/PlaceOfTour';
+import {TbTournament} from "react-icons/tb"
+import TourAdmin from './tourAdmin/TourAdmin';
 
 const data = [
   {
@@ -42,6 +45,18 @@ const data = [
     name: 'Neighboring Point',
     icon: <MdLocationPin />,
     link: '/admin/nei'
+  },
+  {
+    id:6,
+    name:"Place of Tour",
+    icon: <MdShareLocation />,
+    link: '/admin/place-tour'
+  },
+  {
+    id: 7,
+    name: "Tour",
+    icon: <TbTournament />,
+    link: '/admin/tour'
   }
 ]
 
@@ -65,11 +80,16 @@ export default function Admin() {
       setActiveId(data[3].id)
     ) : location.pathname.includes('/nei') ? (
       setActiveId(data[4].id)
+    ) : location.pathname.includes('/place-tour') ? (
+      setActiveId(data[5].id)
+    ) : location.pathname.includes('/tour') ? (
+      setActiveId(data[6].id)
     ) : (
       <NotFound />
     )
 
   }, [location.pathname])
+
 
   return (
     <div className='admin'>
@@ -112,6 +132,10 @@ export default function Admin() {
               <PointOfService />
             ) : location.pathname.includes('/nei') ? (
               <NeighboringPoint />
+            ) : location.pathname.includes('/place-tour') ? (
+              <PlaceOfTour />
+            ) : location.pathname.includes('/tour') ? (
+              <TourAdmin />
             ) : (
               <NotFound />
             )

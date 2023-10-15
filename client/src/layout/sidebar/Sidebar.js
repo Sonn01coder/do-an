@@ -7,10 +7,11 @@ import { useLocation } from 'react-router-dom';
 import VillageList from '../../features/villageList/VillageList';
 import PopupHover from '../../shared/components/PopupHover';
 import { ProductContext } from '../../shared/dataContext/ProductContetx';
+import TourMap from '../../features/tour/tourMap/TourMap';
 
 
 export default function Sidebar() {
-  const pathName = useLocation()
+  const location = useLocation()
   const {popupProduct, setPopupProduct} = useContext(ProductContext)
 
   const [valueSearch, setValueSearch] = useState("")
@@ -59,8 +60,10 @@ export default function Sidebar() {
       <div className='sidebar_content'>
         <div className='sidebar_content-wrapper' >
           {
-            pathName.pathname === '/home' ? 
-            <VillageList valueSearch={valueSearch} /> : <VillageDetail />
+            location.pathname === '/home' ? 
+            <VillageList valueSearch={valueSearch} /> :
+            location.pathname.includes("/village/") ?  <VillageDetail /> 
+            : <TourMap />
           }
         </div>
         {

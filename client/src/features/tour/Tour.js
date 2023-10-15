@@ -1,10 +1,48 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import "./tour.scss";
 import {FaPaperPlane} from "react-icons/fa";
 import {BsSearch, BsArrowRight} from "react-icons/bs";
+import { TourContext } from '../../shared/dataContext/TourContext';
 
 export default function Tour() {
+  const {tours, placeTour} = useContext(TourContext) 
+
+  //filter place of tour
+  const handlePlaceOfTour = (arr) => {
+    const newArr = JSON.parse(arr)
+    return  placeTour.filter(place => newArr.includes(place.id))
+  }
+
+  //handle render journey tour
+  const handleRenderJourney = (arr) => {
+    let renderedString = "Xuất phát từ ";
+
+    for (let i = 0; i < arr.length; i++) {
+      renderedString += arr[i].name;
+      
+      if(arr[i].name.includes("nhà hàng")) {
+        renderedString += " ăn trưa"
+      }
+
+      if (i < arr.length - 2) {
+        renderedString += ', đi đến ';
+      } else if (i === arr.length - 2) {
+        renderedString += ' và cuối cùng về ';
+      }
+    }
+    
+    renderedString += ".";
+
+    return renderedString;
+  }
+
+  //handle slug tour
+  const handleSlugTour = (string) => {
+    return string.toLowerCase().replace(/\s+/g, "-")
+  }
+
+
   return (
     <div className='tour'>
       <div className='tour_header'>
@@ -40,17 +78,20 @@ export default function Tour() {
           </div>
 
           <div className='tour_list'>
-            <div className='tour_item'>
-              <div className='tour_item-content'>
-                <h4>Tour 1:</h4>
-                <p>Từ diểm xuất phát đi làng Bát Tràng, tiếp đó đến thành Cổ Loa và thăm quan đền An Dương Vương</p>
+          {
+            tours.map(tour => (
+                <div className='tour_item'>
+                  <div className='tour_item-content' key={tour.id}>
+                    <h4>{tour.name}:</h4>
+                    <p>{handleRenderJourney(handlePlaceOfTour(tour.placeId))}</p>
+                  </div>
+                  <Link className='tour_item-link' to={handleSlugTour(tour.name)}>
+                    Xem chi tiết lô trình 
+                    <span><BsArrowRight /></span>
+                  </Link>
               </div>
-
-              <Link className='tour_item-link'>
-                Xem chi tiết lô trình 
-                <span><BsArrowRight /></span>
-              </Link>
-            </div>
+              )) 
+            }
           </div>
         </div>
       </div>

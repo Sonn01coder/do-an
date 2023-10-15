@@ -38,6 +38,14 @@ function App() {
           <Route exact path="/admin/poi/detail/:slug" element={<Admin />} />
           <Route exact path="/admin/poi/create" element={<Admin />} />
 
+          <Route exact path="/admin/place-tour" element={<Admin />} />
+          <Route exact path="/admin/place-tour/detail/:slug" element={<Admin />} />
+          <Route exact path="/admin/place-tour/create" element={<Admin />} />
+
+          <Route exact path="/admin/tour" element={<Admin />} />
+          <Route exact path="/admin/tour/detail/:slug" element={<Admin />} />
+          <Route exact path="/admin/tour/create" element={<Admin />} />
+
           <Route exact path="/admin/nei" element={<Admin />} />
 
           <Route exact path="/village/:slug">
@@ -51,6 +59,7 @@ function App() {
 
           <Route exact path="/tour">
             <Route index element={<Tour />} />
+            <Route path=":slug" element={<Layout />} />
           </Route>
 
           <Route  path="/login" element={<Login />} />

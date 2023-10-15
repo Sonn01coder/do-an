@@ -4,7 +4,6 @@ import configViewEngine from "./config/ViewEngine";
 import initWebRoutes from "./route/web";
 import {connectDB} from "./config/connectDB";
 import initAPIRoutes from "./route/api";
-import { createJWT, verifyToken } from "./migrations/JWTAction";
 
 //read file env
 require('dotenv').config();

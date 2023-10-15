@@ -8,20 +8,23 @@ import { ProductProvider } from './shared/dataContext/ProductContetx';
 import { POSProvider } from './shared/dataContext/PointOfServiceContext';
 import { POIProvider } from './shared/dataContext/PointOfInterestContext';
 import { NeiProvider } from './shared/dataContext/NeighboringPointContext';
+import { TourProvider } from './shared/dataContext/TourContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <VillageProvider>
       <NeiProvider>
-        <ProductProvider>
-          <POSProvider>
-            <POIProvider>
-              <App />
+        <TourProvider>
+          <ProductProvider>
+            <POSProvider>
+              <POIProvider>
+                <App />
               <Toaster/>
-            </POIProvider>
-          </POSProvider>
-        </ProductProvider>
+              </POIProvider>
+            </POSProvider>
+          </ProductProvider>
+        </TourProvider>
       </NeiProvider>
     </VillageProvider>
 );

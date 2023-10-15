@@ -34,6 +34,8 @@ export const PRODUCT_URL = BASE_URL + "/product"
 export const POI_URL = BASE_URL + "/poi"
 export const POS_URL = BASE_URL + "/pos"
 export const NEI_URL = BASE_URL + "/nei"
+export const TOUR_URL = BASE_URL + "/tour"
+export const PLACE_OF_TOUR_URL = BASE_URL + "/place-tour"
 
 
 export const ROUTER = {
@@ -48,6 +50,12 @@ export const ROUTER = {
 
     ADMIN_POI_DETAIL: "/admin/poi/detail/",
     ADMIN_POI_CREATE: "/admin/poi/create",
+
+    ADMIN_PLACE_OF_TOUR_DETAIL: "/admin/place-tour/detail/",
+    ADMIN_PLACE_OF_TOUR_CREATE: "/admin/place-tour/create",
+
+    ADMIN_TOUR_DETAIL: "/admin/tour/detail/",
+    ADMIN_TOUR_CREATE: "/admin/tour/create",
 }
 
 export const TITLE_VILLAGE_ADMIN = {
@@ -71,6 +79,14 @@ export const TITLE_ADMIN = {
     POINT_OF_SERVICE: {
         EDIT: "Edit Point of Service",
         CREATE: "Create Point of Service",
+    },
+    PLACE_OF_TOUR: {
+        EDIT: "Edit Place of Tour",
+        CREATE: "Create Place of Tour",
+    },
+    TOUR: {
+        EDIT: "Edit Tour",
+        CREATE: "Create Tour",
     }
 }
 
