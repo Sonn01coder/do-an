@@ -6,6 +6,7 @@ import pointofserviceController from '../controllers/pointofserviceController';
 import neighboringpointController from '../controllers/neighboringpointController';
 import placetourController from '../controllers/placetourController';
 import tourController from '../controllers/tourController';
+import usersController from '../controllers/usersController';
 
 let router =  express.Router();
 
@@ -53,6 +54,15 @@ let initAPIRoutes = (app) => {
     router.post('/tour/create', tourController.createTour)
     router.put('/tour/update', tourController.updateTour)
     router.delete('/tour/delete/:id', tourController.deleteTour)
+
+    //user
+    router.get('/user/getAllUser', usersController.getAllUser)
+    router.get('/user/login', usersController.loginUser)
+    router.post('/user/register', usersController.registerUser)
+    router.put('/user/updateInfoUser', usersController.updateInfoUser)
+    router.put('/user/changepassword', usersController.changePassword)
+    router.put('/user/resetpassword', usersController.resetsPassword)
+    router.delete('/user/delete/:id', usersController.deleteUser)
 
     return app.use('/api/v1/', router) 
 }
