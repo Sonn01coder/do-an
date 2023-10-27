@@ -5,10 +5,10 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 
-//get list user
-const getAllUser = async (req, res) => {
+//get list user member || village user
+const getAllUsersExceptAdminAndSuperUser = async (req, res) => {
   try {
-    const [rows, fields] = await pool.execute('SELECT * FROM users');
+    const [rows, fields] = await pool.execute('SELECT * FROM users WHERE role NOT IN ("admin", "super_user")');
     
     return res.status(200).json({
       message: "Success",
@@ -22,6 +22,25 @@ const getAllUser = async (req, res) => {
     });
   }
 };
+
+//get list user member || village user || administrators
+const getAllUsersExceptSuperUser= async (req, res) => {
+  try {
+    const [rows, fields] = await pool.execute('SELECT * FROM users WHERE role NOT IN ("super_user")');
+    
+    return res.status(200).json({
+      message: "Success",
+      data: rows
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    return res.status(500).json({
+      message: 'An error occurred',
+      error: error
+    });
+  }
+};
+
 
 //register user
 const registerUser = async (req, res) => {
@@ -84,6 +103,34 @@ const updateInfoUser = async (req, res) => {
     });
   }
 };
+
+//update role user
+const updateRoleUser = async (req, res) => {
+  const {role, id} = req.body
+
+  try {
+    const [rows] = await pool.execute('SELECT * FROM users WHERE id = ?', [id]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({
+        message: "Product not found"
+      });
+    }
+
+    await pool.execute('UPDATE users SET role = ?  WHERE id = ?',
+      [role, id]);
+
+    return res.status(200).json({
+      message: "Product updated successfully"
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    return res.status(500).json({
+      message: 'An error occurred',
+      error: error
+    });
+  }
+}
 
 //login user
 const loginUser = async (req, res) => {
@@ -194,17 +241,41 @@ const changePassword = async (req, res) => {
     }
 };
 
-//forgot password or reset password
-const resetsPassword = (req, res) => {
+
+//get user = id
+const getUserById = async (req, res) => {
+  const {id} = req.params; // Lấy id từ tham số đường dẫn
+
+  try {
+    const [rows, fields] = await pool.execute('SELECT * FROM users WHERE id = ?', [id]);
     
-}
+    if (rows.length === 0) {
+      return res.status(404).json({
+        message: "User not found"
+      });
+    }
+
+    return res.status(200).json({
+      message: "Success",
+      data: rows[0]
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    return res.status(500).json({
+      message: 'An error occurred',
+      error: error
+    });
+  }
+};
 
 export default {
-  getAllUser,
+  getUserById,
   loginUser,
   updateInfoUser,
   registerUser,
   deleteUser,
   changePassword,
-  resetsPassword
+  getAllUsersExceptAdminAndSuperUser,
+  getAllUsersExceptSuperUser,
+  updateRoleUser
 };

@@ -12,9 +12,12 @@ import Tour from "./features/tour/Tour";
 import Login from "./features/login/Login";
 import MyAccount from "./features/myAccount/MyAccount";
 import BookTours from "./features/bookTours/BookTours";
+import { AuthContext } from "./shared/dataContext/AuthContext";
+import PopupChangePassword from "./shared/components/PopupChangePassword";
 
 function App() {
   const {popupAdmin, isLoading} = useContext(VillageContext)
+  const {isPopupChangePassword} = useContext(AuthContext)
 
   return (
     <BrowserRouter>
@@ -46,6 +49,10 @@ function App() {
           <Route exact path="/admin/tour/detail/:slug" element={<Admin />} />
           <Route exact path="/admin/tour/create" element={<Admin />} />
 
+          <Route exact path="/admin/user" element={<Admin />} />
+          <Route exact path="/admin/user/:slug" element={<Admin />} />
+          <Route exact path="/admin/user/create" element={<Admin />} />
+
           <Route exact path="/admin/nei" element={<Admin />} />
 
           <Route exact path="/village/:slug">
@@ -69,9 +76,11 @@ function App() {
 
           <Route path="/book-tour" element={<BookTours />} />
 
+
         </Routes>
         {popupAdmin.isPopup && <PopupAdmin /> }
         {isLoading && <Loading />}
+        {isPopupChangePassword && <PopupChangePassword />}
       </div>
     </BrowserRouter>
 

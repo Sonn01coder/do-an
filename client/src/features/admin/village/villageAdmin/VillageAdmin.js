@@ -4,11 +4,17 @@ import {AiFillEdit, AiFillDelete} from "react-icons/ai"
 import { Link } from 'react-router-dom';
 import {ROUTER} from "../../../../shared/constants/Constants";
 import { VillageContext } from '../../../../shared/dataContext/VillageContext';
+import { AuthContext } from '../../../../shared/dataContext/AuthContext';
 
 
 
 export default function VillageAdmin() {
   const {villages, setPopupAdmin} = useContext(VillageContext)
+  const {userCurrent} = useContext(AuthContext)
+
+  const villageId = userCurrent?.role && userCurrent.role.match(/\d+/) ? Number(userCurrent.role.match(/\d+/)[0]) : 0;
+
+  const villageCurrentAdmin  = villages.filter(village => village.id === villageId)
 
 
   const showPopupAdmin = (item) => {
@@ -25,7 +31,7 @@ export default function VillageAdmin() {
         </div>
         <body>
         {
-            villages.map(item => (
+          (userCurrent?.role?.includes(process.env.REACT_APP_VILLAGE_USER) ? villageCurrentAdmin : villages).map(item => (
             <div key={item.id}>
                 <section>{item.id}</section>
                 <section>{item.name}</section>

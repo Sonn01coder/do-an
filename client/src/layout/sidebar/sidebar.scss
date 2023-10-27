@@ -73,6 +73,15 @@
             color: blue;
             margin-left: 20px;
             @include flex(center, center, row);
+
+            &-login {
+                @include flex(center, center, row);
+                color: rgb(157, 49, 10);
+
+                &:active {
+                    opacity: 0.8;
+                }
+            }
         }
 
     }

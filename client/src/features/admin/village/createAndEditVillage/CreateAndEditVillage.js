@@ -15,7 +15,6 @@ export default function CreateAndEditVillage() {
 
     //get slug
     const {slug} = useParams()
-    console.log(slug);
 
     //get village current 
     const villageCurrent = villages.find(village => {
@@ -24,11 +23,6 @@ export default function CreateAndEditVillage() {
             return village
         }
     })
-
-    console.log(villages);
-
-    console.log(villageCurrent);
-
 
     const [formData, setFormData] = useState( villageCurrent ||  VILLAGE_DEFAULT)
 

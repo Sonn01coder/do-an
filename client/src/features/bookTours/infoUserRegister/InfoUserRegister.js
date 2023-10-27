@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './infoUserRegister.scss';
 import { validationBookTour } from '../../../shared/validation';
+import { AuthContext } from '../../../shared/dataContext/AuthContext';
+import { TourContext } from '../../../shared/dataContext/TourContext';
 
 export default function InfoUserRegister() {
-  const [valueForm, setValueForm] = useState({name: '', email: '', phoneOne: '', phoneTwo: ''})
-  const [error, setError] = useState({name: '', email: '', phoneOne: '', phoneTwo: '' })
-  
+  const {userCurrent} = useContext(AuthContext)
+  const {bookTour, setBookTour} = useContext(TourContext)
+
+  //validation 
+  const [error, setError] = useState({name: '', phoneOne: '', phoneTwo: '' })
+
   return (
     <div className='infoUserRegister'>
       <h3>Thông tin liên hệ: </h3>
@@ -15,9 +20,9 @@ export default function InfoUserRegister() {
         <section>
           <input 
             type="text" 
-            value={valueForm.name}
-            onChange={e => setValueForm({...valueForm, name: e.target.value})}
-            onBlur={() => setError({...error, name: validationBookTour(valueForm.name, valueForm.email, valueForm.phoneOne, valueForm.phoneTwo).name})}
+            value={userCurrent.name || bookTour.name}
+            onChange={e => setBookTour({...bookTour, name: e.target.value})}
+            onBlur={() => setError({...error, name: validationBookTour(bookTour.name, bookTour.phone1, bookTour.phone2).name})}
           />
         </section>
         {error.name && <p>{error.name}</p>}
@@ -25,44 +30,42 @@ export default function InfoUserRegister() {
 
       <div className='infoUserRegister_input-item'>
         <h5>Email</h5>
-        <section>
-        <input 
-          type="text"
-          value={valueForm.email}
-          onChange={e => setValueForm({...valueForm, email: e.target.value})}
-          onBlur={() => setError({...error, email: validationBookTour(valueForm.name, valueForm.email, valueForm.phoneOne, valueForm.phoneTwo).email})}
-        />
-        </section>
-        {error.email && <p>{error.email}</p>}
+          <section>
+            <input 
+              type="text"
+              value={userCurrent.email}
+            />
+          </section>
         </div>
         
         <div className='infoUserRegister_input-item'>
-        <h5>Phone 1</h5>
-        <section>
-        <input 
-          type="text" 
-          value={valueForm.phoneOne}
-          onChange={e => setValueForm({...valueForm, phoneOne: e.target.value})}
-          onBlur={() => setError({...error, phoneOne: validationBookTour(valueForm.name, valueForm.email, valueForm.phoneOne, valueForm.phoneTwo).phoneOne})}
-        />
-        </section>
-        {error.phoneOne && <p>{error.phoneOne}</p>}
+          <h5>Phone 1</h5>
+          <section>
+          <input 
+            type="number" 
+            value={bookTour.phoneOne}
+            onChange={e => setBookTour({...bookTour, phone1: e.target.value})}
+            onBlur={() => setError({...error, phoneOne: validationBookTour(bookTour.name,  bookTour.phone1, bookTour.phone2).phone1})}
+          />
+          </section>
+          {error.phoneOne && <p>{error.phoneOne}</p>}
         </div>
 
       <div className='infoUserRegister_input-item'>
         <h5>Phone 2</h5>
         <section>
         <input 
-          type="text" 
-          value={valueForm.phoneTwo}
-          onChange={e => setValueForm({...valueForm, phoneTwo: e.target.value})}
-          onBlur={() => setError({...error, phoneTwo: validationBookTour(valueForm.name, valueForm.email, valueForm.phoneOne, valueForm.phoneTwo).phoneTwo})}
+          type="number" 
+          value={bookTour.phoneTwo}
+          onChange={e => setBookTour({...bookTour, phone2: e.target.value})}
+          onBlur={() => setError({...error, phoneTwo: validationBookTour(bookTour.name, bookTour.phone1, bookTour.phone2).phone2})}
         />
         </section>
         {error.phoneTwo && <p>{error.phoneTwo}</p>}
 
       </div>
       </div>
+
     </div>
   )
 }

@@ -5,8 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import { TourContext } from '../../../shared/dataContext/TourContext';
 
 export default function TourMap() {
-
-    const {tours, placeTour} = useContext(TourContext) 
+    const {tours, placeTour, setNameTour} = useContext(TourContext) 
 
     const {slug} = useParams()
 
@@ -17,8 +16,6 @@ export default function TourMap() {
 
     //get tour current 
   const tourCurrent = tours.find(tour => handleSlugTour(tour.name) === slug)
-
-  console.log(tourCurrent);
 
   //filter place of tour
   const handlePlaceOfTour = (arr) => {
@@ -80,7 +77,7 @@ export default function TourMap() {
         </div>
 
         <div className='tourMap_register'>
-            <button>ĐĂNG KÍ THAM QUAN TOUR 1</button>
+            <Link to={"/book-tour"} className='tourMap_register-link' onClick={() => setNameTour(tourCurrent.name)}>ĐĂNG KÍ THAM QUAN {tourCurrent.name.toUpperCase()}</Link>
         </div>
     </div>
   )

@@ -7,6 +7,7 @@ import neighboringpointController from '../controllers/neighboringpointControlle
 import placetourController from '../controllers/placetourController';
 import tourController from '../controllers/tourController';
 import usersController from '../controllers/usersController';
+import historytourController from '../controllers/historytourController';
 
 let router =  express.Router();
 
@@ -56,13 +57,21 @@ let initAPIRoutes = (app) => {
     router.delete('/tour/delete/:id', tourController.deleteTour)
 
     //user
-    router.get('/user/getAllUser', usersController.getAllUser)
-    router.get('/user/login', usersController.loginUser)
+    router.get('/user/getMember', usersController.getAllUsersExceptAdminAndSuperUser)
+    router.get('/user/getUsers', usersController.getAllUsersExceptSuperUser)
+    router.get('/user/getUser/:id', usersController.getUserById)
+    router.post('/user/login', usersController.loginUser)
     router.post('/user/register', usersController.registerUser)
     router.put('/user/updateInfoUser', usersController.updateInfoUser)
+    router.put('/user/updateRole', usersController.updateRoleUser)
     router.put('/user/changepassword', usersController.changePassword)
-    router.put('/user/resetpassword', usersController.resetsPassword)
     router.delete('/user/delete/:id', usersController.deleteUser)
+
+    //history tour
+    router.get('/historytour/getAll', historytourController.getAllHistoryTour)
+    router.post('/historytour/create', historytourController.createHistoryTour)
+    router.put('/historytour/update', historytourController.updateHistoryTour)
+    router.delete('/historytour/delete/:id', historytourController.deleteHistoryTour)
 
     return app.use('/api/v1/', router) 
 }

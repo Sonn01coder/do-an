@@ -26,6 +26,17 @@
             cursor: pointer;
             font-weight: 600;
         }
+
+        &-avatar {
+            margin-right: 40px;
+            @include flex(center, flex-start, row);
+            
+            p {
+                margin-left: 15px;
+                font-weight: 600;
+                color: rgb(154, 61, 14);
+            }
+        }
     }
 
     &_content {

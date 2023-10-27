@@ -10,11 +10,23 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { POIContext } from '../../../../shared/dataContext/PointOfInterestContext';
+import { AuthContext } from '../../../../shared/dataContext/AuthContext';
 
 export default function CreateAndEditPOI() {
+
+    const {userCurrent} = useContext(AuthContext)
     const {villages} = useContext(VillageContext);
     const {poi, createPoi, updatePoi } = useContext(POIContext);
 
+    //check admin village
+    const isAdminVillage = userCurrent?.role?.includes(process.env.REACT_APP_VILLAGE_USER)
+
+    const villageId = Number(userCurrent?.role?.match(/\d+/)[0])
+
+    const villageCurrentAdmin  = villages.find(village => village.id === villageId)
+
+//handle logic crate and edit
+ 
     //get slug
     const {slug} = useParams()
 
@@ -97,9 +109,9 @@ export default function CreateAndEditPOI() {
     //handle add/edit village
     const handleAllProduct = () => {
         if(formData.id) {
-            void updatePoi({...formData, image: JSON.stringify(selectedImages) , villageId: villageCurrent.id, id: formData.id})
+            void updatePoi({...formData, image: JSON.stringify(selectedImages) , villageId: villageCurrent.id || villageCurrentAdmin?.id, id: formData.id})
         } else {
-            void createPoi({...formData, image: JSON.stringify(selectedImages), villageId: villageCurrent.id  })
+            void createPoi({...formData, image: JSON.stringify(selectedImages), villageId: villageCurrent.id || villageCurrentAdmin?.id })
             setFormData(POS_DEFAULT)
             setVillageCurrent(VILLAGE_DEFAULT)
             setSelectedImages([])
@@ -157,12 +169,23 @@ export default function CreateAndEditPOI() {
 
             <div className='createAndEditPOS_content-input  full-width'>
                 <p>Village</p>
-                <input 
-                    type="text" 
-                    placeholder='Địa điểm dịch lịch gần làng' 
-                    value={villageCurrent.name}
-                    onClick={() => setPopupVillages(true)}
-                />
+                {
+                    isAdminVillage ? 
+                    (
+                        <input 
+                            type="text" 
+                            placeholder='Địa điểm dịch lịch' 
+                            value={villageCurrentAdmin?.name}
+                        />
+                    ) : (
+                        <input 
+                            type="text" 
+                            placeholder='Địa điểm dịch lịch gần làng' 
+                            value={villageCurrent.name}
+                            onClick={() => setPopupVillages(true)}
+                        />
+                    )
+                }
                 {
                     popupVillages && (
                         <div ref={popupRef} className='createAndEditPOS_content-input-popup'>

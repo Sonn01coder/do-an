@@ -4,9 +4,12 @@ import "./tour.scss";
 import {FaPaperPlane} from "react-icons/fa";
 import {BsSearch, BsArrowRight} from "react-icons/bs";
 import { TourContext } from '../../shared/dataContext/TourContext';
+import { AuthContext } from '../../shared/dataContext/AuthContext';
+import Avatar from '../avatar/Avatar';
 
 export default function Tour() {
   const {tours, placeTour} = useContext(TourContext) 
+  const {userCurrent} = useContext(AuthContext)
 
   //filter place of tour
   const handlePlaceOfTour = (arr) => {
@@ -42,23 +45,35 @@ export default function Tour() {
     return string.toLowerCase().replace(/\s+/g, "-")
   }
 
-
+  //handle show email -> @
+  const handelShowEmail = (email) => {
+    const atIndex = email.indexOf('@');
+    return email.substring(0, atIndex + 1); // Lấy cả kí tự @
+  }
   return (
     <div className='tour'>
       <div className='tour_header'>
         <Link to={'/home'} >
             <h2>LÀNG VIỆT</h2>
         </Link>
-
-        <div>
-          <Link to={"/login"}>
-            <button>Đăng nhập</button>
-          </Link>
-
-          <Link to={"/register"}>
-            <button>Đăng kí</button>
-          </Link>
-        </div>
+        {
+          Object.keys(userCurrent).length === 0  ? (
+            <div>
+              <Link to={"/login"}>
+                <button>Đăng nhập</button>
+              </Link>
+    
+              <Link to={"/register"}>
+                <button>Đăng kí</button>
+              </Link>
+            </div>
+          )  : (
+            <div className='tour_header-avatar'>
+              <Avatar />
+              <p>{userCurrent.name || `${handelShowEmail(userCurrent.email)}...`}</p>
+            </div>
+          )
+        }
       </div>
 
       <div className='tour_content'>
@@ -80,7 +95,7 @@ export default function Tour() {
           <div className='tour_list'>
           {
             tours.map(tour => (
-                <div className='tour_item'>
+                <div className='tour_item' key={tour.id}>
                   <div className='tour_item-content' key={tour.id}>
                     <h4>{tour.name}:</h4>
                     <p>{handleRenderJourney(handlePlaceOfTour(tour.placeId))}</p>

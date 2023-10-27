@@ -1,21 +1,19 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import {AiFillCaretDown} from "react-icons/ai"
-import {BsSearch} from "react-icons/bs";
-import { ROUTER, showListLength } from '../../../shared/constants/Constants'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import CreateAndEditPOI from './createAndEditPOI/CreateAndEditPOI';
-import ListPOI from './listPOI/listPOI';
+import { ROUTER, showListLength } from '../../../shared/constants/Constants'
+import {AiFillCaretDown} from "react-icons/ai"
+import {BsSearch} from "react-icons/bs"
+import ListUser from './listUsers/ListUsers'
+import CreateAndEditUser from './createAndEditUser/CreateAndEditUser'
 
-export default function PointOfInterest() {
-
-  const [listLength, setListLength] = useState(showListLength[0].length)
+export default function UserAdmin() {
+const [listLength, setListLength] = useState(showListLength[0].length)
   const [openPopup, setOpenPopUp] = useState(false)
 
   const popUpRef = useRef()
 
   //get current param
   const location = useLocation()
-
 
   //handle pick length show data
   const handlePickLength = (length) => {
@@ -40,7 +38,7 @@ export default function PointOfInterest() {
   return (
     <section className='productManagement'>
     {
-        !(location.pathname.includes(ROUTER.ADMIN_POI_CREATE) || location.pathname.includes(ROUTER.ADMIN_POI_DETAIL) ) ? 
+        !(location.pathname.includes(ROUTER.ADMIN_USER_CREATE) || location.pathname.includes(ROUTER.ADMIN_USER_DETAIL) ) ? 
         (
           <div className='productManagement_body'>
              <div className='productManagement_body-header'>
@@ -63,19 +61,19 @@ export default function PointOfInterest() {
                  </div>
    
                  <div className='productManagement_body-header-search'>
-                   <Link to={ROUTER.ADMIN_POI_CREATE}><button>Create</button></Link>
+                   <Link to={ROUTER.ADMIN_USER_CREATE}><button>Create</button></Link>
                    <input type="text"  placeholder='Nhập từ khóa tìm kiếm'/>
                    <section><BsSearch /></section>
                  </div>
              </div>
    
              <div>
-                <ListPOI />
+                <ListUser />
              </div>
            </div>   
         ) : (
           <div className='productManagement_body'>
-            <CreateAndEditPOI />
+                <CreateAndEditUser />
           </div> 
         )
       }

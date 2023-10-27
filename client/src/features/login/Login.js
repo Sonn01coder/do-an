@@ -1,28 +1,75 @@
-import React, { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import "./login.scss";
 import img from "../../shared/assest/image/img_login.jpg";
 import {ImArrowRight2} from 'react-icons/im';
 import { validationLogin } from '../../shared/validation';
+import { AuthContext } from '../../shared/dataContext/AuthContext';
+import { VillageContext } from '../../shared/dataContext/VillageContext';
 
 export default function Login() {
 
-    const [formData, setFormData] = useState({email: '', password: '', confirmPassword: ''});
+    const {registerUser, loginUser, userCurrent} = useContext(AuthContext)
+
+    const {setIsLoading} = useContext(VillageContext)
+    
+    const [formData, setFormData] = useState({email:'', password:'', confirmPassword:''});
 
     const [error, setError] = useState({email: '', password: '', confirmPassword: ''})
 
     const location = useLocation()
+
+    const navigate = useNavigate()
     
     const isLogin = location.pathname === "/login"
 
-    const handleLoginAndRegister = () => {
-        setFormData({email: '', password: '', confirmPassword: ''})
+    //handle logic login user
+    const handleLogicLogin = async () => {
+        const res = await loginUser({email:formData.email, password: formData.password})
+        if(res?.status === 200) {
+            setTimeout(() => {
+                setIsLoading(false)
+                navigate('/home')
+                setFormData({email: '', password: '', confirmPassword: ''})
+            }, 2000)
+        }
     }
 
+    console.log(!(Object.keys(userCurrent).length === 0))
 
+    useEffect(() => {
+        if(!(Object.keys(userCurrent).length === 0)) {
+            console.log("login");
+            navigate('/home')
+        }
+      }, [Object.keys(userCurrent).length === 0])
+
+    //handle logic register account
+    const handleLogicRegister = async () => {
+        const res = await registerUser({email: formData.email, password: formData.password})
+        if(res?.status === 201) {
+            setTimeout(() => {
+                setIsLoading(false)
+                navigate('/myaccount/user')
+                setFormData({email: '', password: '', confirmPassword: ''})
+            }, 2000)
+        }
+    }
+
+    //button login or register
+    const handleLoginAndRegister = () => {
+        if(isLogin) {
+            handleLogicLogin()
+        } else {
+            handleLogicRegister()
+        }
+    }
+
+    //validation form login
     const validations = validationLogin(formData.email, formData.password, formData.confirmPassword)
 
 
+    //check disabled button login
     const isDisabled = isLogin ? (validations.email === undefined && validations.password  === undefined) 
                     : (validations.email === undefined && validations.password  === undefined && validations.confirmPassword === undefined)
 

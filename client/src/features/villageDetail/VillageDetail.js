@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import {AiFillHome} from 'react-icons/ai';
-import {RiRunFill} from "react-icons/ri"
+import {RiRunFill} from "react-icons/ri";
+import {MdOutlineTour} from "react-icons/md";
 import './villageDetail.scss';
 import { Link, useParams } from 'react-router-dom';
 import { VillageContext } from '../../shared/dataContext/VillageContext';
@@ -36,7 +37,6 @@ export default function VillageDetail() {
     return JSON.parse(array)[index]
   }
 
-
   const handleHoverImage = (product) => {
     setPopupProduct({...popupProduct, isPopup: true, product: product})
   }
@@ -46,6 +46,14 @@ export default function VillageDetail() {
         <div className='villageDetail_title'>
             <h1>{village.name}</h1>
             <section>
+              <span> 
+                <Link to='/tour'>
+                  <MdOutlineTour />
+                </Link>
+                <div className='villageDetail_icon-tour-popup'>
+                  <Link to="/tour" className='villageDetail_tour-popup-text' >Đăng kí tham gia tour </Link>
+                </div>
+              </span>
               <span>
                 <Link to="/home" >
                   <AiFillHome />

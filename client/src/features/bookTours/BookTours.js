@@ -1,15 +1,26 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import "./bookTours.scss";
 import { LIST_NAVIGATE_BOOKTOURS } from '../../shared/constants/Constants';
 import InfoTour from './infoTour/InfoTour';
 import {GrLinkNext, GrLinkPrevious} from 'react-icons/gr';
 import InfoUserRegister from './infoUserRegister/InfoUserRegister';
 import PaymentTours from './paymentTours/PaymentTours';
+import { AuthContext } from '../../shared/dataContext/AuthContext';
 
 export default function BookTours() {
 
     const [currentPage, setCurrentPage] = useState(1)
+    const { userCurrent } = useContext(AuthContext)
+
+    const navigate = useNavigate()
+
+
+  useEffect(() => {
+    if(Object.keys(userCurrent).length === 0) {
+        navigate('/login')
+    }
+  }, [Object.keys(userCurrent).length === 0])
 
   return (
     <div className='bookTours'>

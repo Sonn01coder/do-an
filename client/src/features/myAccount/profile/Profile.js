@@ -1,13 +1,26 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './profile.scss';
 import { Link } from 'react-router-dom';
 import { validationProfile } from '../../../shared/validation';
+import { AuthContext } from '../../../shared/dataContext/AuthContext';
 
 export default function Profile() {
-    const [value, setValue] = useState({name: '', phone: ''})
+  const {userCurrent, updateInfoUser, setIsPopupChangePassword} = useContext(AuthContext)
+
+    const [value, setValue] = useState({name: userCurrent?.name, phone: userCurrent?.phone1})
     const [error, setError] = useState({name: '', phone: ''})
 
     const isDisabled = error.name !== undefined && error !== undefined 
+
+    const handleUpdateInfoUser = () => {
+      void updateInfoUser({name: value.name, phone1: Number(value.phone), id: userCurrent?.id})
+    }
+
+    useEffect(() => {
+      if (userCurrent) {
+          setValue({ name: userCurrent.name, phone: userCurrent.phone1 });
+      }
+  }, [userCurrent]);
 
   return (
     <div className='profile'>
@@ -30,6 +43,7 @@ export default function Profile() {
             <p>Email</p>
             <input
                 placeholder='Nhập email của bạn'
+                value={userCurrent?.email || ''}
             />
         </div>
 
@@ -52,13 +66,14 @@ export default function Profile() {
             <input
                 type='password'
                 placeholder='Nhập mật khẩu của bạn'
+                value={"password"}
             />
         </div>
       </div>
 
       <div className='profile_footer'>
-        <Link className='profile_footer-link'>Change password</Link>
-        <button className={isDisabled ? 'profile-btn-disabled' : ""}>Save</button>
+        <div onClick={() => setIsPopupChangePassword(true)} className='profile_footer-link'>Change password</div>
+        <button onClick={handleUpdateInfoUser} className={isDisabled ? 'profile-btn-disabled' : ""}>Save</button>
       </div>
     </div>
   )

@@ -1,18 +1,20 @@
 import React, {  useContext, useEffect, useRef, useState } from 'react'
 import './sidebar.scss';
 import {FiSearch} from "react-icons/fi";
-import {BsSignTurnRightFill} from "react-icons/bs";
+import {AiOutlineUserAdd} from "react-icons/ai";
 import VillageDetail from '../../features/villageDetail/VillageDetail';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import VillageList from '../../features/villageList/VillageList';
 import PopupHover from '../../shared/components/PopupHover';
 import { ProductContext } from '../../shared/dataContext/ProductContetx';
 import TourMap from '../../features/tour/tourMap/TourMap';
-
+import Avatar from '../../features/avatar/Avatar';
+import { AuthContext } from '../../shared/dataContext/AuthContext';
 
 export default function Sidebar() {
   const location = useLocation()
   const {popupProduct, setPopupProduct} = useContext(ProductContext)
+  const {userCurrent} = useContext(AuthContext)
 
   const [valueSearch, setValueSearch] = useState("")
 
@@ -54,7 +56,15 @@ export default function Sidebar() {
           <section><FiSearch /></section>
         </div>
 
-        <div className='sidebar_search-turn'><BsSignTurnRightFill /></div>
+        <div  className='sidebar_search-turn'>
+        {
+          Object.keys(userCurrent).length === 0 ?(
+            <Link to='/login' className='sidebar_search-turn-login'>
+              <AiOutlineUserAdd />
+            </Link>
+          ) : <Avatar />  
+        }
+        </div> 
       </div>
 
       <div className='sidebar_content'>

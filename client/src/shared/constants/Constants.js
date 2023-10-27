@@ -36,6 +36,8 @@ export const POS_URL = BASE_URL + "/pos"
 export const NEI_URL = BASE_URL + "/nei"
 export const TOUR_URL = BASE_URL + "/tour"
 export const PLACE_OF_TOUR_URL = BASE_URL + "/place-tour"
+export const AUTH_URL = BASE_URL + "/user"
+export const HISTORY_TOUR_URL = BASE_URL + "/historytour"
 
 
 export const ROUTER = {
@@ -56,6 +58,9 @@ export const ROUTER = {
 
     ADMIN_TOUR_DETAIL: "/admin/tour/detail/",
     ADMIN_TOUR_CREATE: "/admin/tour/create",
+
+    ADMIN_USER_DETAIL: "/admin/user/",
+    ADMIN_USER_CREATE: "/admin/user/create",
 }
 
 export const TITLE_VILLAGE_ADMIN = {
@@ -87,6 +92,10 @@ export const TITLE_ADMIN = {
     TOUR: {
         EDIT: "Edit Tour",
         CREATE: "Create Tour",
+    },
+    USER: {
+        EDIT: "Edit Role User",
+        CREATE: "Create User",
     }
 }
 
@@ -152,4 +161,61 @@ export const LIST_NAVIGATE_BOOKTOURS = [
         id:3,
         number: 3
     }
+]
+
+export const AVATAR_LINK = [
+    {
+        id: 1,
+        name: "PROFILE",
+        link: "/myaccount/profile",
+        role:"member"
+    },
+    {
+        id: 2,
+        name: "HISTORY TOUR",
+        link: "/myaccount/history-tour",
+        role: "member"
+    },
+    {
+        id:3,
+        name: "EDIT VILLAGE",
+        link: "/admin/village",
+        role: 'admin'
+    },
+    {
+        id: 4,
+        name: "LOGOUT",
+        link: "/login",
+        role: 'member'
+    }
+]
+
+export const HISTORY_TOUR_DEFAULT = {
+    tourId: 0,
+    name: "",
+    ticket: 0,
+    phone1: 0,
+    phone2: 0,
+    dateStart: "",
+    dateEnd:""
+}
+
+export const ROLE_USER = [
+    {   
+        id: 1,
+        role: process.env.REACT_APP_MEMBER
+    },
+    {   
+        id: 2,
+        role: process.env.REACT_APP_ADMIN
+    },
+    {   
+        id: 3,
+        role: process.env.REACT_APP_SUPER_USER
+    },
+    {   
+        id: 4,
+        role: process.env.REACT_APP_VILLAGE_USER
+    },
+
 ]

@@ -52,6 +52,35 @@
                     border: 2px solid blue;
                 }
             }
+
+            .createAndEditTour_input-role {
+                width: 90%;
+                position: relative;
+                margin-bottom: 10px;
+                margin-top: 10px;
+
+                input {
+                    width: 100%;
+                }
+
+                .popup-role {
+                    width: 100%;
+                    position: absolute;
+                    z-index: 300000;
+                    padding: 10px 15px;
+                    background-color: #fff;
+                    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.6);
+
+                    section {
+                        padding: 12px 20px;
+                        cursor: pointer;
+
+                        &:hover {
+                            background-color: #efe8e8 ;
+                        }
+                    }
+                }
+            }
         }
 
         .createAndEditTour_journey {

@@ -1,10 +1,10 @@
-import React, {  useEffect, useState } from 'react'
+import React, {  useContext, useEffect, useRef, useState } from 'react'
 import {GiVillage} from 'react-icons/gi';
-import {FaPlaceOfWorship} from 'react-icons/fa';
+import {FaPlaceOfWorship, FaUsers} from 'react-icons/fa';
 import {AiOutlineInbox} from 'react-icons/ai';
 import {MdOutlineTour, MdLocationPin, MdShareLocation} from  'react-icons/md'
 import './admin.scss';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import VillageManagement from './village/VillageManagement';
 import ProductManagement from './product/ProductManagement';
 import NotFound from './notFound/NotFound';
@@ -14,53 +14,76 @@ import NeighboringPoint from './neighboringPoint/NeighboringPoint';
 import PlaceOfTour from './placeOfTour/PlaceOfTour';
 import {TbTournament} from "react-icons/tb"
 import TourAdmin from './tourAdmin/TourAdmin';
+import UserAdmin from './userAdmin/UserAdmin';
+import { AuthContext } from '../../shared/dataContext/AuthContext';
 
 const data = [
   {
     id: 1,
     name: 'Village',
     icon:  <GiVillage />,
-    link: '/admin/village'
+    link: '/admin/village',
+    role: "village_admin"
   },
   {
     id: 2,
     name: 'Product',
     icon:  <AiOutlineInbox />,
-    link: '/admin/product'
+    link: '/admin/product',
+    role: "village_admin"
   },
   {
     id: 3,
     name: 'Point of Interest',
     icon:  <FaPlaceOfWorship />,
-    link: '/admin/poi'
+    link: '/admin/poi',
+    role: "village_admin"
   },
   {
     id: 4,
     name: 'Point of Service',
     icon:  <MdOutlineTour />,
-    link: '/admin/pos'
+    link: '/admin/pos',
+    role: "admin"
   }, 
   {
     id: 5,
     name: 'Neighboring Point',
     icon: <MdLocationPin />,
-    link: '/admin/nei'
+    link: '/admin/nei',
+    role: "admin"
   },
   {
     id:6,
     name:"Place of Tour",
     icon: <MdShareLocation />,
-    link: '/admin/place-tour'
+    link: '/admin/place-tour',
+    role: "admin"
   },
   {
     id: 7,
     name: "Tour",
     icon: <TbTournament />,
-    link: '/admin/tour'
-  }
+    link: '/admin/tour',
+    role: "admin"
+  },
+   {
+    id:8,
+    name: "User",
+    icon: <FaUsers />,
+    link: "/admin/user",
+    role: "admin"
+   }
 ]
 
 export default function Admin() {
+  const { userCurrent, setUserCurrent } = useContext(AuthContext)
+
+
+  const [isPopupLogout, setIsPopupLogout] = useState(false)
+
+  const navigate = useNavigate()
+
   //active
   const [activeId , setActiveId] = useState(data[0].id)
 
@@ -68,7 +91,6 @@ export default function Admin() {
   const location = useLocation()
 
   //path => active
-
   useEffect(() => {
     location.pathname.includes("/village") ? (
       setActiveId(data[0].id)
@@ -84,12 +106,38 @@ export default function Admin() {
       setActiveId(data[5].id)
     ) : location.pathname.includes('/tour') ? (
       setActiveId(data[6].id)
+    ) : location.pathname.includes('/user') ? (
+      setActiveId(data[7].id)
     ) : (
       <NotFound />
     )
 
   }, [location.pathname])
 
+  const popupRef = useRef(null)
+
+   //click outside
+   useEffect(() => {
+    const handler = (e) => {
+      if (popupRef?.current?.contains(e.target) === false) {
+        setIsPopupLogout(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+    };
+  }, []);
+
+  //logout
+  const handleLogout = () => {
+    setIsPopupLogout(false)
+    setUserCurrent({})
+    navigate("/login")
+  }
+
+  const data_village_admin = data.filter(item => item.role === 'village_admin')
 
   return (
     <div className='admin'>
@@ -98,25 +146,31 @@ export default function Admin() {
 
         <div className='admin_sidebar-navigation'>
           {
-            data.map(item => (
-              <Link to={item.link} key={item.id} onClick={() => setActiveId(item.id)}>
-                <div className={item.id === activeId ? 'active' : ''}>
-                  <section>{item.icon}</section>
-                  <p>{item.name}</p>
-                </div>
-              </Link>
-            ))
+            
+               (userCurrent?.role?.includes('villageId_user')  ? data_village_admin : data).map(item => (
+                <Link to={item.link} key={item.id} onClick={() => setActiveId(item.id)}>
+                  <div className={item.id === activeId ? 'active' : ''}>
+                    <section>{item.icon}</section>
+                    <p>{item.name}</p>
+                  </div>
+                </Link>
+              ))
           }
         </div>
       </div>
 
       <div className='admin_content'>
         <div className='admin_content-header'>
-          <div>
-            <section>
-              <img src='https://yt3.ggpht.com/a/AATXAJzENkjCwI-ZdY5tls6YfiuWGb32Ufs7Jo6wfQ=s900-c-k-c0xffffffff-no-rj-mo'  alt='avt'/>
-            </section>
-            <p>Son Nguyen Truong</p>
+          <div className='admin_content-header-admin'>
+            <p>{userCurrent?.email}</p>
+            <div onClick={() => setIsPopupLogout(true)}>{userCurrent?.email?.slice(0,2)?.toUpperCase()}</div>
+            {
+              isPopupLogout && (
+                <section ref={popupRef} onClick={handleLogout}>
+                    <span>Logout</span>
+                </section>
+              )
+            }
           </div>
         </div>
         
@@ -136,6 +190,8 @@ export default function Admin() {
               <PlaceOfTour />
             ) : location.pathname.includes('/tour') ? (
               <TourAdmin />
+            ) : location.pathname.includes('/user') ? (
+              <UserAdmin />
             ) : (
               <NotFound />
             )

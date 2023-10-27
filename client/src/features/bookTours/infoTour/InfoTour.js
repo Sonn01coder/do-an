@@ -1,40 +1,77 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import "./infoTour.scss";
 import {BsChevronDown} from "react-icons/bs";
 import {FaChevronDown, FaChevronUp} from "react-icons/fa";	
-
-const list_tour = [
-    {
-        id: 1,
-        name: 'Tour 1'
-    },
-    {
-        id: 2,
-        name: 'Tour 2'
-    },
-    {
-        id: 3,
-        name: 'Tour 3'
-    },
-    {
-        id: 4,
-        name: 'Tour 4'
-    },
-    {
-        id: 5,
-        name: 'Tour 5'
-    },
-]
+import { TourContext } from '../../../shared/dataContext/TourContext';
 
 export default function InfoTour() {
 
-    const [tourCurrent, setTourCurrent] = useState(list_tour[0].name)
+    const {nameTour, tours, placeTour, setBookTour, bookTour} = useContext(TourContext)
+    
+    //filter tour book when click button book tour
+    const tourBook =  tours.find(tour => tour.name === nameTour)
+    
+    //tour name current
+    const [tourNameCurrent, setTourNameCurrent] = useState(tourBook.name)
 
+    //tour current
+    const [tourCurrent, setTourCurrent] = useState(tours[0])
+
+    //show popup
     const [isPopupTours, setIsPopupTours] = useState(false)
 
+    //ticket number
     const [countTickets, setCountTickets] = useState(1)
 
+    //ref popup
     const popupTourRef = useRef(null)
+
+    //filter name tour 
+    const listNameTours = tours.map(tour => tour.name)
+
+    //change tour current
+    useEffect(() => {
+      const newTour = tours.find(tour => tour.name === tourNameCurrent)
+      setBookTour({...bookTour, tourId: newTour.id})
+      setTourCurrent(newTour)
+    }, [tourNameCurrent])
+
+    useEffect(() => {
+      setBookTour({...bookTour, ticket: countTickets})
+    }, [countTickets])
+
+  //filter place of tour
+  const handlePlaceOfTour = (arr) => {
+    const newArr = JSON.parse(arr)
+    return  placeTour.filter(place => newArr.includes(place.id))
+  }
+
+    //handle render journey tour
+  const handleRenderJourney = (arr) => {
+    const renderedString = [];
+
+    for (let i = 0; i < arr.length; i++) {
+      
+      if(arr[i].name.includes("nhà hàng")) {
+        if(i===arr.length-1) {
+            renderedString.push(`Và cuối cùng về ${arr[i].name} ăn trưa`)
+
+        } else {
+            renderedString.push(`Đến ${arr[i].name} ăn trưa`)
+        }
+      } else {
+            if(i===0) {
+              renderedString.push(`Xuất phát từ ${arr[i].name}`)
+            } else if (i < arr.length - 2) {
+                renderedString.push(`Tiếp đó ${arr[i].name}`)
+            } else if (i === arr.length - 1) {
+                renderedString.push(`Và cuối cùng đến ${arr[i].name}`)
+            }
+        }
+    }
+
+    return renderedString;
+  }
 
     //click outside
   useEffect(() => {
@@ -52,7 +89,7 @@ export default function InfoTour() {
 
   //handle pick tour
   const handlePickTour = (tour) => {
-    setTourCurrent(tour)
+    setTourNameCurrent(tour)
     setIsPopupTours(false)
   }
 
@@ -73,15 +110,15 @@ export default function InfoTour() {
             <p>Tour: </p>
             <div className='infoTour_category-current'>
                 <section onClick={() => setIsPopupTours(true)}>
-                    {tourCurrent}
+                    {tourNameCurrent}
                     <span><BsChevronDown /></span>
                 </section>
                 {
                     isPopupTours && (
                         <div className='infoTour_category-current-list' ref={popupTourRef}>
                         {
-                            list_tour.map(tour => (
-                                 <span onClick={() => handlePickTour(tour.name)} key={tour.id}>{tour.name}</span>
+                            listNameTours.map((tourName, index) => (
+                                 <span onClick={() => handlePickTour(tourName)} key={index}>{tourName}</span>
                             ))
                         }
                         </div>
@@ -90,16 +127,17 @@ export default function InfoTour() {
             </div>
         </section>
         <p className='infoTour_journey'>
-        <section>Lộ trình: </section>   
-        Làng Bát Tràng, thành Cổ Loa, đền An Dương Vương
+            <section>Lộ trình: </section>   
+            {handlePlaceOfTour(tourCurrent.placeId).map((place, index) => <span key={place.id}>{index === 0 ? place.name : `, ${place.name}`}</span>) }
         </p>
         <div className='infoTour_journey-detail'>
             <p>Chi tiết:</p> 
             <section>
-                <span>- Xuất phát tại VNU</span>
-                <span>- Đến làng Bát Tràng</span>
-                <span>- Tiếp đó đến thành Cổ Loa</span>
-                <span>- Di chuyển tới đền An Dương Vương</span>
+            {
+              handleRenderJourney(handlePlaceOfTour(tourCurrent.placeId)).map((place, index) => (
+                <span key={index}>- {place}</span>
+              ))
+            }
             </section>
         </div>
         <div className='infoTour_ticket'>
@@ -116,6 +154,33 @@ export default function InfoTour() {
                     <span className={countTickets === 1 ? "count-disabled" : ''} onClick={handleMinusTickets}><FaChevronDown /></span>
                 </div>
             </div>
+        </div>
+
+        <div className="infoTour_date">
+            <section>Date :</section>
+            <span>
+              <div className='infoTour_date-input'>
+                <p>Date start</p>
+                <input 
+                  type="date" 
+                  placeholder='Date start' 
+                  min="2023-09-01" 
+                  value={bookTour.dateStart}
+                  onChange={e => setBookTour({...bookTour, dateStart: e.target.value})}
+                />
+              </div>
+              
+              <div className='infoTour_date-input'>
+                <p>Date end</p>
+                <input 
+                  type="date" 
+                  placeholder='Date end' 
+                  min={bookTour.dateStart} 
+                  value={bookTour.dateEnd}
+                  onChange={e => setBookTour({...bookTour, dateEnd: e.target.value})}
+                />
+              </div>
+            </span>
         </div>
     </div>
   )

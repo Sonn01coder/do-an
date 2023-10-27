@@ -1,14 +1,24 @@
-import React from 'react'
-import { Link, useLocation, useParams } from 'react-router-dom'
+import React, { useContext, useEffect } from 'react'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import "./myAccount.scss";
 import { LIST_SIDEBAR_MYACCOUNT } from '../../shared/constants/Constants';
 import Profile from './profile/Profile';
 import HistoryTour from './historyTour/HistoryTour';
+import { AuthContext } from '../../shared/dataContext/AuthContext';
 
 export default function MyAccount() {
 
   const {slug} = useParams()
   const location = useLocation()
+  const navigate = useNavigate()
+
+  const { userCurrent } = useContext(AuthContext)
+
+  useEffect(() => {
+    if(Object.keys(userCurrent).length === 0) {
+        navigate('/login')
+    }
+  }, [Object.keys(userCurrent)?.length === 0])
 
   return (
     <div className='myAccount'>

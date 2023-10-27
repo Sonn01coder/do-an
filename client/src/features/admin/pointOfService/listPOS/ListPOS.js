@@ -14,8 +14,6 @@ export default function ListPOS() {
     setPopupAdmin({id: item.id, isPopup: true, content: `Point Of Service ${item.name}`, category: "pos"})
   }
 
-
-
   const villageName = (idVillage) => {
     if(idVillage) {
       const village = villages.find(village => village.id === idVillage)

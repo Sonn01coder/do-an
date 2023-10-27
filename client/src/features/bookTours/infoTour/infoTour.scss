@@ -5,7 +5,7 @@
 
     h3 {
         font-size: 20px;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
     }
 
     &_category {
@@ -46,7 +46,6 @@
                 top: -20px;
                 right: -16px;
                 border-radius: 5px;
-                box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
 
                 &::-webkit-scrollbar-thumb {
                     background: #605e5e;
@@ -102,7 +101,7 @@
     }
 
     &_ticket{
-        margin-top: 20px;
+        margin-top: 10px;
         @include flex(center, flex-start, row);
 
         p {
@@ -111,15 +110,14 @@
 
         &-count {
             @include flex(center, flex-start, row);
-            border: 1px solid #827e7e;
-            padding: 10px 5px 10px 15px;
+            border: 1px solid #d3cece;
+            padding: 3px 3px 3px 13px;
             margin-left: 15px;
-            box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.6);
 
             input {
                 margin-right: 15px;
                 width: 50px;
-                padding: 8px 10px;
+                padding: 5px 8px;
                 border: none;
                 font-size: 16px;
                 text-align: center;
@@ -145,5 +143,34 @@
             }
         }
 
+    }
+
+    &_date {
+        margin-top: 15px;
+        @include flex(flex-start, flex-start, row);
+
+        section {
+            font-weight: 600;
+            margin-right: 15px;
+           
+        }
+
+        span {
+            .infoTour_date-input {
+                @include flex(flex-start, flex-start, row);
+                margin-bottom: 10px;
+
+                p {
+                    min-width: 80px;
+                }
+
+                input {
+                    padding: 8px 25px;
+                    border-radius: 5px;
+                    border: 1px solid #ccc;
+                    cursor: pointer;
+                }
+            }
+        }
     }
 }

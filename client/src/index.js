@@ -9,22 +9,25 @@ import { POSProvider } from './shared/dataContext/PointOfServiceContext';
 import { POIProvider } from './shared/dataContext/PointOfInterestContext';
 import { NeiProvider } from './shared/dataContext/NeighboringPointContext';
 import { TourProvider } from './shared/dataContext/TourContext';
+import { AuthProvider } from './shared/dataContext/AuthContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <VillageProvider>
+  <VillageProvider>
+    <AuthProvider>
       <NeiProvider>
         <TourProvider>
           <ProductProvider>
             <POSProvider>
               <POIProvider>
                 <App />
-              <Toaster/>
+                <Toaster/>
               </POIProvider>
             </POSProvider>
           </ProductProvider>
         </TourProvider>
-      </NeiProvider>
+        </NeiProvider>
+      </AuthProvider>
     </VillageProvider>
 );

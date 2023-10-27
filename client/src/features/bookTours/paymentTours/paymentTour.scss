@@ -1,0 +1,84 @@
+@import '../../../index.scss';
+
+.paymentTour {
+    @include flex(flex-start,unset, column);
+    width: 100%;
+
+    h3 {
+        font-size: 20px;
+        margin-bottom: 40px ;
+    }
+
+    &_client {
+        width: 100%;
+        @include flex(flex-start, flex-start, row);
+        margin-bottom: 15px;
+        
+        h4 {
+            width: 150px;
+        }
+
+        &-info {
+            width: 100%;
+
+            &-input {
+                margin-bottom: 8px;
+                width: 100%;
+                @include flex(flex-start, flex-start, row);
+
+                p {
+                    width: 100px;
+                }
+
+                input {
+                    padding: 8px 15px;
+                    width: 50%;
+                    border-radius: 6px;
+                    border: 1px solid #ccc;
+                }
+            }
+        }
+
+    }
+
+    &_tour {
+        width: 100%;
+        @include flex(flex-start, flex-start, row);
+
+        h4 {
+            width: 150px;
+        }
+
+        &-info {
+            width: 100%;
+           @include flex(flex-start, flex-start, column);
+
+           div{
+            width: 100%;
+            @include flex(flex-start, flex-start, row);
+            margin-bottom: 5px;
+
+            p{
+                width: 100px;
+            }
+           }
+        }
+    }
+
+    &_btn {
+        width: 100%;
+
+        button {
+            margin-top: 30px;
+            margin-right: 10px;
+            padding: 10px 25px;
+            border-radius: 5px;
+            border: 1px solid rgb(157, 8, 8);
+            cursor: pointer;
+            background-color: red;
+            font-size: 16px;
+            color: #fff;
+            float: right;
+        }
+    }
+}

@@ -5,10 +5,16 @@ import { Link } from 'react-router-dom';
 import {ROUTER} from "../../../../shared/constants/Constants";
 import { VillageContext } from '../../../../shared/dataContext/VillageContext';
 import { ProductContext } from '../../../../shared/dataContext/ProductContetx';
+import { AuthContext } from '../../../../shared/dataContext/AuthContext';
 
 export default function ProductsAll() {
+  const {userCurrent} = useContext(AuthContext)
   const {villages, setPopupAdmin} = useContext(VillageContext)
   const {products} = useContext(ProductContext)
+
+  const villageId = userCurrent?.role && userCurrent.role.match(/\d+/) ? Number(userCurrent.role.match(/\d+/)[0]) : 0;
+
+  const productCurrentAdmin  = products.filter(products => products.villageId=== villageId)
 
 
   const showPopupAdmin = (item) => {
@@ -33,7 +39,7 @@ export default function ProductsAll() {
         </div>
         <body className='productList_admin-body'>
         {
-            products.map(item => (
+            (userCurrent?.role?.includes(process.env.REACT_APP_VILLAGE_USER) ? productCurrentAdmin : products).map(item => (
             <div key={item.id}>
                 <section>{item.id}</section>
                 <section>{item.name}</section>

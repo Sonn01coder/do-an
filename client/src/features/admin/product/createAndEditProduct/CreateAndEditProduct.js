@@ -11,10 +11,20 @@ import 'react-quill/dist/quill.snow.css';
 import { storage } from '../../../../shared/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { ProductContext } from '../../../../shared/dataContext/ProductContetx';
+import { AuthContext } from '../../../../shared/dataContext/AuthContext';
 
 export default function CreateAndEditProduct() {
+    const { userCurrent } = useContext(AuthContext)
     const {villages} = useContext(VillageContext);
     const {products, createProduct, updateProduct} = useContext(ProductContext);
+
+     //check admin village
+     const isAdminVillage = userCurrent?.role?.includes(process.env.REACT_APP_VILLAGE_USER)
+
+    const villageId = userCurrent?.role && userCurrent.role.match(/\d+/) ? Number(userCurrent.role.match(/\d+/)[0]) : 0;
+
+ 
+     const villageCurrentAdmin  = villages.find(village => village.id === villageId)
 
     //get slug
     const {slug} = useParams()
@@ -98,9 +108,9 @@ export default function CreateAndEditProduct() {
     //handle add/edit village
     const handleAllProduct = () => {
         if(formData.id) {
-            void updateProduct({...formData, image: JSON.stringify(selectedImages) , villageId: villageCurrent.id, id: formData.id})
+            void updateProduct({...formData, image: JSON.stringify(selectedImages) , villageId: villageCurrent.id || villageCurrentAdmin?.id    , id: formData.id})
         } else {
-            void createProduct({...formData, image: JSON.stringify(selectedImages), villageId: villageCurrent.id })
+            void createProduct({...formData, image: JSON.stringify(selectedImages), villageId: villageCurrent.id || villageCurrentAdmin?.id })
             setFormData(PRODUCT_DEFAULT)
             setVillageCurrent(VILLAGE_DEFAULT)
         }
@@ -137,12 +147,23 @@ export default function CreateAndEditProduct() {
 
             <div className='createAndEditProduct_content-input  full-width'>
                 <p>Village</p>
-                <input 
+                {
+                    isAdminVillage ? (
+                        <input 
+                    type="text" 
+                    placeholder='Sản phẩm thuộc làng' 
+                    value={villageCurrentAdmin?.name}
+                />
+                    ): (
+                        <input 
                     type="text" 
                     placeholder='Sản phẩm thuộc làng' 
                     value={villageCurrent.name}
                     onClick={() => setPopupVillages(true)}
                 />
+                    )
+                }
+                
                 {
                     popupVillages && (
                         <div ref={popupRef} className='createAndEditProduct_content-input-popup'>
