@@ -16,6 +16,7 @@ import {TbTournament} from "react-icons/tb"
 import TourAdmin from './tourAdmin/TourAdmin';
 import UserAdmin from './userAdmin/UserAdmin';
 import { AuthContext } from '../../shared/dataContext/AuthContext';
+import { USER_DEFAULT } from '../../shared/constants/Constants';
 
 const data = [
   {
@@ -133,7 +134,7 @@ export default function Admin() {
   //logout
   const handleLogout = () => {
     setIsPopupLogout(false)
-    setUserCurrent({})
+    setUserCurrent(USER_DEFAULT)
     navigate("/login")
   }
 

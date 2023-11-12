@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import "./tour.scss";
 import {FaPaperPlane} from "react-icons/fa";
@@ -10,6 +10,9 @@ import Avatar from '../avatar/Avatar';
 export default function Tour() {
   const {tours, placeTour} = useContext(TourContext) 
   const {userCurrent} = useContext(AuthContext)
+
+  const [valueSearch, setValueSearch] = useState("")
+
 
   //filter place of tour
   const handlePlaceOfTour = (arr) => {
@@ -40,6 +43,12 @@ export default function Tour() {
     return renderedString;
   }
 
+  //filter tour with value search
+  const filterTour = tours.filter(tour => {
+    const renderedString = handleRenderJourney(handlePlaceOfTour(tour.placeId))
+    return renderedString.toLowerCase().includes(valueSearch.toLowerCase())
+  })
+
   //handle slug tour
   const handleSlugTour = (string) => {
     return string.toLowerCase().replace(/\s+/g, "-")
@@ -57,7 +66,7 @@ export default function Tour() {
             <h2>LÀNG VIỆT</h2>
         </Link>
         {
-          Object.keys(userCurrent).length === 0  ? (
+          userCurrent.email === '' ? (
             <div>
               <Link to={"/login"}>
                 <button>Đăng nhập</button>
@@ -87,14 +96,23 @@ export default function Tour() {
             </section>
 
             <div className='tour_content-input'>
-              <input type='text' placeholder="Nhập từ khóa tìm kiếm của bạn" />
+              <input 
+                type='text' 
+                placeholder="Nhập từ khóa tìm kiếm của bạn" 
+                value={valueSearch}
+                onChange={e => setValueSearch(e.target.value)} 
+              />
               <span><BsSearch /></span>
             </div>
           </div>
 
           <div className='tour_list'>
+          <div className="tour_list-title">
+            Bạn có thể tham khảo một số tour có sẵn hoặc tự tạo lộ trình riêng cho mình
+            <Link to='/user-tour' className='tour_list-title-link'>Tại đây</Link>
+          </div>
           {
-            tours.map(tour => (
+            filterTour.map(tour => (
                 <div className='tour_item' key={tour.id}>
                   <div className='tour_item-content' key={tour.id}>
                     <h4>{tour.name}:</h4>

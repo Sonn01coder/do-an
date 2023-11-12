@@ -178,7 +178,7 @@ export const AVATAR_LINK = [
     },
     {
         id:3,
-        name: "EDIT VILLAGE",
+        name: "ADMIN",
         link: "/admin/village",
         role: 'admin'
     },
@@ -219,3 +219,14 @@ export const ROLE_USER = [
     },
 
 ]
+
+
+export const USER_DEFAULT = {
+    email:'',
+    id: 0,
+    name: '',
+    password: '',
+    phone1: 0,
+    phone2: 0,
+    role: 'member'
+}

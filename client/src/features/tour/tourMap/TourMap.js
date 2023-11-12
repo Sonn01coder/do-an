@@ -5,9 +5,13 @@ import { Link, useParams } from 'react-router-dom';
 import { TourContext } from '../../../shared/dataContext/TourContext';
 
 export default function TourMap() {
-    const {tours, placeTour, setNameTour} = useContext(TourContext) 
+    const {tours, placeTour, setNameTour, setBookTour, bookTour} = useContext(TourContext) 
 
     const {slug} = useParams()
+
+    console.log(slug);
+
+    console.log(tours);
 
     //handle slug tour
   const handleSlugTour = (string) => {
@@ -39,7 +43,7 @@ export default function TourMap() {
       } else {
             if(i===0) {
               renderedString.push(`Xuất phát từ ${arr[i].name}`)
-            } else if (i < arr.length - 2) {
+            } else if (i <=  arr.length - 2) {
                 renderedString.push(`Tiếp đó ${arr[i].name}`)
             } else if (i === arr.length - 1) {
                 renderedString.push(`Và cuối cùng đến ${arr[i].name}`)
@@ -48,6 +52,12 @@ export default function TourMap() {
     }
 
     return renderedString;
+  }
+
+
+  const handleBookTour = () => {
+    setNameTour(tourCurrent.name)
+    setBookTour({...bookTour, tourId: tourCurrent.id})
   }
 
   return (
@@ -77,7 +87,7 @@ export default function TourMap() {
         </div>
 
         <div className='tourMap_register'>
-            <Link to={"/book-tour"} className='tourMap_register-link' onClick={() => setNameTour(tourCurrent.name)}>ĐĂNG KÍ THAM QUAN {tourCurrent.name.toUpperCase()}</Link>
+            <Link to={"/book-tour"} className='tourMap_register-link' onClick={handleBookTour}>ĐĂNG KÍ THAM QUAN {tourCurrent.name.toUpperCase()}</Link>
         </div>
     </div>
   )

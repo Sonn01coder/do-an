@@ -35,14 +35,11 @@ export default function Login() {
         }
     }
 
-    console.log(!(Object.keys(userCurrent).length === 0))
-
     useEffect(() => {
-        if(!(Object.keys(userCurrent).length === 0)) {
-            console.log("login");
+        if(userCurrent.email !== '') {
             navigate('/home')
         }
-      }, [Object.keys(userCurrent).length === 0])
+      }, [Object.keys(userCurrent).length])
 
     //handle logic register account
     const handleLogicRegister = async () => {

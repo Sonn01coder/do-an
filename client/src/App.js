@@ -64,6 +64,8 @@ function App() {
             <Route path="poi/:path" element={<POI />} />
           </Route>
 
+          <Route path="user-tour" element={<Layout />} />
+
           <Route exact path="/tour">
             <Route index element={<Tour />} />
             <Route path=":slug" element={<Layout />} />

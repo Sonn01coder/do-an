@@ -9,6 +9,7 @@ export default function HistoryTour() {
 
   const [userCurrentId, setUserCurrentId] = useState(0)
 
+
   useEffect(() => {
     const getLocalUserId = localStorage.getItem('userIdFair');
     if (getLocalUserId) {
@@ -21,10 +22,11 @@ export default function HistoryTour() {
   //filter history tour user
   const filterHistoryTour = historyTour.filter(tour => tour.userId === userCurrentId)
 
-  const filterHistoryTourId = filterHistoryTour.map(tour => tour.tourId)
-
   //filter tour
-  const filterTours = tours.filter(tour => filterHistoryTourId.includes(tour.id))
+  const filterTours = filterHistoryTour.map(tour => { 
+    const newTour = tours.find(item => item.id === tour.tourId)
+    return {...tour, ...newTour}
+  })
 
   //filter place of tour
   const handlePlaceOfTour = (arr) => {
@@ -55,11 +57,6 @@ export default function HistoryTour() {
     return renderedString;
   }
 
-  //filter history tour: get date start, date end
-  const historyTourCurrent = (id) => {
-    return filterHistoryTour.find(tour => tour.tourId === id)
-  }
-
   //handle slug tour: Tour 1 => tour-1
   const handleSlugTour = (string) => {
     return "/tour/" + string.toLowerCase().replace(/\s+/g, "-")
@@ -73,9 +70,9 @@ export default function HistoryTour() {
         <div className='historyTour_tour' key={tour.id}>
           <h3>{tour.name}:</h3>
           <p>Lộ trình: {handleRenderJourney(handlePlaceOfTour(tour.placeId))}</p>
-          <p>Ngày đi: {historyTourCurrent(tour.id).dateStart}</p>
-          <p>Ngày về: {historyTourCurrent(tour.id).dateEnd}</p>
-          <p>Giá {tour.price.toLocaleString('vi-VN')} x {historyTourCurrent(tour.id).tickerNumber} vé = {(tour.price * historyTourCurrent(tour.id).tickerNumber).toLocaleString('vi-VN')} VND </p>
+          <p>Ngày đi: {tour.dateStart}</p>
+          <p>Ngày về: {tour.dateEnd}</p>
+          <p>Giá {tour.price.toLocaleString('vi-VN')} x {tour.tickerNumber} vé = {(tour.price * tour.tickerNumber).toLocaleString('vi-VN')} VND </p>
           <p className='historyTour_tour-link'><Link to={handleSlugTour(tour.name)}>Xem chi tiết lộ trình trên map</Link></p>
         </div>
       ))) : (

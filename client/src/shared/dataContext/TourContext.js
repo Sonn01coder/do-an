@@ -28,6 +28,9 @@ export const TourProvider = (props) => {
     //book tour
     const [bookTour, setBookTour] = useState(HISTORY_TOUR_DEFAULT)
 
+    //user tour
+    const [waypoints, setWaypoints] = useState([])
+
 //PLACE OF TOUR
     //place of tour
     const getAllPlaceOfTour = async () => {
@@ -190,7 +193,9 @@ export const TourProvider = (props) => {
                     nameTour, 
                     setNameTour,
                     bookTour,
-                    setBookTour
+                    setBookTour,
+                    waypoints, 
+                    setWaypoints
                 }}
         >
            {children}

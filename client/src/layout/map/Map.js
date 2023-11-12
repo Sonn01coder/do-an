@@ -1,18 +1,17 @@
+
 import React, { useContext } from 'react'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import { LOCATION_HANOI } from '../../shared/constants/Constants'
-import { Icon, divIcon } from 'leaflet';
+import {  Icon } from 'leaflet';
 import 'leaflet/dist/leaflet.css'
 import "./map.scss";
 import { VillageContext } from '../../shared/dataContext/VillageContext';
 import { POIContext } from '../../shared/dataContext/PointOfInterestContext';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import ChangeMap, { TourMap } from './ChangeMap';
+import ChangeMap, { ToursMap, UserTour }  from './ChangeMap';
 import {MdOutlineOpenInNew} from "react-icons/md"
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import { TourContext } from '../../shared/dataContext/TourContext';
-import {PiNumberCircleOneFill} from "react-icons/pi" 
-
 
 export default function Map() {
   const {villages} = useContext(VillageContext)
@@ -34,7 +33,9 @@ export default function Map() {
   const handleGeocodePlaceOfTour = (arr) => {
     const newArr = JSON.parse(arr)
     const places =   placeTour.filter(place => newArr.includes(place.id))
-    return places.map(place => JSON.parse(place.geocode))
+    const placesGeocode = places.map(place => JSON.parse(place.geocode))
+
+    return {placesGeocode, places}
   }
 
   //get location
@@ -51,59 +52,50 @@ export default function Map() {
   //check Is Home
   const isHome = isPathName(location.pathname, "/home")
 
+  //check is user tour
+  const isUserTour = isPathName(location.pathname, "/user-tour")
+
   //get village current
   const villageCurrent = villages.find(village => village.slug.trim() === slug)
 
   //get poi current
   const poiCurrent = isVillage ? poi.filter(item => item.villageId === villageCurrent.id) : []
 
-  const customIcon = (image, index) => {
-    const img =  JSON.parse(image)
-    
-    return isVillage ? (
+  const customIcon = (image) => {
+    const img = JSON.parse(image);
+    return isHome ? (
+      new Icon({
+        iconUrl: require("../../shared/assest/image/icon.png"),
+        iconSize: [38, 38]
+      })
+    ) : isVillage ?  (
       new Icon({
         iconUrl: img[0],
         iconSize: [34, 34]
       })
-    ) :  (
-      new Icon({
-        iconUrl:require("../../shared/assest/image/icon.png"),
-        iconSize: [38, 38]
-      }) 
-    )
-    }
-
-  const testIcon = (index) => {
-    return (
-       new Icon({
-        iconUrl:require("../../shared/assest/image/icon.png"),
-        iconSize: [30, 30]
-      })
-    )
-  }
-
+    )  : null
+  };
 
   const convertToArray = (village) => {
     const geocode = JSON.parse(village.geocode);
     return geocode
   }
 
-
   return (
     <div className='map'>
-    <MapContainer center={LOCATION_HANOI} zoom={13}>
+    <MapContainer center={LOCATION_HANOI} zoom={11}>
     <TileLayer 
       url='https://apis.wemap.asia/raster-tiles/styles/osm-bright/{z}/{x}/{y}@2x.png?key=eURZuPekNfEchcBlPDfiAgadLZJuhPKSw'
     />
     {isVillage ? <ChangeMap geocode={JSON.parse(villageCurrent.geocode)}/> : null} 
-    {isTour ? <TourMap waypoints={handleGeocodePlaceOfTour(tourCurrent.placeId)}/> : null}
+    {isTour ? <ToursMap place={handleGeocodePlaceOfTour(tourCurrent.placeId)}/> : null}
+    {isUserTour ? <UserTour /> : null}
     {
-      (poiCurrent.length > 0 ? poiCurrent : isHome ? villages : []).map((village, index) => (
+      (poiCurrent.length > 0 ? poiCurrent : isHome ? villages :  []).map((village) => (
         <Marker 
           key={village.id}
           position={convertToArray(village)}
-          // icon={customIcon(village.image, index)}
-          icon={isTour ? testIcon(index) :customIcon(village.image)}
+          icon={customIcon(village?.image)}
         >
           <Popup autoOpen={true} autoClose={true}>
             <div className='map_popup'>
@@ -118,8 +110,9 @@ export default function Map() {
           </Popup>
         </Marker>
         ))
-      }
+    }
       </MapContainer>
       </div>
       )
 }
+

@@ -4,12 +4,13 @@ import "../scss/components/popupChangePassword.scss";
 import { validationChangePassword } from '../validation';
 import { AuthContext } from '../dataContext/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { USER_DEFAULT } from '../constants/Constants';
 
 export default function PopupChangePassword() {
 
   const navigate = useNavigate()
 
-  const {setIsPopupChangePassword, changePassword, userCurrent} = useContext(AuthContext)
+  const {setIsPopupChangePassword, changePassword, userCurrent, setUserCurrent} = useContext(AuthContext)
 
   const [valueForm, setValueForm] = useState({oldPassword: '', newPassword: '', confirmPassword: ''});
 
@@ -19,12 +20,14 @@ export default function PopupChangePassword() {
   const disabledBtn = error.oldPassword || error.newPassword || error.confirmPassword 
 
   const handleCheckChangePassword = async () => {
-    const res = await changePassword({id: userCurrent.id, oldPassword: valueForm.oldPassword, newPassword: valueForm.newPassword})
+    const res = await changePassword({id: userCurrent?.id || 0, oldPassword: valueForm.oldPassword, newPassword: valueForm.newPassword})
 
     if(res?.status === 200) {
+      setIsPopupChangePassword(false)
       setTimeout(() => {
+        localStorage.removeItem('userIdFair');
+        setUserCurrent(USER_DEFAULT)
         navigate("/login")
-        setIsPopupChangePassword(false)
       }, 1000)
     }
   }

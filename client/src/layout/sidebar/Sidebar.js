@@ -10,6 +10,7 @@ import { ProductContext } from '../../shared/dataContext/ProductContetx';
 import TourMap from '../../features/tour/tourMap/TourMap';
 import Avatar from '../../features/avatar/Avatar';
 import { AuthContext } from '../../shared/dataContext/AuthContext';
+import UserTour from '../../features/userTour/UserTour';
 
 export default function Sidebar() {
   const location = useLocation()
@@ -58,7 +59,7 @@ export default function Sidebar() {
 
         <div  className='sidebar_search-turn'>
         {
-          Object.keys(userCurrent).length === 0 ?(
+          userCurrent.email === "" ?(
             <Link to='/login' className='sidebar_search-turn-login'>
               <AiOutlineUserAdd />
             </Link>
@@ -72,7 +73,8 @@ export default function Sidebar() {
           {
             location.pathname === '/home' ? 
             <VillageList valueSearch={valueSearch} /> :
-            location.pathname.includes("/village/") ?  <VillageDetail /> 
+            location.pathname.includes("/village/") ?  <VillageDetail /> :
+            location.pathname === '/user-tour' ? <UserTour />
             : <TourMap />
           }
         </div>

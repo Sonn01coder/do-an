@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import {ToastSuccess, ToastError} from '../common/toast'
 import { VillageContext } from "./VillageContext";
 import { changePasswordAPI, getMembersAPI, getUserByIdAPI, getUsersAPI, loginUserAPI, registerUserAPI, updateInfoUserAPI, updateRoleUserAPI } from "../../API/authService";
+import { USER_DEFAULT } from "../constants/Constants";
 
 export const AuthContext = createContext();
 
@@ -16,7 +17,7 @@ export const AuthProvider = (props) => {
     //member
     const [members, setMembers] = useState([])
 
-    const [userCurrent, setUserCurrent] = useState({})
+    const [userCurrent, setUserCurrent] = useState(USER_DEFAULT)
 
     const [isPopupChangePassword, setIsPopupChangePassword] = useState(false)
 
@@ -109,7 +110,7 @@ export const AuthProvider = (props) => {
             setUserCurrent(res.data.data)
             setTimeout(() => {
                 setIsLoading(false)
-                setUserCurrent({})
+                setUserCurrent(USER_DEFAULT)
             }, 1000)
         } else  {
             setIsLoading(false)
@@ -125,7 +126,7 @@ export const AuthProvider = (props) => {
 
     return (
         <AuthContext.Provider 
-            value={{updateRoleUser, registerUser,changePassword,  loginUser, users, userCurrent, updateInfoUser, isPopupChangePassword, setIsPopupChangePassword, members}}
+            value={{updateRoleUser, registerUser,changePassword, setUserCurrent,  loginUser, users, userCurrent, updateInfoUser, isPopupChangePassword, setIsPopupChangePassword, members}}
         >
            {children}
         </AuthContext.Provider>

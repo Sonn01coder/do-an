@@ -12,8 +12,11 @@ export default function PaymentTours() {
     void createHistoryTour({userId: userCurrent.id, tourId: bookTour.tourId, dateStart: bookTour.dateStart, dateEnd: bookTour.dateEnd, tickerNumber: bookTour.ticket})
   }
 
+  console.log(bookTour);
   //filter tour 
   const tourCurrent = tours.find(tour => tour.id === bookTour.tourId)
+
+  console.log(tourCurrent);
 
   //filter place of tour
   const handlePlaceOfTour = (arr) => {

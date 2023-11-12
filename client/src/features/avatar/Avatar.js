@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import "./avatar.scss";
 import { AuthContext } from '../../shared/dataContext/AuthContext';
 import { Link } from 'react-router-dom';
-import { AVATAR_LINK } from '../../shared/constants/Constants';
+import { AVATAR_LINK, USER_DEFAULT } from '../../shared/constants/Constants';
 import { VillageContext } from '../../shared/dataContext/VillageContext';
 
 export default function Avatar() {
@@ -37,10 +37,10 @@ export default function Avatar() {
         if(name === "LOGOUT") {
             setIsLoading(true)
             localStorage.removeItem('userIdFair');
-            setUserCurrent({})
+            setUserCurrent(USER_DEFAULT)
             setTimeout(() => {
                 setIsLoading(false)
-            }, 1500)
+            }, 1000)
         }
     }
 

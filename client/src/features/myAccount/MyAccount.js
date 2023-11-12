@@ -15,10 +15,10 @@ export default function MyAccount() {
   const { userCurrent } = useContext(AuthContext)
 
   useEffect(() => {
-    if(Object.keys(userCurrent).length === 0) {
+    if(userCurrent?.email === "") {
         navigate('/login')
     }
-  }, [Object.keys(userCurrent)?.length === 0])
+  }, [])
 
   return (
     <div className='myAccount'>

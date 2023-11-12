@@ -15,12 +15,11 @@ export default function BookTours() {
 
     const navigate = useNavigate()
 
-
   useEffect(() => {
-    if(Object.keys(userCurrent).length === 0) {
+    if(userCurrent?.email === '' ) {
         navigate('/login')
     }
-  }, [Object.keys(userCurrent).length === 0])
+  }, [Object.keys(userCurrent).length])
 
   return (
     <div className='bookTours'>

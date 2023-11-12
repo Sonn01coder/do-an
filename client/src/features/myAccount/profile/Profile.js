@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import './profile.scss';
-import { Link } from 'react-router-dom';
 import { validationProfile } from '../../../shared/validation';
 import { AuthContext } from '../../../shared/dataContext/AuthContext';
 
