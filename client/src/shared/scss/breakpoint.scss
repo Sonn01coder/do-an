@@ -1,0 +1,18 @@
+
+@mixin laptop {
+    @media only screen and (max-width: $laptop-width) {
+        @content;
+    }
+}
+
+@mixin pc {
+    @media only screen and (max-width: $pc-width) {
+        @content;
+    }
+}
+
+@mixin pcBig {
+    @media only screen and (max-width: $pc-big-width) {
+        @content
+    }
+}

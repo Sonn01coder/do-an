@@ -21,9 +21,6 @@
             .productList_path-link {
                 @include flex(center, flex-start, row);
 
-                .name_link {
-                }
-
                 p {
                     color: blue;
                     cursor: pointer;
@@ -67,11 +64,23 @@
     }
 
     &_wrapper {
-        @include flex(center, space-between, unset);
+        height: calc(100% - 100px);
+        @include flex(flex-start, space-between, unset);
         padding: 5px 30px 0;
         flex-wrap: wrap;
-        max-height: 550px;
         overflow-y: auto;
+
+        &::-webkit-scrollbar-thumb {
+            background: #747373;
+        }
+    
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+    
+        &::-webkit-scrollbar-track {
+            background: #e7e7e7;
+        }
 
         a {
             width: calc(23% - 10px); 

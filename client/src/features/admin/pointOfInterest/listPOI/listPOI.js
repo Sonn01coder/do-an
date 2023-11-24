@@ -4,14 +4,12 @@ import { Link } from 'react-router-dom';
 import {ROUTER} from "../../../../shared/constants/Constants";
 import { VillageContext } from '../../../../shared/dataContext/VillageContext';
 import {AuthContext} from '../../../../shared/dataContext/AuthContext';
-import { POIContext } from '../../../../shared/dataContext/PointOfInterestContext';
 import "./listPOI.scss";
 
-export default function ListPOI() {
+export default function ListPOI({poi}) {
   const {userCurrent} = useContext(AuthContext)
 
   const {villages, setPopupAdmin} = useContext(VillageContext)
-  const {poi} = useContext(POIContext)
 
   const villageId = userCurrent?.role && userCurrent.role.match(/\d+/) ? Number(userCurrent.role.match(/\d+/)[0]) : 0;
 

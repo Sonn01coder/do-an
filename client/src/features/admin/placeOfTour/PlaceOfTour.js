@@ -1,14 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { ROUTER, showListLength } from '../../../shared/constants/Constants'
 import { Link, useLocation } from 'react-router-dom';
 import {AiFillCaretDown} from "react-icons/ai"
 import {BsSearch} from "react-icons/bs" 
 import CreateAndEditPlaceTour from './createAndEditPlaceTour/CreateAndEditPlaceTour';
 import ListPlaceTour from './listPlaceTour/ListPlaceTour';
+import { TourContext } from '../../../shared/dataContext/TourContext';
 
 export default function PlaceOfTour() {
     const [listLength, setListLength] = useState(showListLength[0].length)
     const [openPopup, setOpenPopUp] = useState(false)
+
+    const {placeTour} = useContext(TourContext)
+
+    const [valueSearch, setValueSearch] = useState("")
+
+    const [newPlaceTour, setNewPlaceTour] = useState(placeTour)
+
+    const placeTourSearch = placeTour.filter(item => item.name.toLowerCase().includes(valueSearch.toLowerCase()))
   
     const popUpRef = useRef()
   
@@ -20,6 +29,15 @@ export default function PlaceOfTour() {
       setListLength(length)
       setOpenPopUp(false)
     }
+
+    useEffect(() => {
+      if(listLength < placeTour.length) {
+        const newArr = placeTour.slice(0, listLength)
+        setNewPlaceTour(newArr)
+      } else {
+        setNewPlaceTour(placeTourSearch)
+      }
+    }, [listLength])
   
     //click outside
     useEffect(() => {
@@ -62,13 +80,13 @@ export default function PlaceOfTour() {
      
                    <div className='productManagement_body-header-search'>
                      <Link to={ROUTER.ADMIN_PLACE_OF_TOUR_CREATE}><button>Create</button></Link>
-                     <input type="text"  placeholder='Nhập từ khóa tìm kiếm'/>
+                     <input type="text"  placeholder='Nhập từ khóa tìm kiếm' value={valueSearch} onChange={e => setValueSearch(e.target.value)}/>
                      <section><BsSearch /></section>
                    </div>
                </div>
      
                <div>
-                    <ListPlaceTour />
+                    <ListPlaceTour placeTour={newPlaceTour.length > 0 ? newPlaceTour : placeTourSearch}/>
                </div>
              </div>   
           ) : (

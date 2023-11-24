@@ -2,8 +2,9 @@
 
 .villageDetail {
     padding-right: 3px;
-    max-height: 500px;
-    
+    height: 100%;
+    // overflow: hidden;
+
     &_title {
         @include flex(center, space-between, row);
         padding: 5px 8px 12px 0;
@@ -88,8 +89,8 @@
     }
     
     &_content {
+        height: calc(100% - 60px);
         overflow-y: auto;
-        max-height: 445px;
 
         &::-webkit-scrollbar-thumb {
             background: #747373;
@@ -130,13 +131,15 @@
                 text-overflow: ellipsis;
                 overflow: hidden;
                 display: inline;
+                max-height: 100px !important;
 
                 h4 {
                     float: left;
                 }
 
-                p {
+                span {
                     overflow: hidden;
+                    display: inline-block;
                 }
             }
 

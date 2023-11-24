@@ -71,7 +71,7 @@ export default function VillageDetail() {
 
             <section className='villageDetail_content-history'>
               <h4>Lịch sử ra đời: </h4>
-              <p style={{maxHeight: isMore ? null : "100px"}} dangerouslySetInnerHTML={{ __html: village.history }}/>
+              <span style={{maxHeight: isMore ? null : "100px"}} dangerouslySetInnerHTML={{ __html: village.history }}/>
             </section>
 
             <div className='villageDetail_content-more' onClick={() => setIsMore(!isMore)}>

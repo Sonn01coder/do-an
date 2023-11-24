@@ -5,8 +5,8 @@ import {AiFillEdit, AiFillDelete} from "react-icons/ai"
 import { ROUTER } from '../../../../shared/constants/Constants';
 import { AuthContext } from '../../../../shared/dataContext/AuthContext';
 
-export default function ListUser() {
-  const {users, members, userCurrent} = useContext(AuthContext)
+export default function ListUser({users}) {
+  const {members, userCurrent} = useContext(AuthContext)
 
   const {setPopupAdmin} = useContext(TourContext)
 

@@ -3,27 +3,27 @@ export const LOCATION_HANOI = [21.0285, 105.8542]
 export const showListLength = [
     {
         id: 1,
-        length: 10
+        length: "All"
     },
     {
         id: 2,
-        length: 20
+        length: 10
     },
     {
         id: 3,
-        length: 50
+        length: 20
     },
     {
         id: 4,
-        length: 100
+        length: 50
     },
     {
         id: 5,
-        length:200
+        length: 100
     },
     {
         id: 6,
-        length: "All"
+        length: 200
     }
 ]
 

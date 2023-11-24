@@ -4,13 +4,11 @@ import {AiFillEdit, AiFillDelete} from "react-icons/ai"
 import { Link } from 'react-router-dom';
 import {ROUTER} from "../../../../shared/constants/Constants";
 import { VillageContext } from '../../../../shared/dataContext/VillageContext';
-import { ProductContext } from '../../../../shared/dataContext/ProductContetx';
 import { AuthContext } from '../../../../shared/dataContext/AuthContext';
 
-export default function ProductsAll() {
+export default function ProductsAll({products}) {
   const {userCurrent} = useContext(AuthContext)
   const {villages, setPopupAdmin} = useContext(VillageContext)
-  const {products} = useContext(ProductContext)
 
   const villageId = userCurrent?.role && userCurrent.role.match(/\d+/) ? Number(userCurrent.role.match(/\d+/)[0]) : 0;
 

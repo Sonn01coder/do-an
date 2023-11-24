@@ -48,7 +48,7 @@ export default function PoiScreen() {
           <h3>CÁC ĐỊA ĐIỂM KHÁC CỦA {villageCurrent.name.toUpperCase()} :</h3>
           <section>
           {
-            listPoi.lenght > 0 ? (
+            listPoi.length > 0 ? (
               (
                 listPoi.map(item => (
                   <Link key={item.id} className='item_wrapper-footer-item' to={`/village/${slug}/poi/${item.slug}`}>

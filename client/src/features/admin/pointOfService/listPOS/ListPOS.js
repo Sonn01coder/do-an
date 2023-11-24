@@ -3,12 +3,9 @@ import {AiFillEdit, AiFillDelete} from "react-icons/ai"
 import { Link } from 'react-router-dom';
 import {ROUTER} from "../../../../shared/constants/Constants";
 import { VillageContext } from '../../../../shared/dataContext/VillageContext';
-import { POSContext } from '../../../../shared/dataContext/PointOfServiceContext';
 
-export default function ListPOS() {
+export default function ListPOS({pos}) {
   const {villages, setPopupAdmin} = useContext(VillageContext)
-  const {pos} = useContext(POSContext)
-
 
   const showPopupAdmin = (item) => {
     setPopupAdmin({id: item.id, isPopup: true, content: `Point Of Service ${item.name}`, category: "pos"})
@@ -20,7 +17,6 @@ export default function ListPOS() {
       return village.name || ""
     }
   }
-
  
   return (
     <div className='productList_admin'>

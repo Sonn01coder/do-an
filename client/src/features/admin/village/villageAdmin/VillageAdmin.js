@@ -8,8 +8,8 @@ import { AuthContext } from '../../../../shared/dataContext/AuthContext';
 
 
 
-export default function VillageAdmin() {
-  const {villages, setPopupAdmin} = useContext(VillageContext)
+export default function VillageAdmin({villages}) {
+  const {setPopupAdmin} = useContext(VillageContext)
   const {userCurrent} = useContext(AuthContext)
 
   const villageId = userCurrent?.role && userCurrent.role.match(/\d+/) ? Number(userCurrent.role.match(/\d+/)[0]) : 0;

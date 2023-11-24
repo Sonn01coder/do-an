@@ -5,23 +5,39 @@ import { ROUTER, showListLength } from '../../../shared/constants/Constants'
 import { Link, useLocation } from 'react-router-dom'
 import CreateAndEditPOI from './createAndEditPOI/CreateAndEditPOI';
 import ListPOI from './listPOI/listPOI';
+import { POIContext } from '../../../shared/dataContext/PointOfInterestContext';
 
 export default function PointOfInterest() {
+  const {poi} = useContext(POIContext)
 
   const [listLength, setListLength] = useState(showListLength[0].length)
   const [openPopup, setOpenPopUp] = useState(false)
 
   const popUpRef = useRef()
 
+  const [newPoi, setNewPoi] = useState(poi)
+
+  const [valueSearch, setValueSearch] = useState("")
+
+  const poiSearch = poi.filter(product => product.name.toLowerCase().includes(valueSearch.toLowerCase()))
+
   //get current param
   const location = useLocation()
-
 
   //handle pick length show data
   const handlePickLength = (length) => {
     setListLength(length)
     setOpenPopUp(false)
   }
+
+  useEffect(() => {
+    if(listLength < poi.length) {
+      const newArr = poi.slice(0, listLength)
+      setNewPoi(newArr)
+    } else {
+      setNewPoi(poiSearch)
+    }
+  }, [listLength])
 
   //click outside
   useEffect(() => {
@@ -64,13 +80,13 @@ export default function PointOfInterest() {
    
                  <div className='productManagement_body-header-search'>
                    <Link to={ROUTER.ADMIN_POI_CREATE}><button>Create</button></Link>
-                   <input type="text"  placeholder='Nhập từ khóa tìm kiếm'/>
+                   <input type="text"  placeholder='Nhập từ khóa tìm kiếm' value={ valueSearch} onChange={e => setValueSearch(e.target.value)}/>
                    <section><BsSearch /></section>
                  </div>
              </div>
    
              <div>
-                <ListPOI />
+                <ListPOI poi={ newPoi.length > 0 ? newPoi : poiSearch}/>
              </div>
            </div>   
         ) : (

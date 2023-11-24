@@ -4,9 +4,8 @@ import { TourContext } from '../../../../shared/dataContext/TourContext'
 import { Link } from 'react-router-dom';
 import { ROUTER } from '../../../../shared/constants/Constants';
 
-export default function ListPlaceTour() {
+export default function ListPlaceTour({placeTour}) {
     const {setPopupAdmin} = useContext(TourContext)
-    const {placeTour} = useContext(TourContext)
   
   
     const showPopupAdmin = (item) => {

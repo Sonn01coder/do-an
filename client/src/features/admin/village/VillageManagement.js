@@ -7,17 +7,34 @@ import CreateAndEditVillage from './createAndEditVillage/CreateAndEditVillage';
 import VillageAdmin from './villageAdmin/VillageAdmin';
 import "./VillageManagement.scss";
 import { AuthContext } from '../../../shared/dataContext/AuthContext';
+import { VillageContext } from '../../../shared/dataContext/VillageContext';
 
 export default function VillageManagement() {
     const {userCurrent} = useContext(AuthContext)
+    
+    const {villages} = useContext(VillageContext)
+
+    const [newVillages, setNewVillages] = useState(villages)
 
     const [listLength, setListLength] = useState(showListLength[0].length)
     const [openPopup, setOpenPopUp] = useState(false)
 
+    //value form search
+    const [valueSearch, setValueSearch] = useState("")
+
+    const villageSearch = villages.filter(village => village.name.toLowerCase().includes(valueSearch.toLowerCase()))
+
+    useEffect(() => {
+       if(listLength < villages.length) {
+        const newArr = villages.slice(0, listLength)
+        setNewVillages(newArr)
+      } else {
+        setNewVillages(villageSearch)
+      }
+    }, [listLength])
+
     //get current param
     const location = useLocation()
-
-    console.log();
 
     //handle pick length show data
     const handlePickLength = (length) => {
@@ -70,13 +87,18 @@ export default function VillageManagement() {
    
                  <div className='villageManagement_body-header-search'>
                    { !userCurrent?.role?.includes(process.env.REACT_APP_VILLAGE_USER) && <Link to={ROUTER.ADMIN_VILLAGE_CREATE}><button>Create</button></Link> }
-                   <input type="text"  placeholder='Nhập từ khóa tìm kiếm'/>
+                   <input 
+                    type="text"  
+                    placeholder='Nhập từ khóa tìm kiếm'
+                    value={valueSearch}
+                    onChange={e => setValueSearch(e.target.value)}
+                  />
                    <section><BsSearch /></section>
                  </div>
              </div>
    
              <div>
-                   <VillageAdmin />
+                   <VillageAdmin villages={newVillages.length > 0 ? newVillages : villageSearch} />
              </div>
            </div>   
         ) : (

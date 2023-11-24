@@ -143,7 +143,9 @@ export default function Admin() {
   return (
     <div className='admin'>
       <div className='admin_sidebar'>
-        <h2>LÀNG NGHỀ</h2>
+        <Link to="/home">
+          <h2>LÀNG NGHỀ</h2>
+        </Link>
 
         <div className='admin_sidebar-navigation'>
           {

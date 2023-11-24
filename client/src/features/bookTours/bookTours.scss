@@ -90,7 +90,8 @@
             }
 
             .bookTours-btn-disabled {
-                display: none;
+               opacity: 0.3;
+               pointer-events: none;
             }
         }
     }

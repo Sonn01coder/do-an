@@ -1,15 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import {AiFillCaretDown} from "react-icons/ai"
 import {BsSearch} from "react-icons/bs";
 import { ROUTER, showListLength } from '../../../shared/constants/Constants'
 import { Link, useLocation } from 'react-router-dom'
 import CreateAndEditPOS from './createAndEditPOS/CreateAndEditPOS';
 import ListPOS from './listPOS/ListPOS';
+import { POSContext } from '../../../shared/dataContext/PointOfServiceContext';
 
 
 export default function PointOfService() {
   const [listLength, setListLength] = useState(showListLength[0].length)
   const [openPopup, setOpenPopUp] = useState(false)
+
+  const [valueSearch, setValueSearch] = useState("")
+
+  const {pos} = useContext(POSContext)
+
+  const [newPos, setNewPos] = useState(pos)
+
+  const posSearch = pos.filter(item => item.name.toLowerCase().includes(valueSearch.toLowerCase()))
 
   const popUpRef = useRef()
 
@@ -21,6 +30,15 @@ export default function PointOfService() {
     setListLength(length)
     setOpenPopUp(false)
   }
+
+  useEffect(() => {
+    if(listLength < pos.length) {
+      const newArr = pos.slice(0, listLength)
+      setNewPos(newArr)
+    } else {
+      setNewPos(posSearch)
+    }
+  }, [listLength])
 
   //click outside
   useEffect(() => {
@@ -63,13 +81,13 @@ export default function PointOfService() {
    
                  <div className='productManagement_body-header-search'>
                    <Link to={ROUTER.ADMIN_POS_CREATE}><button>Create</button></Link>
-                   <input type="text"  placeholder='Nhập từ khóa tìm kiếm'/>
+                   <input type="text"  placeholder='Nhập từ khóa tìm kiếm' value={valueSearch} onChange={e => setValueSearch(e.target.value)}/>
                    <section><BsSearch /></section>
                  </div>
              </div>
    
              <div>
-                <ListPOS />
+                <ListPOS pos={newPos.length > 0 ? newPos : posSearch}/>
              </div>
            </div>   
         ) : (

@@ -9,10 +9,6 @@ export default function TourMap() {
 
     const {slug} = useParams()
 
-    console.log(slug);
-
-    console.log(tours);
-
     //handle slug tour
   const handleSlugTour = (string) => {
     return string.toLowerCase().replace(/\s+/g, "-")
@@ -62,20 +58,21 @@ export default function TourMap() {
 
   return (
     <div className='tourMap'>
-        <div className='tourMap_navigate'> 
-            <h3>{tourCurrent.name.toUpperCase()}</h3>
-            <Link to={"/home"}><AiFillHome /></Link>
-        </div>
+    <div className='tourMap_header'>
+      <div className='tourMap_navigate'> 
+          <h3>{tourCurrent.name.toUpperCase()}</h3>
+          <Link to={"/home"}><AiFillHome /></Link>
+      </div>
 
-        <div className='tourMap_tour'>
-            <div className='tourMap_tour-content'>
-                <div className='tourMap_tour-content-journey'>
-                    <h4>Lộ trình:</h4>
-                    {
-                        handleRenderJourney(handlePlaceOfTour(tourCurrent.placeId)).map((place, index) => (
-                            <p key={place}>{index + 1}.{place}</p>
-                        ))
-                    }
+      <div className='tourMap_tour'>
+          <div className='tourMap_tour-content'>
+              <div className='tourMap_tour-content-journey'>
+                  <h4>Lộ trình:</h4>
+                  {
+                      handleRenderJourney(handlePlaceOfTour(tourCurrent.placeId)).map((place, index) => (
+                          <p key={place}>{index + 1}.{place}</p>
+                      ))
+                  }
                 </div>
 
                 <div className='tourMap_tour-content-price'>
@@ -85,7 +82,7 @@ export default function TourMap() {
             </div>
             <Link to={"/tour"} className='tourMap_tour-more'>Xem thêm các tour khác</Link>
         </div>
-
+      </div>
         <div className='tourMap_register'>
             <Link to={"/book-tour"} className='tourMap_register-link' onClick={handleBookTour}>ĐĂNG KÍ THAM QUAN {tourCurrent.name.toUpperCase()}</Link>
         </div>

@@ -7,7 +7,7 @@ import ListTour from './listTour/ListTour'
 import CreateAndEditTour from './createAndEditTour/CreateAndEditTour'
 
 export default function TourAdmin() {
-    const [listLength, setListLength] = useState(showListLength[0].length)
+  const [listLength, setListLength] = useState(showListLength[0].length)
   const [openPopup, setOpenPopUp] = useState(false)
 
   const popUpRef = useRef()
@@ -20,6 +20,7 @@ export default function TourAdmin() {
     setListLength(length)
     setOpenPopUp(false)
   }
+
 
   //click outside
   useEffect(() => {

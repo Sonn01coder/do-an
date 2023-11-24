@@ -9,7 +9,6 @@ export default function PoiList({poiVillage, village}) {
 
   const poiSearch = poiVillage.filter(item => item.name.toLowerCase().includes(valueSearch.toLowerCase()))
 
-
   return (
     <div className='productList'>
         <div className='productList_path'>
